@@ -1,0 +1,19 @@
+name: OfflineManager
+version: 3.0 beta-0.1
+api-version: 1.16
+main: net.flawe.offlinemanager.OfflineManager
+author: flaweoff
+website: https://t.me/flawe_sv/OfflineManagerPlugin
+prefix: OfflineManager
+
+softdepend:
+  - PlaceholderAPI
+
+commands:
+  offlinemanager:
+    usage: /offlinemanager [sub-command]
+    description: test
+    aliases:
+      - om
+    permission: offlinemanager.use
+    permission-message: You don't have permission for do this

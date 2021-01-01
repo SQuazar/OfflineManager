@@ -1,0 +1,19 @@
+name: OfflineManager
+version: ${version}
+api-version: 1.16
+main: net.flawe.offlinemanager.OfflineManager
+author: flaweoff
+website: ${url}
+prefix: OfflineManager
+
+softdepend:
+  - PlaceholderAPI
+
+commands:
+  offlinemanager:
+    usage: /offlinemanager [sub-command]
+    description: test
+    aliases:
+      - om
+    permission: offlinemanager.use
+    permission-message: You don't have permission for do this

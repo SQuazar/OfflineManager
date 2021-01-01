@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Maven: net.flawe:OfflineManagerAPI:3.0-beta">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/flawe/OfflineManagerAPI/3.0-Beta/OfflineManagerAPI-3.0-Beta.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/OfflineManagerAPI/OfflineManagerAPI-3.0-beta-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/net/flawe/OfflineManagerAPI/3.0-Beta/OfflineManagerAPI-3.0-beta-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/net/flawe/OfflineManagerAPI/3.0-Beta/OfflineManagerAPI-3.0-beta-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/OfflineManagerAPI/OfflineManagerAPI-3.0-beta-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/net/flawe/OfflineManagerAPI/3.0-Beta/OfflineManagerAPI-3.0-beta-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/net/flawe/OfflineManagerAPI/3.0-Beta/OfflineManagerAPI-3.0-beta-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
