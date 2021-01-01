@@ -22,8 +22,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.bukkit:bukkit:1.16.4-R3" level="project" />
-    <orderEntry type="module" module-name="OfflineManagerPlugin" />
-    <orderEntry type="module" module-name="OfflineManagerAPI" />
-    <orderEntry type="library" name="Maven: org.jetbrains:annotations:16.0.1" level="project" />
+    <orderEntry type="library" name="Maven: net.flawe:OfflineManagerPlugin:3.0 beta-0.1" level="project" />
   </component>
 </module>

@@ -1,7 +1,3 @@
 /.idea/
-/target/
-/OfflineManagerPlugin/target/
-/OfflineManagerAPI/target/
-/OfflineManagerInternal/target
-/OfflineManagerInternal/v1_16_R3/target/
-.*iml
+*.iml
+*/target

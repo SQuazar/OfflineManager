@@ -47,6 +47,7 @@ public class ConfigManager implements IConfigManager {
         messages = YamlConfiguration.loadConfiguration(messagesFile);
         if (configFile.exists())
             initConfigurations();
+
     }
 
     private void initConfigurations() {
