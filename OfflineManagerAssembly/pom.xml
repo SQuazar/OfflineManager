@@ -8,7 +8,7 @@
         <version>3.0 beta-0.1</version>
     </parent>
 
-    <artifactId>OfflineManagerAssebly</artifactId>
+    <artifactId>OfflineManagerAssembly</artifactId>
     <name>OfflineManagerAssembly</name>
 
     <build>
