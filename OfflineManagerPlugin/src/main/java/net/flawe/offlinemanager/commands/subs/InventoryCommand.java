@@ -79,7 +79,7 @@ public class InventoryCommand extends OMCommand {
                         .replace("%player%", player.getName()));
                 return;
             }
-            OfflineArmorInventoryHolder armorInventoryHolder = new OfflineArmorInventoryHolder(user, player, api.getConfigManager().getEnderChestConfig().getName());
+            OfflineArmorInventoryHolder armorInventoryHolder = new OfflineArmorInventoryHolder(user, player, api.getConfigManager().getArmorInventoryConfig().getName());
             event.setInventory(armorInventoryHolder.getInventory());
             event.setInventoryType(armorInventoryHolder.getInventoryType());
             Bukkit.getScheduler().runTask(plugin, () -> {
