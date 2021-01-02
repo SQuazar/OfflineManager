@@ -19,7 +19,7 @@ public class HelpCommand extends OMCommand {
             player.sendMessage(api.getConfigManager().getMessageString(player, functionDisabled));
             return;
         }
-        StringBuilder builder = new StringBuilder("&a[OfflineManager] &eCommand list:");
+        StringBuilder builder = new StringBuilder("&a[OfflineManager] &eOfflineManager help menu:");
         for (ICommand command : api.getCommandManager().getSubCommands()) {
             if (command.hasPermission(player))
                 builder.append("\n &e- &a/om ")
