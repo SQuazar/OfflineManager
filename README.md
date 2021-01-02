@@ -44,100 +44,100 @@ If you update plugin to 3.0 version, recommended remove config.yml and messages.
 <th>Permission</th>
 </tr>
 <tr>
-<th>/offlinemanager</th>
-<th>om</th>
-<th>OfflineManager main command</th>
-<th>offlinemanager.use</th>
+<td>/offlinemanager</td>
+<td>om</td>
+<td>OfflineManager main command</td>
+<td>offlinemanager.use</td>
 </tr>
 <tr>
-<th>/om help</th>
-<th>none</th>
-<th>Get plugin help page</th>
-<th>offlinemanager.use</th>
+<td>/om help</td>
+<td>none</td>
+<td>Get plugin help page</td>
+<td>offlinemanager.use</td>
 </tr>
 <tr>
-<th>/om invsee [player]</th>
-<th>none</th>
-<th>Open player's offline inventory</th>
-<th>offlinemanager.invsee</th>
+<td>/om invsee [player]</td>
+<td>none</td>
+<td>Open player's offline inventory</td>
+<td>offlinemanager.invsee</td>
 </tr>
 <tr>
-<th>/om invsee [player] armor</th>
-<th>none</th>
-<th>Open player's offline armor inventory</th>
-<th>offlinemanager.invsee.armor</th>
+<td>/om invsee [player] armor</td>
+<td>none</td>
+<td>Open player's offline armor inventory</td>
+<td>offlinemanager.invsee.armor</td>
 </tr>
 <tr>
-<th>/om enderchest [player]</th>
-<th>ec</th>
-<th>Open player's offline ender chest</th>
-<th>offlinemanager.enderchest</th>
+<td>/om enderchest [player]</td>
+<td>ec</td>
+<td>Open player's offline ender chest</td>
+<td>offlinemanager.enderchest</td>
 </tr>
 <tr>
-<th>/om reload [player]</th>
-<th>none</th>
-<th>Reload the plugin configuration</th>
-<th>offlinemanager.reload</th>
+<td>/om reload [player]</td>
+<td>none</td>
+<td>Reload the plugin configuration</td>
+<td>offlinemanager.reload</td>
 </tr>
 <tr>
-<th>/om teleport [player]</th>
-<th>tp</th>
-<th>Teleport to offline player</th>
-<th>offlinemanager.teleport</th>
+<td>/om teleport [player]</td>
+<td>tp</td>
+<td>Teleport to offline player</td>
+<td>offlinemanager.teleport</td>
 </tr>
 <tr>
-<th>/om tphere [player]</th>
-<th>none</th>
-<th>Teleport an offline player to you</th>
-<th>offlinemanager.tphere</th>
+<td>/om tphere [player]</td>
+<td>none</td>
+<td>Teleport an offline player to you</td>
+<td>offlinemanager.tphere</td>
 </tr>
 <tr>
-<th>/om adventure [player]</th>
-<th>none</th>
-<th>Set the adventure mode to the offline player</th>
-<th>offlinemanager.adventure</th>
+<td>/om adventure [player]</td>
+<td>none</td>
+<td>Set the adventure mode to the offline player</td>
+<td>offlinemanager.adventure</td>
 </tr>
 <tr>
-<th>/om creative [player]</th>
-<th>none</th>
-<th>Set the creative mode to the offline player</th>
-<th>offlinemanager.creative</th>
+<td>/om creative [player]</td>
+<td>none</td>
+<td>Set the creative mode to the offline player</td>
+<td>offlinemanager.creative</td>
 </tr>
 <tr>
-<th>/om survival [player]</th>
-<th>none</th>
-<th>Set the survival mode to the offline player</th>
-<th>offlinemanager.survival</th>
+<td>/om survival [player]</td>
+<td>none</td>
+<td>Set the survival mode to the offline player</td>
+<td>offlinemanager.survival</td>
 </tr>
 <tr>
-<th>/om spectator [player]</th>
-<th>none</th>
-<th>Set the spectator mode to the offline player</th>
-<th>offlinemanager.spectator</th>
+<td>/om spectator [player]</td>
+<td>none</td>
+<td>Set the spectator mode to the offline player</td>
+<td>offlinemanager.spectator</td>
 </tr>
 <tr>
-<th>/om clear [player]</th>
-<th>none</th>
-<th>Clear the offline player inventory</th>
-<th>offlinemanager.clear</th>
+<td>/om clear [player]</td>
+<td>none</td>
+<td>Clear the offline player inventory</td>
+<td>offlinemanager.clear</td>
 </tr>
 <tr>
-<th>/om kill [player]</th>
-<th>none</th>
-<th>Kill the offline player</th>
-<th>offlinemanager.kill</th>
+<td>/om kill [player]</td>
+<td>none</td>
+<td>Kill the offline player</td>
+<td>offlinemanager.kill</td>
 </tr>
 <tr>
-<th>/om heal [player]</th>
-<th>none</th>
-<th>Heal the offline player</th>
-<th>offlinemanager.heal</th>
+<td>/om heal [player]</td>
+<td>none</td>
+<td>Heal the offline player</td>
+<td>offlinemanager.heal</td>
 </tr>
 <tr>
-<th>/om feed [player]</th>
-<th>none</th>
-<th>Feed the offline player</th>
-<th>offlinemanager.feed</th>
+<td>/om feed [player]</td>
+<td>none</td>
+<td>Feed the offline player</td>
+<td>offlinemanager.feed</td>
 </tr>
 </table>
 </div>
@@ -152,44 +152,44 @@ If you update plugin to 3.0 version, recommended remove config.yml and messages.
 <th>Description</th>
 </tr>
 <tr>
-<th>player_name</th>
-<th>Returns the player name</th>
+<td>player_name</td>
+<td>Returns the player name</td>
 </tr>
 <tr>
-<th>player_uuid</th>
-<th>Returns the player's uuid</th>
+<td>player_uuid</td>
+<td>Returns the player's uuid</td>
 </tr>
 <tr>
-<th>player_healths</th>
-<th>Returns the player's healths count</th>
+<td>player_healths</td>
+<td>Returns the player's healths count</td>
 </tr>
 <tr>
-<th>player_food</th>
-<th>Returns the player's food count</th>
+<td>player_food</td>
+<td>Returns the player's food count</td>
 </tr>
 <tr>
-<th>player_locX</th>
-<th>Returns the player's x coordinate</th>
+<td>player_locX</td>
+<td>Returns the player's x coordinate</td>
 </tr>
 <tr>
-<th>player_locY</th>
-<th>Returns the player's y coordinate</th>
+<td>player_locY</td>
+<td>Returns the player's y coordinate</td>
 </tr>
 <tr>
-<th>player_locZ</th>
-<th>Returns the player's z coordinate</th>
+<td>player_locZ</td>
+<td>Returns the player's z coordinate</td>
 </tr>
 <tr>
-<th>player_locYaw</th>
-<th>Returns the player's yaw</th>
+<td>player_locYaw</td>
+<td>Returns the player's yaw</td>
 </tr>
 <tr>
-<th>player_locPitch</th>
-<th>Returns the player's pitch</th>
+<td>player_locPitch</td>
+<td>Returns the player's pitch</td>
 </tr>
 <tr>
-<th>player_locWorld</th>
-<th>Returns the player's world name</th>
+<td>player_locWorld</td>
+<td>Returns the player's world name</td>
 </tr>
 </table>
 </div>
@@ -210,12 +210,12 @@ In order to get information from the player you need, you must:
 <th>Result</th>
 </tr>
 <tr>
-<th>parseother_{playername}_{om_player_uuid}</th>
-<th>Return the player's uuid</th>
+<td>parseother_{playername}_{om_player_uuid}</td>
+<td>Return the player's uuid</td>
 </tr>
 <tr>
-<th>parseother_{playername}_{om_player_locX}</th>
-<th>Return the player's x coordinate</th>
+<td>parseother_{playername}_{om_player_locX}</td>
+<td>Return the player's x coordinate</td>
 </tr>
 </table>
 </div>
