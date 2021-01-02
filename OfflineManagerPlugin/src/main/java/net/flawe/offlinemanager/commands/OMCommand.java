@@ -49,9 +49,7 @@ public abstract class OMCommand implements ICommand {
     }
 
     @Override
-    public void execute(Player player, String[] args) {
-
-    }
+    public abstract void execute(Player player, String[] args);
 
     @Override
     public boolean hasPermission(Player player) {
