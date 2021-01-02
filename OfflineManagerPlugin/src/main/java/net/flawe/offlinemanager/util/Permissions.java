@@ -1,6 +1,7 @@
 package net.flawe.offlinemanager.util;
 
 public class Permissions {
+    public static final String usage = "offlinemanager.usage";
     public static final String invsee = "offlinemanager.invsee";
     public static final String invsee_armor = "offlinemanager.invsee.armor";
     public static final String enderchest = "offlinemanager.enderchest";
