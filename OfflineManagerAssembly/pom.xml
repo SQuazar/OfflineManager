@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.flawe</groupId>
         <artifactId>OfflineManagerParent</artifactId>
-        <version>3.0 beta-0.1</version>
+        <version>3.0 beta-0.2</version>
     </parent>
 
     <artifactId>OfflineManagerAssembly</artifactId>
@@ -13,7 +13,7 @@
 
     <build>
         <directory>../target</directory>
-        <finalName>OfflineManager 3.0 beta-0.1</finalName>
+        <finalName>OfflineManager 3.0 beta-0.2</finalName>
 
         <plugins>
             <plugin>

@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.flawe</groupId>
         <artifactId>OfflineManagerInternal</artifactId>
-        <version>3.0 beta-0.1</version>
+        <version>3.0 beta-0.2</version>
     </parent>
 
     <artifactId>v1_16_R3</artifactId>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>net.flawe</groupId>
             <artifactId>OfflineManagerPlugin</artifactId>
-            <version>3.0 beta-0.1</version>
+            <version>3.0 beta-0.2</version>
         </dependency>
     </dependencies>
 
