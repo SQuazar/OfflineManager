@@ -8,7 +8,7 @@ enter-nickname: "&a[OfflineManager] &eEnter player nickname!"
 enter-subcommand: "&a[OfflineManager] &eEnter sub-command!"
 player-not-found: "&a[OfflineManager] &ePlayer with this name isn't found!"
 player-is-online: "&a[OfflineManager] &ePlayer with this name is online."
-command-not-found: "&a[OfflineManager] &eThis command isn't found!"
+command-not-found: "&a[OfflineManager] &eThis command isn't found! Use /help for help."
 function-disabled: "&a[OfflineManager] &eThe function %function% is disabled!"
 already-being-edited: "&a[OfflineManager] &eThis player already being edited other player!"
 
