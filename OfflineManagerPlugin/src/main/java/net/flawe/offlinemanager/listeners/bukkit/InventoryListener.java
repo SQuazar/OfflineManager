@@ -35,8 +35,12 @@ public class InventoryListener implements Listener {
             IOfflineInvHolder holder = (IOfflineInvHolder) e.getInventory().getHolder();
             IUser user = holder.getUser();
             OfflineInventoryClickEvent event = new OfflineInventoryClickEvent((Player) e.getWhoClicked(), user,
-                    InventoryType.ARMOR, e.getInventory(), e.getSlot());
+                    holder.getInventoryType(), e.getInventory(), e.getSlot());
             Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled()) {
+                e.setCancelled(true);
+                return;
+            }
             onInteract(e);
         }
     }
