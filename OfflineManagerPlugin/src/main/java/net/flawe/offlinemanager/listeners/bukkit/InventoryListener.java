@@ -31,18 +31,19 @@ public class InventoryListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent e) {
-        if (e.getInventory().getHolder() != null && e.getInventory().getHolder() instanceof IOfflineInvHolder) {
-            IOfflineInvHolder holder = (IOfflineInvHolder) e.getInventory().getHolder();
-            IUser user = holder.getUser();
-            OfflineInventoryClickEvent event = new OfflineInventoryClickEvent((Player) e.getWhoClicked(), user,
-                    holder.getInventoryType(), e.getInventory(), e.getSlot());
-            Bukkit.getPluginManager().callEvent(event);
-            if (event.isCancelled()) {
-                e.setCancelled(true);
-                return;
+        if (e.getClickedInventory() != null)
+            if (e.getClickedInventory().getHolder() != null && e.getClickedInventory().getHolder() instanceof IOfflineInvHolder) {
+                IOfflineInvHolder holder = (IOfflineInvHolder) e.getClickedInventory().getHolder();
+                IUser user = holder.getUser();
+                OfflineInventoryClickEvent event = new OfflineInventoryClickEvent((Player) e.getWhoClicked(), user,
+                        holder.getInventoryType(), e.getInventory(), e.getSlot());
+                Bukkit.getPluginManager().callEvent(event);
+                if (event.isCancelled()) {
+                    e.setCancelled(true);
+                    return;
+                }
             }
-            onInteract(e);
-        }
+        onInteract(e);
     }
 
     @EventHandler
