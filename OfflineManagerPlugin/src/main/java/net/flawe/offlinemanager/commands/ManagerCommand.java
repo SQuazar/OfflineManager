@@ -40,6 +40,7 @@ public class ManagerCommand implements CommandExecutor, TabCompleter {
         api.getCommandManager().addSubCommand(new HealCommand("heal", "Heal offline player", heal, plugin));
         api.getCommandManager().addSubCommand(new FeedPlayerCommand("feed", "Feed offline player", feed, plugin));
         api.getCommandManager().addSubCommand(new EnderChestCommand("enderchest", "Open offline player enderchest", enderchest, new String[]{"ec"}, plugin));
+        api.getCommandManager().addSubCommand(new HelpCommand("help", "Get command list for plugin", usage));
     }
 
     @Override
