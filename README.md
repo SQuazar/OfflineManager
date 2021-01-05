@@ -220,6 +220,119 @@ In order to get information from the player you need, you must:
 </table>
 </div>
 
+#Message configuration placeholders
+
+<div>
+<table>
+<tr>
+<th>Message</th>
+<th>Placeholders</th>
+</tr>
+<tr>
+<td>permission-deny</td>
+<td>%player%, %permission%</td>
+</tr>
+<tr>
+<td>enter-nickname</td>
+<td>%player%</td>
+</tr>
+<tr>
+<td>enter-subcommand</td>
+<td>%player%</td>
+</tr>
+<tr>
+<td>player-not-found</td>
+<td>%player%, %target%</td>
+</tr>
+<tr>
+<td>player-is-online</td>
+<td>%player%, %target%</td>
+</tr>
+<tr>
+<td>command-not-found</td>
+<td>%player%, %command%</td>
+</tr>
+<tr>
+<td>function-disabled</td>
+<td>%player%, %function%</td>
+</tr>
+<tr>
+<td>already-being-edited</td>
+<td>%player%, %target%</td>
+</tr>
+<tr>
+<td>teleport-success</td>
+<td>%player%, %target%</td>
+</tr>
+<tr>
+<td>teleport-here</td>
+<td>%player%, %target%</td>
+</tr>
+<tr>
+<td>teleport-another</td>
+<td>%player%, %target%, %to%</td>
+</tr>
+<tr>
+<td>gamemode-changed</td>
+<td>%player%, %target%, %gamemode%</td>
+</tr>
+<tr>
+<td>heal-player</td>
+<td>%player%, %target%</td>
+</tr>
+<tr>
+<td>kill-player</td>
+<td>%player%, %target%</td>
+</tr>
+<tr>
+<td>feed-player</td>
+<td>%player%, %target%</td>
+</tr>
+<tr>
+<td>clear-inventory</td>
+<td>%player%, %target%</td>
+</tr>
+</table>
+<table>
+<tr>
+<th colspan="2">Placeholders description</th>
+</tr>
+<tr>
+<th>Placeholder</th>
+<th>Returns</th>
+</tr>
+<tr>
+<td>%player%</td>
+<td>Command sender name</td>
+</tr>
+<tr>
+<td>%target%</td>
+<td>Target offline player name</td>
+</tr>
+<tr>
+<td>%permission%</td>
+<td>Permission name</td>
+</tr>
+<tr>
+<td>%command%</td>
+<td>Command name</td>
+</tr>
+<tr>
+<td>%function%</td>
+<td>Function name</td>
+</tr>
+<tr>
+<td>%to%</td>
+<td>The name of the player to which the offline player is teleported</td>
+</tr>
+<tr>
+<td>%gamemode%</td>
+<td>GameMode name</td>
+</tr>
+</table>
+<h3>Also messages support the placeholders from PlaceholderAPI</h3>
+</div>
+
 # API Usage
 
 ### Installation & Usage
