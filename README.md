@@ -220,7 +220,7 @@ In order to get information from the player you need, you must:
 </table>
 </div>
 
-#Message configuration placeholders
+# Message configuration placeholders
 
 <div>
 <table>
