@@ -1,4 +1,4 @@
-#OfflineManager 3.0 beta-0.1
+#OfflineManager 3.0 beta-0.2
 #Created by flawe prod., LOVEC3327
 #Contact https://vk.com/flawe0ff or https://t.me/flawe_sv
 #Messages configuration file
@@ -17,6 +17,6 @@ teleport-here: "&a[OfflineManager] &eThe player successfully teleported to you!"
 teleport-another: "&a[OfflineManager] &eThe player teleported to another player!"
 gamemode-changed: "&a[OfflineManager] &eSuccessful change gamemode for player!"
 heal-player: "&a[OfflineManager] &eThe player is healed!"
-kill-plyer: "&a[OfflineManager] &eThe player has been killed!"
+kill-player: "&a[OfflineManager] &eThe player has been killed!"
 feed-player: "&a[OfflineManager] &eThe player was fed!"
 clear-inventory: "&a[OfflineManager] &ePlayer's inventory has been cleared!"
