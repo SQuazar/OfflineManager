@@ -26,25 +26,33 @@ public class InventoryCommand extends OMCommand {
     public void execute(Player player, String[] args) {
         if (!api.getConfigManager().getInventoryConfig().interact()) {
             player.sendMessage(api.getConfigManager().getMessageString(player, functionDisabled)
-                    .replace("%function%", "Offline Inventory"));
+                    .replace("%function%", "Offline Inventory")
+                    .replace("%player%", player.getName()));
             return;
         }
         if (!hasPermission(player)) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, permissionDeny));
+            player.sendMessage(api.getConfigManager().getMessageString(player, permissionDeny)
+                    .replace("%player%", player.getName())
+                    .replace("%permission%", getPermission()));
             return;
         }
         if (args.length == 1) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, enterNickname));
+            player.sendMessage(api.getConfigManager().getMessageString(player, enterNickname)
+                    .replace("%player%", player.getName()));
             return;
         }
         String playerName = args[1];
         Player t = Bukkit.getPlayerExact(playerName);
         if (t != null && t.isOnline()) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, playerIsOnline));
+            player.sendMessage(api.getConfigManager().getMessageString(player, playerIsOnline)
+                    .replace("%player%", player.getName())
+                    .replace("%target%", playerName));
             return;
         }
         if (!api.getStorage().hasPlayer(playerName)) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, playerNotFound));
+            player.sendMessage(api.getConfigManager().getMessageString(player, playerNotFound)
+                    .replace("%player%", player.getName())
+                    .replace("%target%", playerName));
             return;
         }
         IUser user = api.getUser(playerName);
@@ -70,7 +78,9 @@ public class InventoryCommand extends OMCommand {
         }
         if (args[2].equalsIgnoreCase("armor")) {
             if (!player.hasPermission(invsee_armor)) {
-                player.sendMessage(api.getConfigManager().getMessageString(player, permissionDeny));
+                player.sendMessage(api.getConfigManager().getMessageString(player, permissionDeny)
+                        .replace("%player%", player.getName())
+                        .replace("%permission%", getPermission()));
                 return;
             }
             if (api.getSession().containsValue(user.getUUID(), ActiveType.ARMOR_INVENTORY)) {

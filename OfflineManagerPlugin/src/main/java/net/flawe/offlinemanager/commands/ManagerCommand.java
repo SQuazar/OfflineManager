@@ -51,11 +51,14 @@ public class ManagerCommand implements CommandExecutor, TabCompleter {
         }
         Player p = (Player) sender;
         if (args.length == 0) {
-            p.sendMessage(api.getConfigManager().getMessageString(p, enterSubCommand));
+            p.sendMessage(api.getConfigManager().getMessageString(p, enterSubCommand)
+                    .replace("%player%", p.getName()));
             return true;
         }
         if (!hasCommand(args[0])) {
-            p.sendMessage(api.getConfigManager().getMessageString(p, commandNotFound));
+            p.sendMessage(api.getConfigManager().getMessageString(p, commandNotFound)
+                    .replace("%player%", p.getName())
+                    .replace("%command%", args[0]));
             return true;
         }
         ICommand command = getCommand(args[0]);
@@ -94,9 +97,8 @@ public class ManagerCommand implements CommandExecutor, TabCompleter {
                     .collect(Collectors.toList());
         if (args.length == 2 && api.getConfigManager().playerComplete())
             return api.getStorage().getListForComplete(args);
-        if (args.length == 3 && args[0].equalsIgnoreCase("invsee")) {
+        if (args.length == 3 && args[0].equalsIgnoreCase("invsee"))
             return Collections.singletonList("armor");
-        }
         return Collections.emptyList();
     }
 }

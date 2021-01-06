@@ -26,37 +26,47 @@ public class EnderChestCommand extends OMCommand {
     public void execute(Player player, String[] args) {
         if (!api.getConfigManager().getEnderChestConfig().enabled()) {
             player.sendMessage(api.getConfigManager().getMessageString(player, functionDisabled)
-                    .replace("%function%", "Ender Chest"));
+                    .replace("%function%", "Ender Chest")
+                    .replace("%player%", player.getName()));
             return;
         }
         if (!hasPermission(player)) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, permissionDeny));
+            player.sendMessage(api.getConfigManager().getMessageString(player, permissionDeny)
+                    .replace("%player%", player.getName())
+                    .replace("%permission%", getPermission()));
             return;
         }
         if (args.length == 1) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, enterNickname));
+            player.sendMessage(api.getConfigManager().getMessageString(player, enterNickname)
+                    .replace("%player%", player.getName()));
             return;
         }
         String playerName = args[1];
         Player target = Bukkit.getPlayerExact(playerName);
         if (target != null && target.isOnline()) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, playerIsOnline));
+            player.sendMessage(api.getConfigManager().getMessageString(player, playerIsOnline)
+                    .replace("%player%", player.getName())
+                    .replace("%target%", playerName));
             return;
         }
         if (!api.getStorage().hasPlayer(playerName)) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, playerNotFound));
+            player.sendMessage(api.getConfigManager().getMessageString(player, playerNotFound)
+                    .replace("%player%", player.getName())
+                    .replace("%target%", playerName));
             return;
         }
         IUser user = api.getUser(playerName);
         if (api.getSession().containsValue(user.getUUID(), ActiveType.ENDER_CHEST)) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, alreadyBeingEdited));
+            player.sendMessage(api.getConfigManager().getMessageString(player, alreadyBeingEdited)
+                    .replace("%player%", player.getName())
+                    .replace("%target%", playerName));
             return;
         }
         OpenOfflineInventoryEvent event = new OpenOfflineInventoryEvent(player, user, InventoryType.ENDER_CHEST);
         Bukkit.getScheduler().runTask(plugin, () -> {
-           Bukkit.getPluginManager().callEvent(event);
-           if (event.isCancelled())
-               return;
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled())
+                return;
             OfflineEnderChestHolder holder = new OfflineEnderChestHolder(user);
             player.openInventory(holder.getInventory());
             api.getSession().add(player.getUniqueId(), user.getUUID(), ActiveType.ENDER_CHEST);

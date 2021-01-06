@@ -17,7 +17,9 @@ public class UpdateConfigCommand extends OMCommand {
     @Override
     public void execute(Player player, String[] args) {
         if (!hasPermission(player)) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, permissionDeny));
+            player.sendMessage(api.getConfigManager().getMessageString(player, permissionDeny)
+                    .replace("%player%", player.getName())
+                    .replace("%permission%", getPermission()));
             return;
         }
         api.getConfigManager().update();
