@@ -9,7 +9,7 @@ public class OfflinePlayerListener implements Listener {
 
     @EventHandler
     public void onLoad(LoadPlayerEvent e) {
-
+        e.setCanceled(true);
     }
 
     @EventHandler

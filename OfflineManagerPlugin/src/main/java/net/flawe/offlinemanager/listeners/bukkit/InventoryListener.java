@@ -61,11 +61,6 @@ public class InventoryListener implements Listener {
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled())
                 e.setCancelled(true);
-/*            if (holder instanceof OfflineInventoryHolder) {
-                if (!configManager.getInventoryConfig().interact()) {
-                    e.setCancelled(true);
-                }
-            }*/
         }
     }
 

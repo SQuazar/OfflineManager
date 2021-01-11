@@ -3,6 +3,7 @@ package net.flawe.offlinemanager.util;
 import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.INMSManager;
 import net.flawe.offlinemanager.api.IUser;
+import org.bukkit.Bukkit;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

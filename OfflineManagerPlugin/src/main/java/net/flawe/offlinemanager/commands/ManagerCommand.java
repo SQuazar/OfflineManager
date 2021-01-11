@@ -25,21 +25,21 @@ public class ManagerCommand implements CommandExecutor, TabCompleter {
 
     private final OfflineManagerAPI api = OfflineManager.getApi();
 
-    public ManagerCommand(OfflineManager plugin) {
-        api.getCommandManager().addSubCommand(new InventoryCommand("invsee", "Open player inventory", invsee, plugin));
+    public ManagerCommand() {
+        api.getCommandManager().addSubCommand(new InventoryCommand("invsee", "Open player inventory", invsee));
         api.getCommandManager().addSubCommand(new ReloadCommand("reload", "Reload plugin configuration", reload));
 //        api.getCommandManager().addSubCommand(new UpdateConfigCommand("update", "Update configuration file", updateConfig));
-        api.getCommandManager().addSubCommand(new TeleportCommand("teleport", "Teleport to player", teleport, new String[]{"tp"}, plugin));
-        api.getCommandManager().addSubCommand(new CreativeCommand("creative", "Set creative mode for player", creative, plugin));
-        api.getCommandManager().addSubCommand(new SurvivalCommand("survival", "Set survival mode for player", survival, plugin));
-        api.getCommandManager().addSubCommand(new SpectatorCommand("spectator", "Set spectator mode for player", spectator, plugin));
-        api.getCommandManager().addSubCommand(new AdventureCommand("adventure", "Set adventure mode for player", adventure, plugin));
-        api.getCommandManager().addSubCommand(new ClearCommand("clear", "Clear offline player inventory", clear, plugin));
-        api.getCommandManager().addSubCommand(new TeleportHereCommand("tphere", "Teleport offline player to yourself", tphere, plugin));
-        api.getCommandManager().addSubCommand(new KillPlayerCommand("kill", "Kill offline player", kill, plugin));
-        api.getCommandManager().addSubCommand(new HealCommand("heal", "Heal offline player", heal, plugin));
-        api.getCommandManager().addSubCommand(new FeedPlayerCommand("feed", "Feed offline player", feed, plugin));
-        api.getCommandManager().addSubCommand(new EnderChestCommand("enderchest", "Open offline player enderchest", enderchest, new String[]{"ec"}, plugin));
+        api.getCommandManager().addSubCommand(new TeleportCommand("teleport", "Teleport to player", teleport, new String[]{"tp"}));
+        api.getCommandManager().addSubCommand(new CreativeCommand("creative", "Set creative mode for player", creative));
+        api.getCommandManager().addSubCommand(new SurvivalCommand("survival", "Set survival mode for player", survival));
+        api.getCommandManager().addSubCommand(new SpectatorCommand("spectator", "Set spectator mode for player", spectator));
+        api.getCommandManager().addSubCommand(new AdventureCommand("adventure", "Set adventure mode for player", adventure));
+        api.getCommandManager().addSubCommand(new ClearCommand("clear", "Clear offline player inventory", clear));
+        api.getCommandManager().addSubCommand(new TeleportHereCommand("tphere", "Teleport offline player to yourself", tphere));
+        api.getCommandManager().addSubCommand(new KillPlayerCommand("kill", "Kill offline player", kill));
+        api.getCommandManager().addSubCommand(new HealCommand("heal", "Heal offline player", heal));
+        api.getCommandManager().addSubCommand(new FeedPlayerCommand("feed", "Feed offline player", feed));
+        api.getCommandManager().addSubCommand(new EnderChestCommand("enderchest", "Open offline player enderchest", enderchest, new String[]{"ec"}));
         api.getCommandManager().addSubCommand(new HelpCommand("help", "Get command list for plugin", usage));
     }
 

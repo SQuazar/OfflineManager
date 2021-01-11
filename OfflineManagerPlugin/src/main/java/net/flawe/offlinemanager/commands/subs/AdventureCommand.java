@@ -1,6 +1,5 @@
 package net.flawe.offlinemanager.commands.subs;
 
-import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.commands.OMCommand;
 import net.flawe.offlinemanager.events.GameModeChangeEvent;
@@ -12,11 +11,8 @@ import static net.flawe.offlinemanager.util.Messages.*;
 
 public class AdventureCommand extends OMCommand {
 
-    private final OfflineManager plugin;
-
-    public AdventureCommand(String name, String help, String permission, OfflineManager plugin) {
+    public AdventureCommand(String name, String help, String permission) {
         super(name, help, permission);
-        this.plugin = plugin;
     }
 
     @Override
@@ -54,15 +50,14 @@ public class AdventureCommand extends OMCommand {
         }
         IUser user = api.getUser(playerName);
         GameModeChangeEvent event = new GameModeChangeEvent(user, player, GameMode.ADVENTURE);
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            Bukkit.getPluginManager().callEvent(event);
-            if (event.isCancelled())
-                return;
-            user.setGameMode(GameMode.ADVENTURE);
-            player.sendMessage(api.getConfigManager().getMessageString(player, gamemodeChanged)
-                    .replace("%target%", user.getPlayer().getName())
-                    .replace("%player%", player.getName())
-                    .replace("%gamemode%", getName()));
-        });
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        user.setGameMode(GameMode.ADVENTURE);
+        player.sendMessage(api.getConfigManager().getMessageString(player, gamemodeChanged)
+                .replace("%target%", user.getPlayer().getName())
+                .replace("%player%", player.getName())
+                .replace("%gamemode%", getName()));
+
     }
 }

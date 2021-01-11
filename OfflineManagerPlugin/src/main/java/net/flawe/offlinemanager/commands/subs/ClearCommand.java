@@ -1,6 +1,5 @@
 package net.flawe.offlinemanager.commands.subs;
 
-import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.commands.OMCommand;
@@ -9,15 +8,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import static net.flawe.offlinemanager.util.Messages.*;
-import static net.flawe.offlinemanager.util.Messages.playerNotFound;
 
 public class ClearCommand extends OMCommand {
 
-    private final OfflineManager plugin;
-
-    public ClearCommand(String name, String help, String permission, OfflineManager plugin) {
+    public ClearCommand(String name, String help, String permission) {
         super(name, help, permission);
-        this.plugin = plugin;
     }
 
     @Override
@@ -55,15 +50,13 @@ public class ClearCommand extends OMCommand {
         }
         IUser user = api.getUser(playerName);
         ClearOfflineInventoryEvent event = new ClearOfflineInventoryEvent(player, user);
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            Bukkit.getPluginManager().callEvent(event);
-            if (event.isCancelled())
-                return;
-            user.getPlayer().getInventory().clear();
-            user.save(SavePlayerType.INVENTORY);
-            player.sendMessage(api.getConfigManager().getMessageString(player, clearInventory)
-                    .replace("%target%", user.getPlayer().getName())
-                    .replace("%player%", player.getName()));
-        });
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        user.getPlayer().getInventory().clear();
+        user.save(SavePlayerType.INVENTORY);
+        player.sendMessage(api.getConfigManager().getMessageString(player, clearInventory)
+                .replace("%target%", user.getPlayer().getName())
+                .replace("%player%", player.getName()));
     }
 }

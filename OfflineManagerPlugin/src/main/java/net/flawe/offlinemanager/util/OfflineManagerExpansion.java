@@ -4,6 +4,8 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.IUser;
+import net.flawe.offlinemanager.events.LoadPlayerEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -39,6 +41,11 @@ public class OfflineManagerExpansion extends PlaceholderExpansion {
     }
 
     @Override
+    public boolean persist() {
+        return true;
+    }
+
+    @Override
     public String onRequest(OfflinePlayer player, @NotNull String params) {
         if (player == null)
             return null;
@@ -46,6 +53,8 @@ public class OfflineManagerExpansion extends PlaceholderExpansion {
             return null;
         if (!player.isOnline()) {
             IUser user = api.getUser(player.getUniqueId());
+            if (user == null)
+                return null;
             return onPlaceholderRequest(user.getPlayer(), params);
         }
         return onPlaceholderRequest(player.getPlayer(), params);

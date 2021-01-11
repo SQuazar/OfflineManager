@@ -1,23 +1,17 @@
 package net.flawe.offlinemanager.commands.subs;
 
-import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.IUser;
-import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.commands.OMCommand;
 import net.flawe.offlinemanager.events.OfflinePlayerTeleportEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import static net.flawe.offlinemanager.util.Messages.*;
-import static net.flawe.offlinemanager.util.Messages.playerNotFound;
 
 public class TeleportHereCommand extends OMCommand {
 
-    private final OfflineManager plugin;
-
-    public TeleportHereCommand(String name, String help, String permission, OfflineManager plugin) {
+    public TeleportHereCommand(String name, String help, String permission) {
         super(name, help, permission);
-        this.plugin = plugin;
     }
 
     @Override
@@ -55,14 +49,12 @@ public class TeleportHereCommand extends OMCommand {
         }
         IUser user = api.getUser(playerName);
         OfflinePlayerTeleportEvent event = new OfflinePlayerTeleportEvent(player, user, player.getLocation(), user.getLocation());
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            Bukkit.getPluginManager().callEvent(event);
-            if (event.isCancelled())
-                return;
-            user.teleport(player);
-            player.sendMessage(api.getConfigManager().getMessageString(player, teleportHere)
-                    .replace("%target%", user.getPlayer().getName())
-                    .replace("%player%", player.getName()));
-        });
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        user.teleport(player);
+        player.sendMessage(api.getConfigManager().getMessageString(player, teleportHere)
+                .replace("%target%", user.getPlayer().getName())
+                .replace("%player%", player.getName()));
     }
 }

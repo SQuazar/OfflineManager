@@ -1,10 +1,7 @@
 package net.flawe.offlinemanager.commands.subs;
 
-import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.IUser;
-import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.commands.OMCommand;
-import net.flawe.offlinemanager.events.OfflineManagerEvent;
 import net.flawe.offlinemanager.events.OfflinePlayerTeleportEvent;
 import net.flawe.offlinemanager.events.TeleportToOfflinePlayerEvent;
 import org.bukkit.Bukkit;
@@ -14,11 +11,8 @@ import static net.flawe.offlinemanager.util.Messages.*;
 
 public class TeleportCommand extends OMCommand {
 
-    private final OfflineManager plugin;
-
-    public TeleportCommand(String name, String help, String permission, String[] aliases, OfflineManager plugin) {
+    public TeleportCommand(String name, String help, String permission, String[] aliases) {
         super(name, help, permission, aliases);
-        this.plugin = plugin;
     }
 
     @Override
@@ -57,15 +51,13 @@ public class TeleportCommand extends OMCommand {
         IUser user = api.getUser(playerName);
         if (args.length == 2) {
             TeleportToOfflinePlayerEvent event = new TeleportToOfflinePlayerEvent(player, user, player.getLocation(), user.getLocation());
-            Bukkit.getScheduler().runTask(plugin, () -> {
-                Bukkit.getPluginManager().callEvent(event);
-                if (event.isCancelled())
-                    return;
-                player.teleport(user.getLocation());
-                player.sendMessage(api.getConfigManager().getMessageString(player, teleportSuccess)
-                        .replace("%player%", player.getName())
-                        .replace("%target%", playerName));
-            });
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled())
+                return;
+            player.teleport(user.getLocation());
+            player.sendMessage(api.getConfigManager().getMessageString(player, teleportSuccess)
+                    .replace("%player%", player.getName())
+                    .replace("%target%", playerName));
             return;
         }
         String toPlayer = args[2];
@@ -73,15 +65,13 @@ public class TeleportCommand extends OMCommand {
         OfflinePlayerTeleportEvent event;
         if (to != null && to.isOnline()) {
             event = new OfflinePlayerTeleportEvent(player, user, to.getLocation(), user.getLocation());
-            Bukkit.getScheduler().runTask(plugin, () -> {
-                if (event.isCancelled())
-                    return;
-                user.teleport(to.getLocation());
-                player.sendMessage(api.getConfigManager().getMessageString(player, teleportAnother)
-                        .replace("%target%", user.getPlayer().getName())
-                        .replace("%to%", to.getName())
-                        .replace("%player%", player.getName()));
-            });
+            if (event.isCancelled())
+                return;
+            user.teleport(to.getLocation());
+            player.sendMessage(api.getConfigManager().getMessageString(player, teleportAnother)
+                    .replace("%target%", user.getPlayer().getName())
+                    .replace("%to%", to.getName())
+                    .replace("%player%", player.getName()));
             return;
         }
         if (!api.getStorage().hasPlayer(toPlayer)) {
@@ -92,15 +82,13 @@ public class TeleportCommand extends OMCommand {
         }
         IUser toUser = api.getUser(toPlayer);
         event = new OfflinePlayerTeleportEvent(player, user, toUser.getLocation(), user.getLocation());
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            Bukkit.getPluginManager().callEvent(event);
-            if (event.isCancelled())
-                return;
-            user.teleport(toUser.getLocation());
-            player.sendMessage(api.getConfigManager().getMessageString(player, teleportAnother)
-                    .replace("%target%", user.getPlayer().getName())
-                    .replace("%to%", toUser.getPlayer().getName())
-                    .replace("%player%", player.getName()));
-        });
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        user.teleport(toUser.getLocation());
+        player.sendMessage(api.getConfigManager().getMessageString(player, teleportAnother)
+                .replace("%target%", user.getPlayer().getName())
+                .replace("%to%", toUser.getPlayer().getName())
+                .replace("%player%", player.getName()));
     }
 }

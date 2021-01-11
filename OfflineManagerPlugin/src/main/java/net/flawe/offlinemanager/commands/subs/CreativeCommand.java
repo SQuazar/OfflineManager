@@ -12,11 +12,8 @@ import static net.flawe.offlinemanager.util.Messages.*;
 
 public class CreativeCommand extends OMCommand {
 
-    private final OfflineManager plugin;
-
-    public CreativeCommand(String name, String help, String permission, OfflineManager plugin) {
+    public CreativeCommand(String name, String help, String permission) {
         super(name, help, permission);
-        this.plugin = plugin;
     }
 
     @Override
@@ -54,15 +51,13 @@ public class CreativeCommand extends OMCommand {
         }
         IUser user = api.getUser(playerName);
         GameModeChangeEvent event = new GameModeChangeEvent(user, player, GameMode.CREATIVE);
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            Bukkit.getPluginManager().callEvent(event);
-            if (event.isCancelled())
-                return;
-            user.setGameMode(GameMode.CREATIVE);
-            player.sendMessage(api.getConfigManager().getMessageString(player, gamemodeChanged)
-                    .replace("%target%", user.getPlayer().getName())
-                    .replace("%player%", player.getName())
-                    .replace("%gamemode%", getName()));
-        });
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        user.setGameMode(GameMode.CREATIVE);
+        player.sendMessage(api.getConfigManager().getMessageString(player, gamemodeChanged)
+                .replace("%target%", user.getPlayer().getName())
+                .replace("%player%", player.getName())
+                .replace("%gamemode%", getName()));
     }
 }

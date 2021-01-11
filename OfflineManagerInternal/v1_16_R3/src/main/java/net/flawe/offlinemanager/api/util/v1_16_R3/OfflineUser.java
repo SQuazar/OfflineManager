@@ -27,28 +27,28 @@ import java.util.UUID;
 public class OfflineUser implements IUser {
 
     private final OfflinePlayer offlinePlayer;
-    private final OfflineManager plugin;
     private final Player player;
     private final WorldNBTStorage storage = getWorldServer().getMinecraftServer().getPlayerList().playerFileData;
     private final UUID uuid;
-
-    private GameMode gameMode;
 
     public OfflineUser(OfflineManager plugin, String name) {
         this(plugin, Bukkit.getOfflinePlayer(name));
     }
 
     public OfflineUser(OfflineManager plugin, UUID uuid) {
-        this(plugin ,Bukkit.getOfflinePlayer(uuid));
+        this(plugin, Bukkit.getOfflinePlayer(uuid));
     }
 
     public OfflineUser(OfflineManager plugin, OfflinePlayer offlinePlayer) {
         this.offlinePlayer = offlinePlayer;
-        this.plugin = plugin;
         this.player = getEntityPlayer().getBukkitEntity().getPlayer();
         if (player != null) {
             LoadPlayerEvent event = new LoadPlayerEvent(player);
-            Bukkit.getScheduler().runTask(plugin, () -> Bukkit.getPluginManager().callEvent(event));
+            try {
+                Bukkit.getPluginManager().callEvent(event);
+            } catch (IllegalStateException e) {
+                Bukkit.getScheduler().runTask(plugin, () -> Bukkit.getPluginManager().callEvent(event));
+            }
             player.loadData();
         }
         this.uuid = offlinePlayer.getUniqueId();
@@ -115,7 +115,7 @@ public class OfflineUser implements IUser {
 
     @Override
     public GameMode getGameMode() {
-        return gameMode == null ? player.getGameMode() : gameMode;
+        return player.getGameMode();
     }
 
     @Override
@@ -169,12 +169,10 @@ public class OfflineUser implements IUser {
     @Override
     public void save(SavePlayerType type) {
         SavePlayerEvent event = new SavePlayerEvent(player, type);
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            Bukkit.getPluginManager().callEvent(event);
-            if (event.isCancelled())
-                return;
-            player.saveData();
-        });
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        player.saveData();
     }
 
     private void tagSave(NBTTagCompound tag, SavePlayerType type) {
@@ -182,12 +180,10 @@ public class OfflineUser implements IUser {
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            try (FileOutputStream stream = new FileOutputStream(new File(storage.getPlayerDir(), uuid + ".dat"))) {
-                NBTCompressedStreamTools.a(tag, stream);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        try (FileOutputStream stream = new FileOutputStream(new File(storage.getPlayerDir(), uuid + ".dat"))) {
+            NBTCompressedStreamTools.a(tag, stream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

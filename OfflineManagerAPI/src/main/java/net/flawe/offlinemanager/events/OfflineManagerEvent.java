@@ -8,6 +8,14 @@ public class OfflineManagerEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
+    public OfflineManagerEvent(boolean async) {
+        super(async);
+    }
+
+    public OfflineManagerEvent() {
+
+    }
+
     @NotNull
     @Override
     public HandlerList getHandlers() {
@@ -17,4 +25,5 @@ public class OfflineManagerEvent extends Event {
     public static HandlerList getHandlerList() {
         return HANDLERS;
     }
+
 }

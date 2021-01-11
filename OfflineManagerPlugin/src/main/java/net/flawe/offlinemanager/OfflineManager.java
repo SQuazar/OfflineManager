@@ -60,7 +60,7 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
     private void initCommands() {
         PluginCommand command = Bukkit.getPluginCommand("offlinemanager");
         if (command != null)
-            command.setExecutor(new ManagerCommand(this));
+            command.setExecutor(new ManagerCommand());
     }
 
     public static OfflineManagerAPI getApi() {

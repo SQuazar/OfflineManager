@@ -1,6 +1,5 @@
 package net.flawe.offlinemanager.commands.subs;
 
-import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.commands.OMCommand;
@@ -13,11 +12,8 @@ import static net.flawe.offlinemanager.util.Messages.*;
 
 public class KillPlayerCommand extends OMCommand {
 
-    private final OfflineManager plugin;
-
-    public KillPlayerCommand(String name, String help, String permission, OfflineManager plugin) {
+    public KillPlayerCommand(String name, String help, String permission) {
         super(name, help, permission);
-        this.plugin = plugin;
     }
 
     @Override
@@ -55,28 +51,26 @@ public class KillPlayerCommand extends OMCommand {
         }
         IUser user = api.getUser(playerName);
         KillOfflinePlayerEvent event = new KillOfflinePlayerEvent(player, user);
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            Bukkit.getPluginManager().callEvent(event);
-            if (event.isCancelled())
-                return;
-            user.kill();
-            if (api.getConfigManager().getCommandKillConfig().dropItems()) {
-                for (ItemStack stack : user.getPlayer().getInventory()) {
-                    if (stack == null)
-                        continue;
-                    if (user.getLocation().getWorld() == null)
-                        break;
-                    user.getLocation().getWorld().dropItemNaturally(user.getLocation(), stack);
-                }
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        user.kill();
+        if (api.getConfigManager().getCommandKillConfig().dropItems()) {
+            for (ItemStack stack : user.getPlayer().getInventory()) {
+                if (stack == null)
+                    continue;
+                if (user.getLocation().getWorld() == null)
+                    break;
+                user.getLocation().getWorld().dropItemNaturally(user.getLocation(), stack);
             }
-            if (api.getConfigManager().getCommandKillConfig().clearItems()) {
-                user.getPlayer().getInventory().clear();
-                user.save(SavePlayerType.INVENTORY);
-            }
-            user.save(SavePlayerType.HEALTHS);
-            player.sendMessage(api.getConfigManager().getMessageString(player, killPlayer)
-                    .replace("%target%", user.getPlayer().getName())
-                    .replace("%player%", player.getName()));
-        });
+        }
+        if (api.getConfigManager().getCommandKillConfig().clearItems()) {
+            user.getPlayer().getInventory().clear();
+            user.save(SavePlayerType.INVENTORY);
+        }
+        user.save(SavePlayerType.HEALTHS);
+        player.sendMessage(api.getConfigManager().getMessageString(player, killPlayer)
+                .replace("%target%", user.getPlayer().getName())
+                .replace("%player%", player.getName()));
     }
 }

@@ -1,6 +1,5 @@
 package net.flawe.offlinemanager.commands.subs;
 
-import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.api.enums.ActiveType;
 import net.flawe.offlinemanager.commands.OMCommand;
@@ -15,11 +14,8 @@ import static net.flawe.offlinemanager.util.Permissions.*;
 
 public class InventoryCommand extends OMCommand {
 
-    private final OfflineManager plugin;
-
-    public InventoryCommand(String name, String help, String permission, OfflineManager plugin) {
+    public InventoryCommand(String name, String help, String permission) {
         super(name, help, permission);
-        this.plugin = plugin;
     }
 
     @Override
@@ -67,13 +63,11 @@ public class InventoryCommand extends OMCommand {
             OfflineInventoryHolder holder = new OfflineInventoryHolder(user, player, api.getConfigManager().getInventoryConfig().getName());
             event.setInventory(holder.getInventory());
             event.setInventoryType(holder.getInventoryType());
-            Bukkit.getScheduler().runTask(plugin, () -> {
-                Bukkit.getPluginManager().callEvent(event);
-                if (event.isCancelled())
-                    return;
-                player.openInventory(holder.getInventory());
-                api.getSession().add(player.getUniqueId(), user.getUUID(), ActiveType.INVENTORY);
-            });
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled())
+                return;
+            player.openInventory(holder.getInventory());
+            api.getSession().add(player.getUniqueId(), user.getUUID(), ActiveType.INVENTORY);
             return;
         }
         if (args[2].equalsIgnoreCase("armor")) {
@@ -92,13 +86,11 @@ public class InventoryCommand extends OMCommand {
             OfflineArmorInventoryHolder armorInventoryHolder = new OfflineArmorInventoryHolder(user, player, api.getConfigManager().getArmorInventoryConfig().getName());
             event.setInventory(armorInventoryHolder.getInventory());
             event.setInventoryType(armorInventoryHolder.getInventoryType());
-            Bukkit.getScheduler().runTask(plugin, () -> {
-                Bukkit.getPluginManager().callEvent(event);
-                if (event.isCancelled())
-                    return;
-                player.openInventory(armorInventoryHolder.getInventory());
-                api.getSession().add(player.getUniqueId(), user.getUUID(), ActiveType.ARMOR_INVENTORY);
-            });
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled())
+                return;
+            player.openInventory(armorInventoryHolder.getInventory());
+            api.getSession().add(player.getUniqueId(), user.getUUID(), ActiveType.ARMOR_INVENTORY);
         }
     }
 }

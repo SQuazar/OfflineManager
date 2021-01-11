@@ -1,31 +1,18 @@
 package net.flawe.offlinemanager.commands.subs;
 
-import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.IUser;
-import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.commands.OMCommand;
 import net.flawe.offlinemanager.events.GameModeChangeEvent;
-import net.minecraft.server.v1_16_R3.NBTCompressedStreamTools;
-import net.minecraft.server.v1_16_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import static net.flawe.offlinemanager.util.Messages.*;
 
 public class SurvivalCommand extends OMCommand {
 
-    private final OfflineManager plugin;
-
-    public SurvivalCommand(String name, String help, String permission, OfflineManager plugin) {
+    public SurvivalCommand(String name, String help, String permission) {
         super(name, help, permission);
-        this.plugin = plugin;
     }
 
     @Override
@@ -63,15 +50,13 @@ public class SurvivalCommand extends OMCommand {
         }
         IUser user = api.getUser(playerName);
         GameModeChangeEvent event = new GameModeChangeEvent(user, player, GameMode.SURVIVAL);
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            Bukkit.getPluginManager().callEvent(event);
-            if (event.isCancelled())
-                return;
-            user.setGameMode(GameMode.SURVIVAL);
-            player.sendMessage(api.getConfigManager().getMessageString(player, gamemodeChanged)
-                    .replace("%target%", user.getPlayer().getName())
-                    .replace("%player%", player.getName())
-                    .replace("%gamemode%", getName()));
-        });
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        user.setGameMode(GameMode.SURVIVAL);
+        player.sendMessage(api.getConfigManager().getMessageString(player, gamemodeChanged)
+                .replace("%target%", user.getPlayer().getName())
+                .replace("%player%", player.getName())
+                .replace("%gamemode%", getName()));
     }
 }

@@ -11,6 +11,7 @@ public class SavePlayerEvent extends OfflineManagerEvent implements Cancellable 
     private final SavePlayerType saveType;
 
     public SavePlayerEvent(Player player, SavePlayerType type) {
+        super(false);
         this.player = player;
         this.saveType = type;
     }

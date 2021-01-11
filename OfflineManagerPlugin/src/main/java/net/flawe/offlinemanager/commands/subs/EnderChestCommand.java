@@ -1,6 +1,5 @@
 package net.flawe.offlinemanager.commands.subs;
 
-import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.api.enums.ActiveType;
 import net.flawe.offlinemanager.api.enums.InventoryType;
@@ -11,15 +10,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import static net.flawe.offlinemanager.util.Messages.*;
-import static net.flawe.offlinemanager.util.Messages.playerNotFound;
 
 public class EnderChestCommand extends OMCommand {
 
-    private final OfflineManager plugin;
-
-    public EnderChestCommand(String name, String help, String permission, String[] aliases, OfflineManager plugin) {
+    public EnderChestCommand(String name, String help, String permission, String[] aliases) {
         super(name, help, permission, aliases);
-        this.plugin = plugin;
     }
 
     @Override
@@ -63,13 +58,11 @@ public class EnderChestCommand extends OMCommand {
             return;
         }
         OpenOfflineInventoryEvent event = new OpenOfflineInventoryEvent(player, user, InventoryType.ENDER_CHEST);
-        Bukkit.getScheduler().runTask(plugin, () -> {
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled())
                 return;
             OfflineEnderChestHolder holder = new OfflineEnderChestHolder(user);
             player.openInventory(holder.getInventory());
             api.getSession().add(player.getUniqueId(), user.getUUID(), ActiveType.ENDER_CHEST);
-        });
     }
 }

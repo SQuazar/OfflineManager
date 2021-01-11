@@ -1,6 +1,5 @@
 package net.flawe.offlinemanager.commands.subs;
 
-import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.commands.OMCommand;
@@ -12,11 +11,8 @@ import static net.flawe.offlinemanager.util.Messages.*;
 
 public class HealCommand extends OMCommand {
 
-    private final OfflineManager plugin;
-
-    public HealCommand(String name, String help, String permission, OfflineManager plugin) {
+    public HealCommand(String name, String help, String permission) {
         super(name, help, permission);
-        this.plugin = plugin;
     }
 
     @Override
@@ -54,15 +50,13 @@ public class HealCommand extends OMCommand {
         }
         IUser user = api.getUser(playerName);
         HealOfflinePlayerEvent event = new HealOfflinePlayerEvent(player, user);
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            Bukkit.getPluginManager().callEvent(event);
-            if (event.isCancelled())
-                return;
-            user.getPlayer().setHealth(20);
-            user.save(SavePlayerType.HEALTHS);
-            player.sendMessage(api.getConfigManager().getMessageString(player, healPlayer)
-                    .replace("%target%", user.getPlayer().getName())
-                    .replace("%player%", player.getName()));
-        });
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        user.getPlayer().setHealth(20);
+        user.save(SavePlayerType.HEALTHS);
+        player.sendMessage(api.getConfigManager().getMessageString(player, healPlayer)
+                .replace("%target%", user.getPlayer().getName())
+                .replace("%player%", player.getName()));
     }
 }
