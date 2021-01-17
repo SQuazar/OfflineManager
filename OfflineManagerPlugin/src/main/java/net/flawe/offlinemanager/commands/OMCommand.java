@@ -5,12 +5,16 @@ import net.flawe.offlinemanager.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.ICommand;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class OMCommand implements ICommand {
 
     private final String name;
     private final String help;
     private final String permission;
     private final String[] aliases;
+    private final Map<String, String> placeholders = new HashMap<>();
 
     protected final OfflineManagerAPI api = OfflineManager.getApi();
 
@@ -54,5 +58,20 @@ public abstract class OMCommand implements ICommand {
     @Override
     public boolean hasPermission(Player player) {
         return player.hasPermission(permission);
+    }
+
+    @Override
+    public void addPlaceholder(String key, String value) {
+        placeholders.put(key, value);
+    }
+
+    @Override
+    public void removePlaceholder(String key) {
+        placeholders.remove(key);
+    }
+
+    @Override
+    public Map<String, String> getPlaceholders() {
+        return placeholders;
     }
 }

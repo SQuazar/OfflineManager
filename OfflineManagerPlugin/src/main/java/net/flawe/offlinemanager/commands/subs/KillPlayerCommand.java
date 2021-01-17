@@ -4,11 +4,12 @@ import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.commands.OMCommand;
 import net.flawe.offlinemanager.events.KillOfflinePlayerEvent;
+import net.flawe.offlinemanager.util.configuration.PlaceholderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import static net.flawe.offlinemanager.util.Messages.*;
+import static net.flawe.offlinemanager.util.constants.Messages.*;
 
 public class KillPlayerCommand extends OMCommand {
 
@@ -18,35 +19,36 @@ public class KillPlayerCommand extends OMCommand {
 
     @Override
     public void execute(Player player, String[] args) {
+        addPlaceholder("%player%", player.getName());
+        addPlaceholder("%permission%", getPermission());
+        addPlaceholder("%function%", "Kill");
+        String msg;
         if (!api.getConfigManager().getCommandKillConfig().enabled()) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, functionDisabled)
-                    .replace("%function%", "Kill")
-                    .replace("%player%", player.getName()));
+            msg = api.getConfigManager().getMessageString(player, functionDisabled);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!hasPermission(player)) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, permissionDeny)
-                    .replace("%player%", player.getName())
-                    .replace("%permission%", getPermission()));
+            msg = api.getConfigManager().getMessageString(player, permissionDeny);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (args.length == 1) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, enterNickname)
-                    .replace("%player%", player.getName()));
+            msg = api.getConfigManager().getMessageString(player, enterNickname);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         String playerName = args[1];
+        addPlaceholder("%target%", playerName);
         Player t = Bukkit.getPlayerExact(playerName);
         if (t != null && t.isOnline()) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, playerIsOnline)
-                    .replace("%player%", player.getName())
-                    .replace("%target%", playerName));
+            msg = api.getConfigManager().getMessageString(player, playerIsOnline);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!api.getStorage().hasPlayer(playerName)) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, playerNotFound)
-                    .replace("%player%", player.getName())
-                    .replace("%target%", playerName));
+            msg = api.getConfigManager().getMessageString(player, playerNotFound);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         IUser user = api.getUser(playerName);
@@ -69,8 +71,7 @@ public class KillPlayerCommand extends OMCommand {
             user.save(SavePlayerType.INVENTORY);
         }
         user.save(SavePlayerType.HEALTHS);
-        player.sendMessage(api.getConfigManager().getMessageString(player, killPlayer)
-                .replace("%target%", user.getPlayer().getName())
-                .replace("%player%", player.getName()));
+        msg = api.getConfigManager().getMessageString(player, killPlayer);
+        player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
     }
 }

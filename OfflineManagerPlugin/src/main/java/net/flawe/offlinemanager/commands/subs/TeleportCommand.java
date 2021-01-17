@@ -4,10 +4,11 @@ import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.commands.OMCommand;
 import net.flawe.offlinemanager.events.OfflinePlayerTeleportEvent;
 import net.flawe.offlinemanager.events.TeleportToOfflinePlayerEvent;
+import net.flawe.offlinemanager.util.configuration.PlaceholderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import static net.flawe.offlinemanager.util.Messages.*;
+import static net.flawe.offlinemanager.util.constants.Messages.*;
 
 public class TeleportCommand extends OMCommand {
 
@@ -17,35 +18,36 @@ public class TeleportCommand extends OMCommand {
 
     @Override
     public void execute(Player player, String[] args) {
+        addPlaceholder("%player%", player.getName());
+        addPlaceholder("%permission%", getPermission());
+        addPlaceholder("%function%", "Teleport");
+        String msg;
         if (!api.getConfigManager().getCommandTeleportConfig().enabled()) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, functionDisabled)
-                    .replace("%function%", "Teleport")
-                    .replace("%player%", player.getName()));
+            msg = api.getConfigManager().getMessageString(player, functionDisabled);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!hasPermission(player)) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, permissionDeny)
-                    .replace("%player%", player.getName())
-                    .replace("%permission%", getPermission()));
+            msg = api.getConfigManager().getMessageString(player, permissionDeny);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (args.length == 1) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, enterNickname)
-                    .replace("%player%", player.getName()));
+            msg = api.getConfigManager().getMessageString(player, enterNickname);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         String playerName = args[1];
+        addPlaceholder("%target%", playerName);
         Player target = Bukkit.getPlayerExact(playerName);
         if (target != null && target.isOnline()) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, playerIsOnline)
-                    .replace("%player%", player.getName())
-                    .replace("%target%", playerName));
+            msg = api.getConfigManager().getMessageString(player, playerIsOnline);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!api.getStorage().hasPlayer(playerName)) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, playerNotFound)
-                    .replace("%player%", player.getName())
-                    .replace("%target%", playerName));
+            msg = api.getConfigManager().getMessageString(player, playerNotFound);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         IUser user = api.getUser(playerName);
@@ -55,12 +57,12 @@ public class TeleportCommand extends OMCommand {
             if (event.isCancelled())
                 return;
             player.teleport(user.getLocation());
-            player.sendMessage(api.getConfigManager().getMessageString(player, teleportSuccess)
-                    .replace("%player%", player.getName())
-                    .replace("%target%", playerName));
+            msg = api.getConfigManager().getMessageString(player, teleportSuccess);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         String toPlayer = args[2];
+        addPlaceholder("%to%", toPlayer);
         Player to = Bukkit.getPlayerExact(toPlayer);
         OfflinePlayerTeleportEvent event;
         if (to != null && to.isOnline()) {
@@ -68,16 +70,13 @@ public class TeleportCommand extends OMCommand {
             if (event.isCancelled())
                 return;
             user.teleport(to.getLocation());
-            player.sendMessage(api.getConfigManager().getMessageString(player, teleportAnother)
-                    .replace("%target%", user.getPlayer().getName())
-                    .replace("%to%", to.getName())
-                    .replace("%player%", player.getName()));
+            msg = api.getConfigManager().getMessageString(player, teleportAnother);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!api.getStorage().hasPlayer(toPlayer)) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, playerNotFound)
-                    .replace("%player%", player.getName())
-                    .replace("%target%", toPlayer));
+            msg = api.getConfigManager().getMessageString(player, playerNotFound);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         IUser toUser = api.getUser(toPlayer);
@@ -86,9 +85,7 @@ public class TeleportCommand extends OMCommand {
         if (event.isCancelled())
             return;
         user.teleport(toUser.getLocation());
-        player.sendMessage(api.getConfigManager().getMessageString(player, teleportAnother)
-                .replace("%target%", user.getPlayer().getName())
-                .replace("%to%", toUser.getPlayer().getName())
-                .replace("%player%", player.getName()));
+        msg = api.getConfigManager().getMessageString(player, teleportAnother);
+        player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
     }
 }

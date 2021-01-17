@@ -3,11 +3,12 @@ package net.flawe.offlinemanager.commands.subs;
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.commands.OMCommand;
 import net.flawe.offlinemanager.events.GameModeChangeEvent;
+import net.flawe.offlinemanager.util.configuration.PlaceholderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
-import static net.flawe.offlinemanager.util.Messages.*;
+import static net.flawe.offlinemanager.util.constants.Messages.*;
 
 public class AdventureCommand extends OMCommand {
 
@@ -17,35 +18,37 @@ public class AdventureCommand extends OMCommand {
 
     @Override
     public void execute(Player player, String[] args) {
+        addPlaceholder("%function%", "GameMode change");
+        addPlaceholder("%player%", player.getName());
+        addPlaceholder("%permission%", getPermission());
+        addPlaceholder("%gamemode%", getName());
+        String msg;
         if (!api.getConfigManager().getCommandGameModeConfig().enabled()) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, functionDisabled)
-                    .replace("%function%", "GameMode change")
-                    .replace("%player%", player.getName()));
+            msg = api.getConfigManager().getMessageString(player, functionDisabled);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!hasPermission(player)) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, permissionDeny)
-                    .replace("%player%", player.getName())
-                    .replace("%permission%", getPermission()));
+            msg = api.getConfigManager().getMessageString(player, permissionDeny);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (args.length == 1) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, enterNickname)
-                    .replace("%player%", player.getName()));
+            msg = api.getConfigManager().getMessageString(player, enterNickname);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         String playerName = args[1];
+        addPlaceholder("%target%", playerName);
         Player t = Bukkit.getPlayerExact(playerName);
         if (t != null && t.isOnline()) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, playerIsOnline)
-                    .replace("%player%", player.getName())
-                    .replace("%target%", playerName));
+            msg = api.getConfigManager().getMessageString(player, playerIsOnline);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!api.getStorage().hasPlayer(playerName)) {
-            player.sendMessage(api.getConfigManager().getMessageString(player, playerNotFound)
-                    .replace("%player%", player.getName())
-                    .replace("%target%", playerName));
+            msg = api.getConfigManager().getMessageString(player, playerNotFound);
+            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         IUser user = api.getUser(playerName);
@@ -54,10 +57,7 @@ public class AdventureCommand extends OMCommand {
         if (event.isCancelled())
             return;
         user.setGameMode(GameMode.ADVENTURE);
-        player.sendMessage(api.getConfigManager().getMessageString(player, gamemodeChanged)
-                .replace("%target%", user.getPlayer().getName())
-                .replace("%player%", player.getName())
-                .replace("%gamemode%", getName()));
-
+        msg = api.getConfigManager().getMessageString(player, gamemodeChanged);
+        player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
     }
 }

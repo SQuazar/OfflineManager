@@ -17,9 +17,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static net.flawe.offlinemanager.util.Messages.commandNotFound;
-import static net.flawe.offlinemanager.util.Messages.enterSubCommand;
-import static net.flawe.offlinemanager.util.Permissions.*;
+import static net.flawe.offlinemanager.util.constants.Messages.commandNotFound;
+import static net.flawe.offlinemanager.util.constants.Messages.enterSubCommand;
+import static net.flawe.offlinemanager.util.constants.Permissions.*;
 
 public class ManagerCommand implements CommandExecutor, TabCompleter {
 
