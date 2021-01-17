@@ -1,4 +1,4 @@
-package net.flawe.offlinemanager.util;
+package net.flawe.offlinemanager.util.constants;
 
 public class Messages {
     public static final String permissionDeny = "permission-deny";
