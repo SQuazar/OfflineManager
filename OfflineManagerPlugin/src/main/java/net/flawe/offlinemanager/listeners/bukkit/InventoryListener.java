@@ -6,7 +6,6 @@ import net.flawe.offlinemanager.events.CloseOfflineInventoryEvent;
 import net.flawe.offlinemanager.events.OfflineInventoryClickEvent;
 import net.flawe.offlinemanager.events.OfflineInventoryInteractEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
