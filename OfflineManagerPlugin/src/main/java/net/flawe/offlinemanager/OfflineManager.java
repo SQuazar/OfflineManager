@@ -109,6 +109,11 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
     }
 
     @Override
+    public String getVersion() {
+        return this.getDescription().getVersion();
+    }
+
+    @Override
     public boolean papi() {
         return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
     }

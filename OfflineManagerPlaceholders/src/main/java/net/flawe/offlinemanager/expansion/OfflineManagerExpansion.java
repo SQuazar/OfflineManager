@@ -1,7 +1,6 @@
 package net.flawe.offlinemanager.expansion;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.IUser;
 import org.bukkit.Location;
@@ -11,11 +10,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class OfflineManagerExpansion extends PlaceholderExpansion {
 
-    private final OfflineManager plugin;
-    private final OfflineManagerAPI api = OfflineManager.getApi();
+    private final OfflineManagerAPI api;
 
-    public OfflineManagerExpansion(OfflineManager plugin) {
-        this.plugin = plugin;
+    public OfflineManagerExpansion(OfflineManagerAPI api) {
+        this.api = api;
     }
 
     @Override
@@ -30,7 +28,7 @@ public class OfflineManagerExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getVersion() {
-        return plugin.getDescription().getVersion();
+        return api.getVersion();
     }
 
     @Override
