@@ -1,4 +1,4 @@
-package net.flawe.offlinemanager.util;
+package net.flawe.offlinemanager.util.configuration;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.flawe.offlinemanager.OfflineManager;
