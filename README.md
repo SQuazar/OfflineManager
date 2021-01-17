@@ -230,23 +230,23 @@ In order to get information from the player you need, you must:
 </tr>
 <tr>
 <td>permission-deny</td>
-<td>%player%, %permission%</td>
+<td>%player%, %permission%, %function%</td>
 </tr>
 <tr>
 <td>enter-nickname</td>
-<td>%player%</td>
+<td>%player%, %permission%, %function%</td>
 </tr>
 <tr>
 <td>enter-subcommand</td>
-<td>%player%</td>
+<td>%player%, %permission%, %function%</td>
 </tr>
 <tr>
 <td>player-not-found</td>
-<td>%player%, %target%</td>
+<td>%player%, %target%, %permission%, %function%</td>
 </tr>
 <tr>
 <td>player-is-online</td>
-<td>%player%, %target%</td>
+<td>%player%, %target%, %permission%, %function%</td>
 </tr>
 <tr>
 <td>command-not-found</td>
@@ -254,43 +254,43 @@ In order to get information from the player you need, you must:
 </tr>
 <tr>
 <td>function-disabled</td>
-<td>%player%, %function%</td>
+<td>%player%, %function%, %permission%</td>
 </tr>
 <tr>
 <td>already-being-edited</td>
-<td>%player%, %target%</td>
+<td>%player%, %target%, %permission%, %function%</td>
 </tr>
 <tr>
 <td>teleport-success</td>
-<td>%player%, %target%</td>
+<td>%player%, %target%, %permission%, %function%</td>
 </tr>
 <tr>
 <td>teleport-here</td>
-<td>%player%, %target%</td>
+<td>%player%, %target%, %permission%, %function%</td>
 </tr>
 <tr>
 <td>teleport-another</td>
-<td>%player%, %target%, %to%</td>
+<td>%player%, %target%, %to%, %permission%, %function%</td>
 </tr>
 <tr>
 <td>gamemode-changed</td>
-<td>%player%, %target%, %gamemode%</td>
+<td>%player%, %target%, %gamemode%, %permission%, %function%</td>
 </tr>
 <tr>
 <td>heal-player</td>
-<td>%player%, %target%</td>
+<td>%player%, %target%, %permission%, %function%</td>
 </tr>
 <tr>
 <td>kill-player</td>
-<td>%player%, %target%</td>
+<td>%player%, %target%, %permission%, %function%</td>
 </tr>
 <tr>
 <td>feed-player</td>
-<td>%player%, %target%</td>
+<td>%player%, %target%, %permission%, %function%</td>
 </tr>
 <tr>
 <td>clear-inventory</td>
-<td>%player%, %target%</td>
+<td>%player%, %target%, %permission%, %function%</td>
 </tr>
 </table>
 <table>
