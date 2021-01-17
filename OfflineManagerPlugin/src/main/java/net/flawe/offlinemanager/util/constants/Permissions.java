@@ -1,4 +1,4 @@
-package net.flawe.offlinemanager.util;
+package net.flawe.offlinemanager.util.constants;
 
 public class Permissions {
     public static final String usage = "offlinemanager.usage";
