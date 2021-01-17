@@ -32,6 +32,7 @@
         <module>OfflineManagerInternal</module>
         <module>OfflineManagerPlugin</module>
         <module>OfflineManagerAssembly</module>
+        <module>OfflineManagerPlaceholders</module>
     </modules>
 
     <profiles>
