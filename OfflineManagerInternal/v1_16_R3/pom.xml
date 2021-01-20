@@ -29,6 +29,13 @@
             <groupId>net.flawe</groupId>
             <artifactId>OfflineManagerPlugin</artifactId>
             <version>3.0 beta-0.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.flawe</groupId>
+            <artifactId>OfflineManagerAPI</artifactId>
+            <version>3.0 beta-0.3</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
