@@ -11,12 +11,12 @@
 
     <distributionManagement>
         <repository>
-            <id>nexus</id>
-            <url>http://localhost:8081/repository/maven-releases</url>
+            <id>codemc-releases</id>
+            <url>https://repo.codemc.io/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
-            <id>nexus</id>
-            <url>http://localhost:8081/repository/maven-snapshots</url>
+            <id>codemc-snapshots</id>
+            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
