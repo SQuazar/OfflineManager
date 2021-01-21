@@ -69,7 +69,6 @@
                     <filters>
                         <filter>
                             <artifact>*:*</artifact>
-                            <!-- Keep the file clean, don't include every single pom from all modules -->
                             <excludes>
                                 <exclude>META-INF/maven/**</exclude>
                             </excludes>
