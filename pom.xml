@@ -6,7 +6,7 @@
 
     <groupId>net.flawe</groupId>
     <artifactId>OfflineManager</artifactId>
-    <name>OfflineManagerParent</name>
+    <name>OfflineManager</name>
     <url>https://t.me/flawe_sv</url>
     <version>3.0.0-SNAPSHOT</version>
 
@@ -34,18 +34,6 @@
         <module>OfflineManagerPlaceholders</module>
         <module>OfflineManagerAssembly</module>
     </modules>
-
-<!--
-    <distributionManagement>
-        <repository>
-            <id>codemc-releases</id>
-            <url>https://repo.codemc.io/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>codemc-snapshots</id>
-            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>-->
 
     <profiles>
         <profile>
