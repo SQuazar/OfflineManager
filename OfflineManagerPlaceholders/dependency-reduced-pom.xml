@@ -3,7 +3,7 @@
   <parent>
     <artifactId>OfflineManagerParent</artifactId>
     <groupId>net.flawe</groupId>
-    <version>3.0 beta-0.3</version>
+    <version>3.0.3-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>OfflineManagerPlaceholders</artifactId>
@@ -40,6 +40,12 @@
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
       <version>1.16.4-R0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.flawe</groupId>
+      <artifactId>OfflineManagerAPI</artifactId>
+      <version>3.0.3-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

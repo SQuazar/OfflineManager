@@ -14,21 +14,16 @@ public class ClearCommand extends OMCommand {
 
     public ClearCommand(String name, String help, String permission) {
         super(name, help, permission);
+        addPlaceholder("%function%", "Clear");
+        addPlaceholder("%permission%", getPermission());
     }
 
     @Override
     public void execute(Player player, String[] args) {
-        addPlaceholder("%function%", "Clear");
         addPlaceholder("%player%", player.getName());
-        addPlaceholder("%permission%", getPermission());
         String msg;
         if (!api.getConfigManager().getCommandClearInventoryConfig().enabled()) {
             msg = api.getConfigManager().getMessageString(player, functionDisabled);
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
-            return;
-        }
-        if (!hasPermission(player)) {
-            msg = api.getConfigManager().getMessageString(player, permissionDeny);
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }

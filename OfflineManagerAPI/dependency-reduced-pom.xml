@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <artifactId>OfflineManagerParent</artifactId>
+    <artifactId>OfflineManager</artifactId>
     <groupId>net.flawe</groupId>
-    <version>3.0 beta-0.3</version>
+    <version>3.0.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>OfflineManagerAPI</artifactId>
@@ -33,4 +33,14 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
+  <distributionManagement>
+    <repository>
+      <id>nexus</id>
+      <url>http://localhost:8081/repository/maven-releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus</id>
+      <url>http://localhost:8081/repository/maven-snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 </project>

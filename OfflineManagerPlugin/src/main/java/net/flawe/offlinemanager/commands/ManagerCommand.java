@@ -4,6 +4,7 @@ import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.ICommand;
 import net.flawe.offlinemanager.commands.subs.*;
+import net.flawe.offlinemanager.util.configuration.PlaceholderUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,8 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static net.flawe.offlinemanager.util.constants.Messages.commandNotFound;
-import static net.flawe.offlinemanager.util.constants.Messages.enterSubCommand;
+import static net.flawe.offlinemanager.util.constants.Messages.*;
 import static net.flawe.offlinemanager.util.constants.Permissions.*;
 
 public class ManagerCommand implements CommandExecutor, TabCompleter {
@@ -62,8 +62,13 @@ public class ManagerCommand implements CommandExecutor, TabCompleter {
             return true;
         }
         ICommand command = getCommand(args[0]);
-        if (command != null)
-            command.execute(p, args);
+        if (command == null)
+            return true;
+        if (!sender.hasPermission(command.getPermission())) {
+            sender.sendMessage(PlaceholderUtil.fillPlaceholders(api.getConfigManager().getMessageString(p, permissionDeny), command.getPlaceholders()));
+            return true;
+        }
+        command.execute(p, args);
         return true;
     }
 
