@@ -1,16 +1,14 @@
-package net.flawe.offlinemanager.commands.subs;
+package net.flawe.offlinemanager.commands.sub;
 
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.api.enums.ActiveType;
 import net.flawe.offlinemanager.api.enums.InventoryType;
 import net.flawe.offlinemanager.commands.OMCommand;
-import net.flawe.offlinemanager.events.OpenOfflineInventoryEvent;
-import net.flawe.offlinemanager.holders.OfflineEnderChestHolder;
+import net.flawe.offlinemanager.api.events.inventory.OpenOfflineInventoryEvent;
+import net.flawe.offlinemanager.inventory.holders.OfflineEnderChestHolder;
 import net.flawe.offlinemanager.util.configuration.PlaceholderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-
-import static net.flawe.offlinemanager.util.constants.Messages.*;
 
 public class EnderChestCommand extends OMCommand {
 
@@ -24,18 +22,18 @@ public class EnderChestCommand extends OMCommand {
         addPlaceholder("%player%", player.getName());
         addPlaceholder("%permission%", getPermission());
         String msg;
-        if (!api.getConfigManager().getEnderChestConfig().enabled()) {
-            msg = api.getConfigManager().getMessageString(player, functionDisabled);
+        if (!settings.getEnderChestConfiguration().enabled()) {
+            msg = api.getConfigManager().fillMessage(player, messages.getFunctionDisabled());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!hasPermission(player)) {
-            msg = api.getConfigManager().getMessageString(player, permissionDeny);
+            msg = api.getConfigManager().fillMessage(player, messages.getPermissionDeny());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (args.length == 1) {
-            msg = api.getConfigManager().getMessageString(player, enterNickname);
+            msg = api.getConfigManager().fillMessage(player, messages.getEnterNickname());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
@@ -43,18 +41,18 @@ public class EnderChestCommand extends OMCommand {
         addPlaceholder("%target%", playerName);
         Player target = Bukkit.getPlayerExact(playerName);
         if (target != null && target.isOnline()) {
-            msg = api.getConfigManager().getMessageString(player, playerIsOnline);
+            msg = api.getConfigManager().fillMessage(player, messages.getPlayerIsOnline());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!api.getStorage().hasPlayer(playerName)) {
-            msg = api.getConfigManager().getMessageString(player, playerNotFound);
+            msg = api.getConfigManager().fillMessage(player, messages.getPlayerNotFound());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         IUser user = api.getUser(playerName);
         if (api.getSession().containsValue(user.getUUID(), ActiveType.ENDER_CHEST)) {
-            msg = api.getConfigManager().getMessageString(player, alreadyBeingEdited);
+            msg = api.getConfigManager().fillMessage(player, messages.getAlreadyBeingEdited());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
