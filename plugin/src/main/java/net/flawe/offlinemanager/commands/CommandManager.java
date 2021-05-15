@@ -1,7 +1,7 @@
 package net.flawe.offlinemanager.commands;
 
-import net.flawe.offlinemanager.api.ICommand;
-import net.flawe.offlinemanager.api.ICommandManager;
+import net.flawe.offlinemanager.api.command.ICommand;
+import net.flawe.offlinemanager.api.command.ICommandManager;
 
 import java.util.ArrayList;
 import java.util.List;
