@@ -1,6 +1,7 @@
-package net.flawe.offlinemanager.events;
+package net.flawe.offlinemanager.api.events.command;
 
-import net.flawe.offlinemanager.api.ICommand;
+import net.flawe.offlinemanager.api.command.ICommand;
+import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 
