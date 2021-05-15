@@ -1,10 +1,10 @@
 package net.flawe.offlinemanager.listeners.bukkit;
 
-import net.flawe.offlinemanager.api.IOfflineInvHolder;
+import net.flawe.offlinemanager.api.inventory.holder.IOfflineInvHolder;
 import net.flawe.offlinemanager.api.IUser;
-import net.flawe.offlinemanager.events.CloseOfflineInventoryEvent;
-import net.flawe.offlinemanager.events.OfflineInventoryClickEvent;
-import net.flawe.offlinemanager.events.OfflineInventoryInteractEvent;
+import net.flawe.offlinemanager.api.events.inventory.CloseOfflineInventoryEvent;
+import net.flawe.offlinemanager.api.events.inventory.OfflineInventoryClickEvent;
+import net.flawe.offlinemanager.api.events.inventory.OfflineInventoryInteractEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
