@@ -1,7 +1,8 @@
-package net.flawe.offlinemanager.events;
+package net.flawe.offlinemanager.api.events.inventory;
 
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.api.enums.InventoryType;
+import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
