@@ -1,6 +1,6 @@
 package net.flawe.offlinemanager.api.util.v1_16_R3;
 
-import net.flawe.offlinemanager.api.IInventory;
+import net.flawe.offlinemanager.api.inventory.IInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
