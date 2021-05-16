@@ -1,7 +1,7 @@
 package net.flawe.offlinemanager.expansion;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.flawe.offlinemanager.OfflineManagerAPI;
+import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.IUser;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
