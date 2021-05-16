@@ -1,12 +1,11 @@
-package net.flawe.offlinemanager.holders;
+package net.flawe.offlinemanager.inventory.holders;
 
-import net.flawe.offlinemanager.api.IOfflineInvHolder;
+import net.flawe.offlinemanager.api.inventory.holder.IOfflineInvHolder;
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.api.enums.InventoryType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
