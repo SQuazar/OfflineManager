@@ -1,4 +1,4 @@
-package net.flawe.offlinemanager.events;
+package net.flawe.offlinemanager.api.events;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
