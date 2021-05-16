@@ -340,7 +340,7 @@ In order to get information from the player you need, you must:
 package net.example;
 
 import net.flawe.offlinemanager.OfflineManager;
-import net.flawe.offlinemanager.OfflineManagerAPI;
+import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
