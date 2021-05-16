@@ -1,8 +1,8 @@
 package net.flawe.offlinemanager.listeners.bukkit;
 
 import net.flawe.offlinemanager.OfflineManager;
-import net.flawe.offlinemanager.api.ISession;
-import net.flawe.offlinemanager.api.IStorage;
+import net.flawe.offlinemanager.api.memory.ISession;
+import net.flawe.offlinemanager.api.memory.IStorage;
 import net.flawe.offlinemanager.api.enums.ActiveType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
