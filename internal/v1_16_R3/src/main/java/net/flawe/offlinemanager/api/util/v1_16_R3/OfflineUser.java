@@ -1,14 +1,13 @@
 package net.flawe.offlinemanager.api.util.v1_16_R3;
 
 import com.mojang.authlib.GameProfile;
-import net.flawe.offlinemanager.OfflineManager;
-import net.flawe.offlinemanager.api.IArmorInventory;
-import net.flawe.offlinemanager.api.IEnderChest;
-import net.flawe.offlinemanager.api.IInventory;
+import net.flawe.offlinemanager.api.inventory.IArmorInventory;
+import net.flawe.offlinemanager.api.inventory.IEnderChest;
+import net.flawe.offlinemanager.api.inventory.IInventory;
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
-import net.flawe.offlinemanager.events.LoadPlayerEvent;
-import net.flawe.offlinemanager.events.SavePlayerEvent;
+import net.flawe.offlinemanager.api.events.data.LoadPlayerEvent;
+import net.flawe.offlinemanager.api.events.data.SavePlayerEvent;
 import net.minecraft.server.v1_16_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -18,6 +17,7 @@ import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,15 +31,15 @@ public class OfflineUser implements IUser {
     private final WorldNBTStorage storage = getWorldServer().getMinecraftServer().getPlayerList().playerFileData;
     private final UUID uuid;
 
-    public OfflineUser(OfflineManager plugin, String name) {
+    public OfflineUser(Plugin plugin, String name) {
         this(plugin, Bukkit.getOfflinePlayer(name));
     }
 
-    public OfflineUser(OfflineManager plugin, UUID uuid) {
+    public OfflineUser(Plugin plugin, UUID uuid) {
         this(plugin, Bukkit.getOfflinePlayer(uuid));
     }
 
-    public OfflineUser(OfflineManager plugin, OfflinePlayer offlinePlayer) {
+    public OfflineUser(Plugin plugin, OfflinePlayer offlinePlayer) {
         this.offlinePlayer = offlinePlayer;
         this.player = getEntityPlayer().getBukkitEntity().getPlayer();
         if (player != null) {
