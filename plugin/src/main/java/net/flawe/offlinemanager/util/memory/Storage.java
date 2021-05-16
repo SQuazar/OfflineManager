@@ -1,7 +1,7 @@
-package net.flawe.offlinemanager.util;
+package net.flawe.offlinemanager.util.memory;
 
 import net.flawe.offlinemanager.OfflineManager;
-import net.flawe.offlinemanager.api.IStorage;
+import net.flawe.offlinemanager.api.memory.IStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
@@ -67,14 +67,14 @@ public class Storage implements IStorage {
         if (args[1].isEmpty())
             return list.subList(0, Math.min(list.size(), 50));
         list = list.parallelStream().filter(s -> s.toLowerCase().startsWith(args[1].toLowerCase())).collect(Collectors.toList());
-        List<String> nlist = new ArrayList<>();
+        List<String> nList = new ArrayList<>();
         int size = 0;
         for (String s : list) {
             size += s.getBytes().length;
             if (size >= 2097152 - 116507)
                 break;
-            nlist.add(s);
+            nList.add(s);
         }
-        return nlist;
+        return nList;
     }
 }
