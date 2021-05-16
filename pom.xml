@@ -28,11 +28,12 @@
     </properties>
 
     <modules>
-        <module>OfflineManagerAPI</module>
-        <module>OfflineManagerInternal</module>
-        <module>OfflineManagerPlugin</module>
-        <module>OfflineManagerPlaceholders</module>
-        <module>OfflineManagerAssembly</module>
+        <module>api</module>
+        <module>internal</module>
+        <module>plugin</module>
+        <module>placeholders</module>
+        <module>bundle</module>
+        <module>annotations</module>
     </modules>
 
     <distributionManagement>
@@ -57,6 +58,53 @@
             </activation>
         </profile>
     </profiles>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>me.clip</groupId>
+                <artifactId>placeholderapi</artifactId>
+                <version>2.10.9</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.spigotmc</groupId>
+                <artifactId>spigot-api</artifactId>
+                <version>1.16.4-R0.1-SNAPSHOT</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.flawe</groupId>
+                <artifactId>api</artifactId>
+                <version>${project.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.flawe</groupId>
+                <artifactId>plugin</artifactId>
+                <version>${project.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.flawe</groupId>
+                <artifactId>placeholders</artifactId>
+                <version>${project.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.flawe</groupId>
+                <artifactId>annotations</artifactId>
+                <version>${project.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>16.0.1</version>
+                <scope>compile</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
