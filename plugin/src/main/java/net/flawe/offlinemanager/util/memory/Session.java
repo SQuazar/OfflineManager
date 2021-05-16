@@ -1,6 +1,6 @@
-package net.flawe.offlinemanager.util;
+package net.flawe.offlinemanager.util.memory;
 
-import net.flawe.offlinemanager.api.ISession;
+import net.flawe.offlinemanager.api.memory.ISession;
 import net.flawe.offlinemanager.api.enums.ActiveType;
 
 import java.util.*;
