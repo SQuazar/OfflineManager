@@ -1,8 +1,10 @@
 package net.flawe.offlinemanager.commands;
 
 import net.flawe.offlinemanager.OfflineManager;
-import net.flawe.offlinemanager.OfflineManagerAPI;
-import net.flawe.offlinemanager.api.ICommand;
+import net.flawe.offlinemanager.api.OfflineManagerAPI;
+import net.flawe.offlinemanager.api.command.ICommand;
+import net.flawe.offlinemanager.configuration.Messages;
+import net.flawe.offlinemanager.configuration.Settings;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -17,6 +19,8 @@ public abstract class OMCommand implements ICommand {
     private final Map<String, String> placeholders = new HashMap<>();
 
     protected final OfflineManagerAPI api = OfflineManager.getApi();
+    protected final Messages messages = ((OfflineManager) api).getMessages();
+    protected final Settings settings = ((OfflineManager) api).getSettings();
 
     public OMCommand(String name, String help, String permission) {
         this(name, help, permission, new String[0]);
