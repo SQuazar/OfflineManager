@@ -1,17 +1,18 @@
-package net.flawe.offlinemanager.commands.subs;
+package net.flawe.offlinemanager.commands.sub;
 
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.commands.OMCommand;
-import net.flawe.offlinemanager.events.OfflinePlayerTeleportEvent;
+import net.flawe.offlinemanager.api.events.entity.player.GameModeChangeEvent;
 import net.flawe.offlinemanager.util.configuration.PlaceholderUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
-import static net.flawe.offlinemanager.util.constants.Messages.*;
 
-public class TeleportHereCommand extends OMCommand {
 
-    public TeleportHereCommand(String name, String help, String permission) {
+public class SurvivalCommand extends OMCommand {
+
+    public SurvivalCommand(String name, String help, String permission) {
         super(name, help, permission);
     }
 
@@ -19,43 +20,44 @@ public class TeleportHereCommand extends OMCommand {
     public void execute(Player player, String[] args) {
         addPlaceholder("%player%", player.getName());
         addPlaceholder("%permission%", getPermission());
-        addPlaceholder("%function%", "Teleport here");
+        addPlaceholder("%function%", "GameMode change");
+        addPlaceholder("%gamemode%", getName());
         String msg;
-        if (!api.getConfigManager().getCommandTeleportConfig().enabled()) {
-            msg = api.getConfigManager().getMessageString(player, functionDisabled);
+        if (!settings.getChangeGamemodeConfiguration().enabled()) {
+            msg = api.getConfigManager().fillMessage(player, messages.getFunctionDisabled());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!hasPermission(player)) {
-            msg = api.getConfigManager().getMessageString(player, permissionDeny);
+            msg = api.getConfigManager().fillMessage(player, messages.getPermissionDeny());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (args.length == 1) {
-            msg = api.getConfigManager().getMessageString(player, enterNickname);
+            msg = api.getConfigManager().fillMessage(player, messages.getEnterNickname());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         String playerName = args[1];
         addPlaceholder("%target%", playerName);
-        Player target = Bukkit.getPlayerExact(playerName);
-        if (target != null && target.isOnline()) {
-            msg = api.getConfigManager().getMessageString(player, playerIsOnline);
+        Player t = Bukkit.getPlayerExact(playerName);
+        if (t != null && t.isOnline()) {
+            msg = api.getConfigManager().fillMessage(player, messages.getPlayerIsOnline());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!api.getStorage().hasPlayer(playerName)) {
-            msg = api.getConfigManager().getMessageString(player, playerNotFound);
+            msg = api.getConfigManager().fillMessage(player, messages.getPlayerNotFound());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         IUser user = api.getUser(playerName);
-        OfflinePlayerTeleportEvent event = new OfflinePlayerTeleportEvent(player, user, player.getLocation(), user.getLocation());
+        GameModeChangeEvent event = new GameModeChangeEvent(user, player, GameMode.SURVIVAL);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        user.teleport(player);
-        msg = api.getConfigManager().getMessageString(player, teleportHere);
+        user.setGameMode(GameMode.SURVIVAL);
+        msg = api.getConfigManager().fillMessage(player, messages.getGamemodeChanged());
         player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
     }
 }

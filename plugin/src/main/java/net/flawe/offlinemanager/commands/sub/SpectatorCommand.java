@@ -1,14 +1,14 @@
-package net.flawe.offlinemanager.commands.subs;
+package net.flawe.offlinemanager.commands.sub;
 
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.commands.OMCommand;
-import net.flawe.offlinemanager.events.GameModeChangeEvent;
+import net.flawe.offlinemanager.api.events.entity.player.GameModeChangeEvent;
 import net.flawe.offlinemanager.util.configuration.PlaceholderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
-import static net.flawe.offlinemanager.util.constants.Messages.*;
+
 
 public class SpectatorCommand extends OMCommand {
 
@@ -23,18 +23,18 @@ public class SpectatorCommand extends OMCommand {
         addPlaceholder("%function%", "GameMode change");
         addPlaceholder("%gamemode%", getName());
         String msg;
-        if (!api.getConfigManager().getCommandGameModeConfig().enabled()) {
-            msg = api.getConfigManager().getMessageString(player, functionDisabled);
+        if (!settings.getChangeGamemodeConfiguration().enabled()) {
+            msg = api.getConfigManager().fillMessage(player, messages.getFunctionDisabled());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!hasPermission(player)) {
-            msg = api.getConfigManager().getMessageString(player, permissionDeny);
+            msg = api.getConfigManager().fillMessage(player, messages.getPermissionDeny());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (args.length == 1) {
-            msg = api.getConfigManager().getMessageString(player, enterNickname);
+            msg = api.getConfigManager().fillMessage(player, messages.getEnterNickname());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
@@ -42,12 +42,12 @@ public class SpectatorCommand extends OMCommand {
         addPlaceholder("%target%", playerName);
         Player t = Bukkit.getPlayerExact(playerName);
         if (t != null && t.isOnline()) {
-            msg = api.getConfigManager().getMessageString(player, playerIsOnline);
+            msg = api.getConfigManager().fillMessage(player, messages.getPlayerIsOnline());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!api.getStorage().hasPlayer(playerName)) {
-            msg = api.getConfigManager().getMessageString(player, playerNotFound);
+            msg = api.getConfigManager().fillMessage(player, messages.getPlayerNotFound());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
@@ -57,7 +57,7 @@ public class SpectatorCommand extends OMCommand {
         if (event.isCancelled())
             return;
         user.setGameMode(GameMode.SPECTATOR);
-        msg = api.getConfigManager().getMessageString(player, gamemodeChanged);
+        msg = api.getConfigManager().fillMessage(player, messages.getGamemodeChanged());
         player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
     }
 }

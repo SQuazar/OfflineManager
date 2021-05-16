@@ -1,14 +1,14 @@
-package net.flawe.offlinemanager.commands.subs;
+package net.flawe.offlinemanager.commands.sub;
 
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.commands.OMCommand;
-import net.flawe.offlinemanager.events.OfflinePlayerTeleportEvent;
-import net.flawe.offlinemanager.events.TeleportToOfflinePlayerEvent;
+import net.flawe.offlinemanager.api.events.entity.player.OfflinePlayerTeleportEvent;
+import net.flawe.offlinemanager.api.events.entity.player.TeleportToOfflinePlayerEvent;
 import net.flawe.offlinemanager.util.configuration.PlaceholderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import static net.flawe.offlinemanager.util.constants.Messages.*;
+
 
 public class TeleportCommand extends OMCommand {
 
@@ -22,18 +22,18 @@ public class TeleportCommand extends OMCommand {
         addPlaceholder("%permission%", getPermission());
         addPlaceholder("%function%", "Teleport");
         String msg;
-        if (!api.getConfigManager().getCommandTeleportConfig().enabled()) {
-            msg = api.getConfigManager().getMessageString(player, functionDisabled);
+        if (!settings.getTeleportConfiguration().enabled()) {
+            msg = api.getConfigManager().fillMessage(player, messages.getFunctionDisabled());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!hasPermission(player)) {
-            msg = api.getConfigManager().getMessageString(player, permissionDeny);
+            msg = api.getConfigManager().fillMessage(player, messages.getPermissionDeny());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (args.length == 1) {
-            msg = api.getConfigManager().getMessageString(player, enterNickname);
+            msg = api.getConfigManager().fillMessage(player, messages.getEnterNickname());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
@@ -41,12 +41,12 @@ public class TeleportCommand extends OMCommand {
         addPlaceholder("%target%", playerName);
         Player target = Bukkit.getPlayerExact(playerName);
         if (target != null && target.isOnline()) {
-            msg = api.getConfigManager().getMessageString(player, playerIsOnline);
+            msg = api.getConfigManager().fillMessage(player, messages.getPlayerIsOnline());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!api.getStorage().hasPlayer(playerName)) {
-            msg = api.getConfigManager().getMessageString(player, playerNotFound);
+            msg = api.getConfigManager().fillMessage(player, messages.getPlayerNotFound());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
@@ -57,7 +57,7 @@ public class TeleportCommand extends OMCommand {
             if (event.isCancelled())
                 return;
             player.teleport(user.getLocation());
-            msg = api.getConfigManager().getMessageString(player, teleportSuccess);
+            msg = api.getConfigManager().fillMessage(player, messages.getTeleportSuccess());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
@@ -70,12 +70,12 @@ public class TeleportCommand extends OMCommand {
             if (event.isCancelled())
                 return;
             user.teleport(to.getLocation());
-            msg = api.getConfigManager().getMessageString(player, teleportAnother);
+            msg = api.getConfigManager().fillMessage(player, messages.getTeleportAnother());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
         if (!api.getStorage().hasPlayer(toPlayer)) {
-            msg = api.getConfigManager().getMessageString(player, playerNotFound);
+            msg = api.getConfigManager().fillMessage(player, messages.getPlayerNotFound());
             player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
             return;
         }
@@ -85,7 +85,7 @@ public class TeleportCommand extends OMCommand {
         if (event.isCancelled())
             return;
         user.teleport(toUser.getLocation());
-        msg = api.getConfigManager().getMessageString(player, teleportAnother);
+        msg = api.getConfigManager().fillMessage(player, messages.getTeleportAnother());
         player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
     }
 }
