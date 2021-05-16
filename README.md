@@ -5,6 +5,7 @@
 <a href="https://github.com/flaweoff/OfflineManager/releases/latest"><img src="https://img.shields.io/github/downloads-pre/flaweoff/OfflineManager/latest/total" alt="Downloads"></a>
 <a href="https://github.com/flaweoff/OfflineManager/releases/latest"><img src="https://img.shields.io/github/release-date-pre/flaweoff/OfflineManager" alt="Release date"></a>
 <a href="https://discord.gg/VGE2zCcNQD"><img src="https://img.shields.io/discord/794710411060183130" alt="Discord chat"></a>
+JavaDoc - https://ci.codemc.io/job/flaweoff/job/OfflineManager/Javadoc/
 </div>
 
 # Description
