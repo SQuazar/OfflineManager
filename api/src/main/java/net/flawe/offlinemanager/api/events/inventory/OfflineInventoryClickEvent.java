@@ -1,4 +1,4 @@
-package net.flawe.offlinemanager.events;
+package net.flawe.offlinemanager.api.events.inventory;
 
 import net.flawe.offlinemanager.api.IUser;
 import net.flawe.offlinemanager.api.enums.InventoryType;
