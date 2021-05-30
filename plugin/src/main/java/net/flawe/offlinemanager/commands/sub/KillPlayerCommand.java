@@ -1,77 +1,73 @@
 package net.flawe.offlinemanager.commands.sub;
 
-import net.flawe.offlinemanager.api.IUser;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
-import net.flawe.offlinemanager.commands.OMCommand;
 import net.flawe.offlinemanager.api.events.entity.player.KillOfflinePlayerEvent;
-import net.flawe.offlinemanager.util.configuration.PlaceholderUtil;
+import net.flawe.offlinemanager.commands.OMCommand;
+import net.flawe.offlinemanager.placeholders.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
 
 
 public class KillPlayerCommand extends OMCommand {
 
     public KillPlayerCommand(String name, String help, String permission) {
         super(name, help, permission);
+        addPlaceholders
+                (
+                        new Placeholder("%function%", "Kill"),
+                        new Placeholder("%permission%", permission)
+                );
     }
 
     @Override
     public void execute(Player player, String[] args) {
-        addPlaceholder("%player%", player.getName());
-        addPlaceholder("%permission%", getPermission());
-        addPlaceholder("%function%", "Kill");
+        addPlaceholder(new Placeholder("%player%", player.getName()));
         String msg;
         if (!settings.getCommandKillConfiguration().enabled()) {
-            msg = api.getConfigManager().fillMessage(player, messages.getFunctionDisabled());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getFunctionDisabled());
             return;
         }
         if (!hasPermission(player)) {
-            msg = api.getConfigManager().fillMessage(player, messages.getPermissionDeny());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getPermissionDeny());
             return;
         }
         if (args.length == 1) {
-            msg = api.getConfigManager().fillMessage(player, messages.getEnterNickname());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getEnterNickname());
             return;
         }
         String playerName = args[1];
-        addPlaceholder("%target%", playerName);
+        addPlaceholder(new Placeholder("%target%", playerName));
         Player t = Bukkit.getPlayerExact(playerName);
         if (t != null && t.isOnline()) {
-            msg = api.getConfigManager().fillMessage(player, messages.getPlayerIsOnline());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getPlayerIsOnline());
             return;
         }
         if (!api.getStorage().hasPlayer(playerName)) {
-            msg = api.getConfigManager().fillMessage(player, messages.getPlayerNotFound());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getPlayerNotFound());
             return;
         }
-        IUser user = api.getUser(playerName);
-        KillOfflinePlayerEvent event = new KillOfflinePlayerEvent(player, user);
+        IPlayerData playerData = api.getPlayerData(playerName);
+        KillOfflinePlayerEvent event = new KillOfflinePlayerEvent(player, playerData);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        user.kill();
+        playerData.setHealth(0F);
         if (settings.getCommandKillConfiguration().dropItems()) {
-            for (ItemStack stack : user.getPlayer().getInventory()) {
+            for (ItemStack stack : playerData.getInventory()) {
                 if (stack == null)
                     continue;
-                if (user.getLocation().getWorld() == null)
+                if (playerData.getWorld() == null)
                     break;
-                user.getLocation().getWorld().dropItemNaturally(user.getLocation(), stack);
+                playerData.getWorld().dropItemNaturally(playerData.getLocation(), stack);
             }
         }
         if (settings.getCommandKillConfiguration().clearItems()) {
-            user.getPlayer().getInventory().clear();
-            user.save(SavePlayerType.INVENTORY);
+            playerData.getInventory().clear();
+            playerData.save(SavePlayerType.INVENTORY);
         }
-        user.save(SavePlayerType.HEALTHS);
-        msg = api.getConfigManager().fillMessage(player, messages.getKillPlayer());
-        player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+        playerData.save(SavePlayerType.HEALTHS);
+        sendPlayerMessage(player, messages.getKillPlayer());
     }
 }

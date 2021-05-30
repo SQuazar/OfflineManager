@@ -1,63 +1,58 @@
 package net.flawe.offlinemanager.commands.sub;
 
-import net.flawe.offlinemanager.api.IUser;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
-import net.flawe.offlinemanager.commands.OMCommand;
 import net.flawe.offlinemanager.api.events.entity.player.HealOfflinePlayerEvent;
-import net.flawe.offlinemanager.util.configuration.PlaceholderUtil;
+import net.flawe.offlinemanager.commands.OMCommand;
+import net.flawe.offlinemanager.placeholders.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-
 
 
 public class HealCommand extends OMCommand {
 
     public HealCommand(String name, String help, String permission) {
         super(name, help, permission);
+        addPlaceholders
+                (
+                        new Placeholder("%function%", "Heal"),
+                        new Placeholder("%permission%", permission)
+                );
     }
 
     @Override
     public void execute(Player player, String[] args) {
-        addPlaceholder("%function%", "Feed");
-        addPlaceholder("%player%", player.getName());
-        addPlaceholder("%permission%", getPermission());
-        String msg;
+        addPlaceholder(new Placeholder("%player%", player.getName()));
         if (!settings.getHealConfiguration().enabled()) {
-            msg = api.getConfigManager().fillMessage(player, messages.getFunctionDisabled());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getFunctionDisabled());
             return;
         }
         if (!hasPermission(player)) {
-            msg = api.getConfigManager().fillMessage(player, messages.getPermissionDeny());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getPermissionDeny());
             return;
         }
         if (args.length == 1) {
-            msg = api.getConfigManager().fillMessage(player, messages.getEnterNickname());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getEnterNickname());
             return;
         }
         String playerName = args[1];
-        addPlaceholder("%target%", playerName);
+        addPlaceholder(new Placeholder("%target%", playerName));
         Player t = Bukkit.getPlayerExact(playerName);
         if (t != null && t.isOnline()) {
-            msg = api.getConfigManager().fillMessage(player, messages.getPlayerIsOnline());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getPlayerIsOnline());
             return;
         }
         if (!api.getStorage().hasPlayer(playerName)) {
-            msg = api.getConfigManager().fillMessage(player, messages.getPlayerNotFound());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getPlayerNotFound());
             return;
         }
-        IUser user = api.getUser(playerName);
-        HealOfflinePlayerEvent event = new HealOfflinePlayerEvent(player, user);
+        IPlayerData playerData = api.getPlayerData(playerName);
+        HealOfflinePlayerEvent event = new HealOfflinePlayerEvent(player, playerData);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        user.getPlayer().setHealth(20);
-        user.save(SavePlayerType.HEALTHS);
-        msg = api.getConfigManager().fillMessage(player, messages.getHealPlayer());
-        player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+        playerData.setHealth(20);
+        playerData.save(SavePlayerType.HEALTHS);
+        sendPlayerMessage(player, messages.getHealPlayer());
     }
 }

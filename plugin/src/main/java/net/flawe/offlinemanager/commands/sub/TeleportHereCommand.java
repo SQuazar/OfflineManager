@@ -1,61 +1,58 @@
 package net.flawe.offlinemanager.commands.sub;
 
-import net.flawe.offlinemanager.api.IUser;
-import net.flawe.offlinemanager.commands.OMCommand;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.api.events.entity.player.OfflinePlayerTeleportEvent;
-import net.flawe.offlinemanager.util.configuration.PlaceholderUtil;
+import net.flawe.offlinemanager.commands.OMCommand;
+import net.flawe.offlinemanager.placeholders.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-
 
 
 public class TeleportHereCommand extends OMCommand {
 
     public TeleportHereCommand(String name, String help, String permission) {
         super(name, help, permission);
+        addPlaceholders
+                (
+                        new Placeholder("%function%", "Teleport here"),
+                        new Placeholder("%permission%", permission)
+                );
     }
 
     @Override
     public void execute(Player player, String[] args) {
-        addPlaceholder("%player%", player.getName());
-        addPlaceholder("%permission%", getPermission());
-        addPlaceholder("%function%", "Teleport here");
-        String msg;
+        addPlaceholder(new Placeholder("%player%", player.getName()));
         if (!settings.getTeleportConfiguration().enabled()) {
-            msg = api.getConfigManager().fillMessage(player, messages.getFunctionDisabled());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getFunctionDisabled());
             return;
         }
         if (!hasPermission(player)) {
-            msg = api.getConfigManager().fillMessage(player, messages.getPermissionDeny());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getPermissionDeny());
             return;
         }
         if (args.length == 1) {
-            msg = api.getConfigManager().fillMessage(player, messages.getEnterNickname());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getEnterNickname());
             return;
         }
         String playerName = args[1];
-        addPlaceholder("%target%", playerName);
+        addPlaceholder(new Placeholder("%target%", playerName));
         Player target = Bukkit.getPlayerExact(playerName);
         if (target != null && target.isOnline()) {
-            msg = api.getConfigManager().fillMessage(player, messages.getPlayerIsOnline());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getPlayerIsOnline());
             return;
         }
         if (!api.getStorage().hasPlayer(playerName)) {
-            msg = api.getConfigManager().fillMessage(player, messages.getPlayerNotFound());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getPlayerNotFound());
             return;
         }
-        IUser user = api.getUser(playerName);
-        OfflinePlayerTeleportEvent event = new OfflinePlayerTeleportEvent(player, user, player.getLocation(), user.getLocation());
+        IPlayerData playerData = api.getPlayerData(playerName);
+        OfflinePlayerTeleportEvent event = new OfflinePlayerTeleportEvent(player, playerData, player.getLocation(), playerData.getLocation());
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        user.teleport(player);
-        msg = api.getConfigManager().fillMessage(player, messages.getTeleportHere());
-        player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+        playerData.setLocation(player);
+        playerData.save(SavePlayerType.LOCATION);
+        sendPlayerMessage(player, messages.getTeleportHere());
     }
 }

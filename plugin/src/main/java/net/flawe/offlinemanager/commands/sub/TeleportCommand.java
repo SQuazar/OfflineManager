@@ -1,91 +1,87 @@
 package net.flawe.offlinemanager.commands.sub;
 
-import net.flawe.offlinemanager.api.IUser;
-import net.flawe.offlinemanager.commands.OMCommand;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.api.events.entity.player.OfflinePlayerTeleportEvent;
 import net.flawe.offlinemanager.api.events.entity.player.TeleportToOfflinePlayerEvent;
-import net.flawe.offlinemanager.util.configuration.PlaceholderUtil;
+import net.flawe.offlinemanager.commands.OMCommand;
+import net.flawe.offlinemanager.placeholders.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-
 
 
 public class TeleportCommand extends OMCommand {
 
     public TeleportCommand(String name, String help, String permission, String[] aliases) {
         super(name, help, permission, aliases);
+        addPlaceholders
+                (
+                        new Placeholder("%fucntion%", "Teleport"),
+                        new Placeholder("%permission%", permission)
+                );
     }
 
     @Override
     public void execute(Player player, String[] args) {
-        addPlaceholder("%player%", player.getName());
-        addPlaceholder("%permission%", getPermission());
-        addPlaceholder("%function%", "Teleport");
-        String msg;
+        removePlaceholder("%to%");
+        addPlaceholder(new Placeholder("%player%", player.getName()));
         if (!settings.getTeleportConfiguration().enabled()) {
-            msg = api.getConfigManager().fillMessage(player, messages.getFunctionDisabled());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getFunctionDisabled());
             return;
         }
         if (!hasPermission(player)) {
-            msg = api.getConfigManager().fillMessage(player, messages.getPermissionDeny());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getPermissionDeny());
             return;
         }
         if (args.length == 1) {
-            msg = api.getConfigManager().fillMessage(player, messages.getEnterNickname());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getEnterNickname());
             return;
         }
         String playerName = args[1];
         addPlaceholder("%target%", playerName);
         Player target = Bukkit.getPlayerExact(playerName);
         if (target != null && target.isOnline()) {
-            msg = api.getConfigManager().fillMessage(player, messages.getPlayerIsOnline());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getPlayerIsOnline());
             return;
         }
         if (!api.getStorage().hasPlayer(playerName)) {
-            msg = api.getConfigManager().fillMessage(player, messages.getPlayerNotFound());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getPlayerNotFound());
             return;
         }
-        IUser user = api.getUser(playerName);
+        IPlayerData playerData = api.getPlayerData(playerName);
         if (args.length == 2) {
-            TeleportToOfflinePlayerEvent event = new TeleportToOfflinePlayerEvent(player, user, player.getLocation(), user.getLocation());
+            TeleportToOfflinePlayerEvent event = new TeleportToOfflinePlayerEvent(player, playerData, player.getLocation(), playerData.getLocation());
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled())
                 return;
-            player.teleport(user.getLocation());
-            msg = api.getConfigManager().fillMessage(player, messages.getTeleportSuccess());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            player.teleport(playerData.getLocation());
+            sendPlayerMessage(player, messages.getTeleportSuccess());
             return;
         }
         String toPlayer = args[2];
-        addPlaceholder("%to%", toPlayer);
+        addPlaceholder(new Placeholder("%to%", toPlayer));
         Player to = Bukkit.getPlayerExact(toPlayer);
         OfflinePlayerTeleportEvent event;
         if (to != null && to.isOnline()) {
-            event = new OfflinePlayerTeleportEvent(player, user, to.getLocation(), user.getLocation());
+            event = new OfflinePlayerTeleportEvent(player, playerData, to.getLocation(), playerData.getLocation());
             if (event.isCancelled())
                 return;
-            user.teleport(to.getLocation());
-            msg = api.getConfigManager().fillMessage(player, messages.getTeleportAnother());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            playerData.setLocation(to.getLocation());
+            playerData.save(SavePlayerType.LOCATION);
+            sendPlayerMessage(player, messages.getTeleportAnother());
             return;
         }
         if (!api.getStorage().hasPlayer(toPlayer)) {
-            msg = api.getConfigManager().fillMessage(player, messages.getPlayerNotFound());
-            player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+            sendPlayerMessage(player, messages.getPlayerNotFound());
             return;
         }
-        IUser toUser = api.getUser(toPlayer);
-        event = new OfflinePlayerTeleportEvent(player, user, toUser.getLocation(), user.getLocation());
+        IPlayerData targetPlayer = api.getPlayerData(toPlayer);
+        event = new OfflinePlayerTeleportEvent(player, playerData, targetPlayer.getLocation(), playerData.getLocation());
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        user.teleport(toUser.getLocation());
-        msg = api.getConfigManager().fillMessage(player, messages.getTeleportAnother());
-        player.sendMessage(PlaceholderUtil.fillPlaceholders(msg, getPlaceholders()));
+        playerData.setLocation(targetPlayer.getLocation());
+        playerData.save(SavePlayerType.LOCATION);
+        sendPlayerMessage(player, messages.getTeleportAnother());
     }
 }
