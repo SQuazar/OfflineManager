@@ -1,6 +1,7 @@
 package net.flawe.offlinemanager.api.events.inventory;
 
-import net.flawe.offlinemanager.api.IUser;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.InventoryType;
 import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
 import org.bukkit.entity.Player;
@@ -14,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 public class CloseOfflineInventoryEvent extends OfflineManagerEvent {
 
     private final IUser user;
+    private final IPlayerData playerData;
     private final Player player;
     private final Inventory inventory;
     private final InventoryType inventoryType;
@@ -25,9 +27,19 @@ public class CloseOfflineInventoryEvent extends OfflineManagerEvent {
      * @param inventory offline inventory that has been closed
      * @param inventoryType offline inventory type
      */
+    @Deprecated
     public CloseOfflineInventoryEvent(@NotNull Player player, @NotNull IUser user, @NotNull Inventory inventory, @NotNull InventoryType inventoryType) {
         this.user = user;
+        this.playerData = user.getPlayerData();
         this.player = player;
+        this.inventory = inventory;
+        this.inventoryType = inventoryType;
+    }
+
+    public CloseOfflineInventoryEvent(@NotNull Player player, IPlayerData playerData, @NotNull Inventory inventory, @NotNull InventoryType inventoryType) {
+        this.player = player;
+        this.playerData = playerData;
+        this.user = playerData.getUser();
         this.inventory = inventory;
         this.inventoryType = inventoryType;
     }
@@ -45,9 +57,14 @@ public class CloseOfflineInventoryEvent extends OfflineManagerEvent {
      *
      * @return Ohe offline inventory owner
      */
+    @Deprecated
     @NotNull
     public IUser getUser() {
         return user;
+    }
+
+    public IPlayerData getPlayerData() {
+        return playerData;
     }
 
     /**

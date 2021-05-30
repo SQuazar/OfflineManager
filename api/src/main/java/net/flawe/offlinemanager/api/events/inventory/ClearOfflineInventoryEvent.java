@@ -1,6 +1,7 @@
 package net.flawe.offlinemanager.api.events.inventory;
 
-import net.flawe.offlinemanager.api.IUser;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -14,6 +15,7 @@ public class ClearOfflineInventoryEvent extends OfflineManagerEvent implements C
 
     private final Player player;
     private final IUser user;
+    private final IPlayerData playerData;
     private boolean cancelled;
 
     /**
@@ -21,9 +23,17 @@ public class ClearOfflineInventoryEvent extends OfflineManagerEvent implements C
      * @param player who clear inventory
      * @param user who's inventory was cleared
      */
+    @Deprecated
     public ClearOfflineInventoryEvent(@NotNull Player player, @NotNull IUser user) {
         this.player = player;
         this.user = user;
+        this.playerData = user.getPlayerData();
+    }
+
+    public ClearOfflineInventoryEvent(@NotNull Player player, @NotNull IPlayerData playerData) {
+        this.player = player;
+        this.playerData = playerData;
+        this.user = playerData.getUser();
     }
 
     /**
@@ -39,9 +49,15 @@ public class ClearOfflineInventoryEvent extends OfflineManagerEvent implements C
      *
      * @return Player whose inventory was deducted
      */
+    @Deprecated
     @NotNull
     public IUser getUser() {
         return user;
+    }
+
+    @NotNull
+    public IPlayerData getPlayerData() {
+        return playerData;
     }
 
     @Override
