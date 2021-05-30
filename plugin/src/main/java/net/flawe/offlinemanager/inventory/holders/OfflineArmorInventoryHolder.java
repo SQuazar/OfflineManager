@@ -1,8 +1,9 @@
 package net.flawe.offlinemanager.inventory.holders;
 
-import net.flawe.offlinemanager.api.inventory.holder.IOfflineInvHolder;
-import net.flawe.offlinemanager.api.IUser;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.InventoryType;
+import net.flawe.offlinemanager.api.inventory.holder.IOfflineInvHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -14,38 +15,55 @@ public class OfflineArmorInventoryHolder implements IOfflineInvHolder {
     private final IUser user;
     private final Player seen;
     private final String name;
+    private final IPlayerData playerData;
 
-    public OfflineArmorInventoryHolder(IUser user) {
+    @Deprecated
+    public OfflineArmorInventoryHolder(@NotNull IUser user) {
         this(user, null, "ArmorInventory");
     }
 
-    public OfflineArmorInventoryHolder(IUser user, Player seen) {
+    @Deprecated
+    public OfflineArmorInventoryHolder(@NotNull IUser user, @Nullable Player seen) {
         this(user, seen, "ArmorInventory");
     }
 
-    public OfflineArmorInventoryHolder(IUser user, Player seen, String name) {
+    @Deprecated
+    public OfflineArmorInventoryHolder(@NotNull IUser user, @Nullable Player seen, @NotNull String name) {
         this.user = user;
         this.seen = seen;
         this.name = name;
+        this.playerData = user.getPlayerData();
+    }
+
+    public OfflineArmorInventoryHolder(@NotNull IPlayerData playerData, @Nullable Player seen, @NotNull String name) {
+        this.playerData = playerData;
+        this.seen = seen;
+        this.name = name;
+        this.user = playerData.getUser();
     }
 
     @Override
-    public Player getPlayer() {
+    public @NotNull Player getPlayer() {
         return user.getPlayer();
     }
 
+    @Deprecated
     @Override
-    public IUser getUser() {
+    public  @NotNull IUser getUser() {
         return user;
     }
 
+    public @NotNull IPlayerData getPlayerData() {
+        return playerData;
+    }
+
     @Override
-    public String getInventoryName() {
+    public @NotNull String getInventoryName() {
         return name;
     }
 
     @Override
-    public InventoryType getInventoryType() {
+    public @NotNull InventoryType getInventoryType() {
         return InventoryType.ARMOR;
     }
 
@@ -59,11 +77,10 @@ public class OfflineArmorInventoryHolder implements IOfflineInvHolder {
         return seen != null;
     }
 
-    @NotNull
     @Override
-    public Inventory getInventory() {
+    public @NotNull Inventory getInventory() {
         Inventory inventory = Bukkit.createInventory(this, 9, name);
-        inventory.setContents(user.getArmorInventory().getInventory().getContents());
+        inventory.setContents(playerData.getArmorInventory().getInventory().getContents());
         return inventory;
     }
 }

@@ -1,6 +1,7 @@
 package net.flawe.offlinemanager.api.events.entity.player;
 
-import net.flawe.offlinemanager.api.IUser;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -10,13 +11,24 @@ public class OfflinePlayerTeleportEvent extends OfflineManagerEvent implements C
 
     private final Player player;
     private final IUser target;
+    private final IPlayerData playerData;
     private final Location to;
     private final Location from;
     private boolean cancelled;
 
+    @Deprecated
     public OfflinePlayerTeleportEvent(Player player, IUser target, Location to, Location from) {
         this.player = player;
         this.target = target;
+        this.playerData = target.getPlayerData();
+        this.to = to;
+        this.from = from;
+    }
+
+    public OfflinePlayerTeleportEvent(Player player, IPlayerData playerData, Location to, Location from) {
+        this.player = player;
+        this.playerData = playerData;
+        this.target = playerData.getUser();
         this.to = to;
         this.from = from;
     }
@@ -35,6 +47,10 @@ public class OfflinePlayerTeleportEvent extends OfflineManagerEvent implements C
 
     public Location getFrom() {
         return from;
+    }
+
+    public IPlayerData getPlayerData() {
+        return playerData;
     }
 
     @Override
