@@ -1,21 +1,22 @@
-package net.flawe.offlinemanager.api.util.v1_16_R3;
+package net.flawe.offlinemanager.api.util.v1_16_R1;
 
 import com.mojang.authlib.GameProfile;
-import net.flawe.offlinemanager.api.inventory.IArmorInventory;
-import net.flawe.offlinemanager.api.inventory.IEnderChest;
-import net.flawe.offlinemanager.api.inventory.IInventory;
-import net.flawe.offlinemanager.api.IUser;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.api.events.data.LoadPlayerEvent;
 import net.flawe.offlinemanager.api.events.data.SavePlayerEvent;
-import net.minecraft.server.v1_16_R3.*;
+import net.flawe.offlinemanager.api.inventory.IArmorInventory;
+import net.flawe.offlinemanager.api.inventory.IEnderChest;
+import net.flawe.offlinemanager.api.inventory.IInventory;
+import net.minecraft.server.v1_16_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_16_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -26,20 +27,26 @@ import java.util.UUID;
 
 public class OfflineUser implements IUser {
 
+    private final Plugin plugin;
     private final OfflinePlayer offlinePlayer;
     private final Player player;
     private final WorldNBTStorage storage = getWorldServer().getMinecraftServer().getPlayerList().playerFileData;
     private final UUID uuid;
+    private final NBTTagCompound tag;
 
+    @Deprecated
     public OfflineUser(Plugin plugin, String name) {
         this(plugin, Bukkit.getOfflinePlayer(name));
     }
 
+    @Deprecated
     public OfflineUser(Plugin plugin, UUID uuid) {
         this(plugin, Bukkit.getOfflinePlayer(uuid));
     }
 
+    @Deprecated
     public OfflineUser(Plugin plugin, OfflinePlayer offlinePlayer) {
+        this.plugin = plugin;
         this.offlinePlayer = offlinePlayer;
         this.player = getEntityPlayer().getBukkitEntity().getPlayer();
         if (player != null) {
@@ -52,6 +59,18 @@ public class OfflineUser implements IUser {
             player.loadData();
         }
         this.uuid = offlinePlayer.getUniqueId();
+        this.tag = storage.getPlayerData(offlinePlayer.getUniqueId().toString());
+    }
+
+    public OfflineUser(Plugin plugin, UUID uuid, NBTTagCompound tagCompound) {
+        this.plugin = plugin;
+        this.offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+        EntityPlayer entityPlayer = getEntityPlayer();
+        entityPlayer.loadData(tagCompound);
+        entityPlayer.load(tagCompound);
+        this.player = entityPlayer.getBukkitEntity().getPlayer();
+        this.tag = tagCompound;
+        this.uuid = uuid;
     }
 
     private MinecraftServer getMinecraftServer() {
@@ -105,12 +124,12 @@ public class OfflineUser implements IUser {
 
     @Override
     public IEnderChest getEnderChest() {
-        return new OfflineEnderChest(player);
+        return new OfflineEnderChest(player.getEnderChest(), tag);
     }
 
     @Override
     public IArmorInventory getArmorInventory() {
-        return new ArmorInventory(player);
+        return new ArmorInventory(this);
     }
 
     @Override
@@ -173,6 +192,11 @@ public class OfflineUser implements IUser {
         if (event.isCancelled())
             return;
         player.saveData();
+    }
+
+    @Override
+    public IPlayerData getPlayerData() {
+        return new PlayerData(uuid, plugin);
     }
 
     private void tagSave(NBTTagCompound tag, SavePlayerType type) {
