@@ -1,19 +1,27 @@
-package net.flawe.offlinemanager.api.util.v1_16_R3;
+package net.flawe.offlinemanager.api.util.v1_16_R2;
 
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.inventory.IArmorInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class ArmorInventory implements IArmorInventory {
 
-    private final Player player;
+    private final IPlayerData playerData;
+    private final IUser user;
 
-    public ArmorInventory(Player player) {
-        this.player = player;
+    public ArmorInventory(IUser user) {
+        this.user = user;
+        this.playerData = user.getPlayerData();
+    }
+
+    public ArmorInventory(IPlayerData playerData) {
+        this.playerData = playerData;
+        this.user = playerData.getUser();
     }
 
     @Override
@@ -25,10 +33,10 @@ public class ArmorInventory implements IArmorInventory {
                 continue;
             }
             if (i == 4) {
-                inventory.setItem(i, player.getInventory().getItemInOffHand());
+                inventory.setItem(i, playerData.getInventory().getItemInOffHand());
                 continue;
             }
-            inventory.setItem(i, player.getInventory().getArmorContents()[i]);
+            inventory.setItem(i, playerData.getInventory().getArmorContents()[i]);
 
         }
         return inventory;
