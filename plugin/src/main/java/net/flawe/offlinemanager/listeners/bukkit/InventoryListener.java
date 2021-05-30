@@ -1,10 +1,10 @@
 package net.flawe.offlinemanager.listeners.bukkit;
 
-import net.flawe.offlinemanager.api.inventory.holder.IOfflineInvHolder;
-import net.flawe.offlinemanager.api.IUser;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.events.inventory.CloseOfflineInventoryEvent;
 import net.flawe.offlinemanager.api.events.inventory.OfflineInventoryClickEvent;
 import net.flawe.offlinemanager.api.events.inventory.OfflineInventoryInteractEvent;
+import net.flawe.offlinemanager.api.inventory.holder.IOfflineInvHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,8 +22,8 @@ public class InventoryListener implements Listener {
             return;
         if (e.getInventory().getHolder() instanceof IOfflineInvHolder) {
             IOfflineInvHolder holder = (IOfflineInvHolder) e.getInventory().getHolder();
-            IUser user = holder.getUser();
-            CloseOfflineInventoryEvent event = new CloseOfflineInventoryEvent((Player) e.getPlayer(), user, e.getInventory(), holder.getInventoryType());
+            IPlayerData playerData = holder.getPlayerData();
+            CloseOfflineInventoryEvent event = new CloseOfflineInventoryEvent((Player) e.getPlayer(), playerData, e.getInventory(), holder.getInventoryType());
             Bukkit.getPluginManager().callEvent(event);
         }
     }
@@ -33,8 +33,8 @@ public class InventoryListener implements Listener {
         if (e.getClickedInventory() != null)
             if (e.getClickedInventory().getHolder() != null && e.getClickedInventory().getHolder() instanceof IOfflineInvHolder) {
                 IOfflineInvHolder holder = (IOfflineInvHolder) e.getClickedInventory().getHolder();
-                IUser user = holder.getUser();
-                OfflineInventoryClickEvent event = new OfflineInventoryClickEvent((Player) e.getWhoClicked(), user,
+                IPlayerData playerData = holder.getPlayerData();
+                OfflineInventoryClickEvent event = new OfflineInventoryClickEvent((Player) e.getWhoClicked(), playerData,
                         holder.getInventoryType(), e.getInventory(), e.getSlot());
                 Bukkit.getPluginManager().callEvent(event);
                 if (event.isCancelled()) {
@@ -55,7 +55,7 @@ public class InventoryListener implements Listener {
             return;
         if (e.getInventory().getHolder() instanceof IOfflineInvHolder) {
             IOfflineInvHolder holder = (IOfflineInvHolder) e.getInventory().getHolder();
-            OfflineInventoryInteractEvent event = new OfflineInventoryInteractEvent((Player) e.getWhoClicked(), holder.getUser(),
+            OfflineInventoryInteractEvent event = new OfflineInventoryInteractEvent((Player) e.getWhoClicked(), holder.getPlayerData(),
                     holder.getInventoryType(), e.getInventory());
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled())
