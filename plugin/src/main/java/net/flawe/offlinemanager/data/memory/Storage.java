@@ -1,21 +1,36 @@
-package net.flawe.offlinemanager.util.memory;
+package net.flawe.offlinemanager.data.memory;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import net.flawe.offlinemanager.OfflineManager;
+import net.flawe.offlinemanager.api.configuration.CacheConfiguration;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.memory.IStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Storage implements IStorage {
 
-    private static final List<String> players = new ArrayList<>();
+    private final List<String> players = new ArrayList<>();
+    private final Cache<UUID, IPlayerData> playerDataCache;
 
     private final OfflineManager plugin;
 
     public Storage(OfflineManager plugin) {
         this.plugin = plugin;
+        CacheConfiguration cacheConfig = plugin.getSettings().getCacheConfiguration();
+        this.playerDataCache = CacheBuilder.newBuilder()
+                .maximumSize(cacheConfig.getSize() == 0 ? Long.MAX_VALUE : cacheConfig.getSize())
+                .expireAfterWrite(cacheConfig.getLifeTime() == 0 ? Long.MAX_VALUE : cacheConfig.getLifeTime(), TimeUnit.MINUTES)
+                .build();
     }
 
     @Override
@@ -43,6 +58,17 @@ public class Storage implements IStorage {
     @Override
     public void remove(String s) {
         players.remove(s);
+    }
+
+    @Override
+    public void addPlayerDataToCache(@NotNull IPlayerData playerData) {
+        this.playerDataCache.put(playerData.getUUID(), playerData);
+        System.out.println("Added new player data to cache. Now size is " + playerDataCache.size());
+    }
+
+    @Override
+    public @Nullable IPlayerData getPlayerDataFromCache(UUID uuid) {
+        return playerDataCache.getIfPresent(uuid);
     }
 
     @Override
