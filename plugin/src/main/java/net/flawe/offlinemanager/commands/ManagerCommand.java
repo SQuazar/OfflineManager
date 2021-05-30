@@ -3,10 +3,13 @@ package net.flawe.offlinemanager.commands;
 import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.command.ICommand;
+import net.flawe.offlinemanager.api.enums.InventoryType;
+import net.flawe.offlinemanager.api.events.command.CommandEvent;
 import net.flawe.offlinemanager.commands.sub.*;
 import net.flawe.offlinemanager.configuration.Messages;
 import net.flawe.offlinemanager.configuration.Settings;
-import net.flawe.offlinemanager.util.configuration.PlaceholderUtil;
+import net.flawe.offlinemanager.placeholders.PlaceholderUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,8 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static net.flawe.offlinemanager.util.ColorUtils.getFormattedString;
 import static net.flawe.offlinemanager.util.constants.Permissions.*;
-import static net.flawe.offlinemanager.util.ColorUtils.*;
 
 public class ManagerCommand implements CommandExecutor, TabCompleter {
 
@@ -30,21 +33,22 @@ public class ManagerCommand implements CommandExecutor, TabCompleter {
     private final Settings settings = ((OfflineManager) api).getSettings();
 
     public ManagerCommand() {
-        api.getCommandManager().addSubCommand(new InventoryCommand("invsee", "Open player inventory", OFFLINEMANAGER_INVSEE));
         api.getCommandManager().addSubCommand(new ReloadCommand("reload", "Reload plugin configuration", OFFLINEMANAGER_RELOAD));
-//        api.getCommandManager().addSubCommand(new UpdateConfigCommand("update", "Update configuration file", updateConfig));
         api.getCommandManager().addSubCommand(new TeleportCommand("teleport", "Teleport to player", OFFLINEMANAGER_TELEPORT, new String[]{"tp"}));
-        api.getCommandManager().addSubCommand(new CreativeCommand("creative", "Set creative mode for player", OFFLINEMANAGER_CREATIVE));
-        api.getCommandManager().addSubCommand(new SurvivalCommand("survival", "Set survival mode for player", OFFLINEMANAGER_SURVIVAL));
-        api.getCommandManager().addSubCommand(new SpectatorCommand("spectator", "Set spectator mode for player", OFFLINEMANAGER_SPECTATOR));
-        api.getCommandManager().addSubCommand(new AdventureCommand("adventure", "Set adventure mode for player", OFFLINEMANAGER_ADVENTURE));
+        api.getCommandManager().addSubCommand(new GameModeCommand("creative", "Set creative mode for player", OFFLINEMANAGER_CREATIVE));
+        api.getCommandManager().addSubCommand(new GameModeCommand("survival", "Set survival mode for player", OFFLINEMANAGER_SURVIVAL));
+        api.getCommandManager().addSubCommand(new GameModeCommand("spectator", "Set spectator mode for player", OFFLINEMANAGER_SPECTATOR));
+        api.getCommandManager().addSubCommand(new GameModeCommand("adventure", "Set adventure mode for player", OFFLINEMANAGER_ADVENTURE));
         api.getCommandManager().addSubCommand(new ClearCommand("clear", "Clear offline player inventory", OFFLINEMANAGER_CLEAR));
         api.getCommandManager().addSubCommand(new TeleportHereCommand("tphere", "Teleport offline player to yourself", OFFLINEMANAGER_TPHERE));
         api.getCommandManager().addSubCommand(new KillPlayerCommand("kill", "Kill offline player", OFFLINEMANAGER_KILL));
         api.getCommandManager().addSubCommand(new HealCommand("heal", "Heal offline player", OFFLINEMANAGER_HEAL));
         api.getCommandManager().addSubCommand(new FeedPlayerCommand("feed", "Feed offline player", OFFLINEMANAGER_FEED));
-        api.getCommandManager().addSubCommand(new EnderChestCommand("enderchest", "Open offline player enderchest", OFFLINEMANAGER_ENDERCHEST, new String[]{"ec"}));
         api.getCommandManager().addSubCommand(new HelpCommand("help", "Get command list for plugin", OFFLINEMANAGER_USAGE));
+        api.getCommandManager().addSubCommand(new ContainerCommand("invsee", "Open player inventory", OFFLINEMANAGER_INVSEE, InventoryType.DEFAULT, settings.getInventoryConfiguration()));
+        api.getCommandManager().addSubCommand(new ContainerCommand("enderchest", "Open offline player enderchest", OFFLINEMANAGER_ENDERCHEST, new String[]{"ec"},
+                InventoryType.ENDER_CHEST, settings.getEnderChestConfiguration()));
+        api.getCommandManager().addSubCommand(new ContainerCommand("armor", "Open player offline armor inventory", OFFLINEMANAGER_INVSEE_ARMOR, InventoryType.ARMOR, settings.getArmorInventoryConfiguration()));
     }
 
     @Override
@@ -72,6 +76,10 @@ public class ManagerCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(PlaceholderUtil.fillPlaceholders(getFormattedString(messages.getPermissionDeny()), command.getPlaceholders()));
             return true;
         }
+        CommandEvent commandEvent = new CommandEvent(p, command, label);
+        Bukkit.getPluginManager().callEvent(commandEvent);
+        if (commandEvent.isCancelled())
+            return true;
         command.execute(p, args);
         return true;
     }
@@ -106,8 +114,6 @@ public class ManagerCommand implements CommandExecutor, TabCompleter {
                     .collect(Collectors.toList());
         if (args.length == 2 && settings.isPlayerComplete())
             return api.getStorage().getListForComplete(args);
-        if (args.length == 3 && args[0].equalsIgnoreCase("invsee"))
-            return Collections.singletonList("armor");
         return Collections.emptyList();
     }
 }

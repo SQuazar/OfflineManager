@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 
 /**
- * Not supported in beta version
+ * Called when player execute the command
  * @author flaweoff
  */
 public class CommandEvent extends OfflineManagerEvent implements Cancellable {
