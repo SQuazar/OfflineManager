@@ -1,6 +1,11 @@
 package net.flawe.offlinemanager.api.memory;
 
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Used for storing the nodes of players nicknames
@@ -26,6 +31,11 @@ public interface IStorage {
      * @param s Player nickname
      */
     void remove(String s);
+
+    void addPlayerDataToCache(@NotNull IPlayerData playerData);
+
+    @Nullable
+    IPlayerData getPlayerDataFromCache(UUID uuid);
 
     /**
      * Reinit storage
