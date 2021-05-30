@@ -1,11 +1,16 @@
 package net.flawe.offlinemanager.api.util.v1_16_R3;
 
 import net.flawe.offlinemanager.api.data.INMSManager;
-import net.flawe.offlinemanager.api.IUser;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.entity.IUser;
+import net.flawe.offlinemanager.api.util.v1_16_R3.data.OfflineUser;
+import net.flawe.offlinemanager.api.util.v1_16_R3.data.PlayerData;
 import net.minecraft.server.v1_16_R3.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +38,16 @@ public class NMSManager implements INMSManager {
     @Override
     public IUser getUser(UUID uuid) {
         return new OfflineUser(plugin, uuid);
+    }
+
+    @Override
+    public @Nullable IPlayerData getPlayerData(@NotNull UUID uuid) {
+        return new PlayerData(uuid, plugin);
+    }
+
+    @Override
+    public @Nullable IPlayerData getPlayerData(@NotNull String name) {
+        return new PlayerData(name, plugin);
     }
 
 }

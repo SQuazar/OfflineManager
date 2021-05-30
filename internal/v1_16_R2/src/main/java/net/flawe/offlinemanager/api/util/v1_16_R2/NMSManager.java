@@ -1,11 +1,11 @@
-package net.flawe.offlinemanager.api.util.v1_12_R1;
+package net.flawe.offlinemanager.api.util.v1_16_R2;
 
 import net.flawe.offlinemanager.api.data.INMSManager;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
-import net.minecraft.server.v1_12_R1.MinecraftServer;
+import net.minecraft.server.v1_16_R2.MinecraftServer;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R2.CraftServer;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,7 +25,7 @@ public class NMSManager implements INMSManager {
     @Override
     public List<String> getSeenPlayers() {
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
-        return Arrays.asList(server.getWorld().getDataManager().getPlayerFileData().getSeenPlayers());
+        return Arrays.asList(server.worldNBTStorage.getSeenPlayers());
     }
 
     @Override
