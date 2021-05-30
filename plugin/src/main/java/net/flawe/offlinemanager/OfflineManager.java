@@ -1,16 +1,20 @@
 package net.flawe.offlinemanager;
 
 import net.flawe.annotation.ConfigurationLoader;
-import net.flawe.offlinemanager.api.*;
+import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.command.ICommandManager;
 import net.flawe.offlinemanager.api.data.IConfigManager;
 import net.flawe.offlinemanager.api.data.INMSManager;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.memory.ISession;
 import net.flawe.offlinemanager.api.memory.IStorage;
 import net.flawe.offlinemanager.commands.CommandManager;
 import net.flawe.offlinemanager.commands.ManagerCommand;
 import net.flawe.offlinemanager.configuration.Messages;
 import net.flawe.offlinemanager.configuration.Settings;
+import net.flawe.offlinemanager.data.memory.Session;
+import net.flawe.offlinemanager.data.memory.Storage;
 import net.flawe.offlinemanager.expansion.OfflineManagerExpansion;
 import net.flawe.offlinemanager.expansion.PAPIHelper;
 import net.flawe.offlinemanager.listeners.bukkit.InventoryListener;
@@ -18,8 +22,6 @@ import net.flawe.offlinemanager.listeners.bukkit.PlayerListener;
 import net.flawe.offlinemanager.listeners.manager.OfflineInventoryListener;
 import net.flawe.offlinemanager.listeners.manager.OfflinePlayerListener;
 import net.flawe.offlinemanager.util.ClassAccessor;
-import net.flawe.offlinemanager.util.memory.Session;
-import net.flawe.offlinemanager.util.memory.Storage;
 import net.flawe.offlinemanager.util.configuration.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
@@ -148,6 +150,28 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
     @Override
     public IUser getUser(UUID uuid) {
         return nmsManager.getUser(uuid);
+    }
+
+    @Override
+    public IPlayerData getPlayerData(String username) {
+        IPlayerData playerData = storage.getPlayerDataFromCache(Bukkit.getOfflinePlayer(username).getUniqueId());
+        if (playerData == null) {
+            playerData = nmsManager.getPlayerData(username);
+            if (playerData != null)
+                storage.addPlayerDataToCache(playerData);
+        }
+        return playerData;
+    }
+
+    @Override
+    public IPlayerData getPlayerData(UUID uuid) {
+        IPlayerData playerData = storage.getPlayerDataFromCache(uuid);
+        if (playerData == null) {
+            playerData = nmsManager.getPlayerData(uuid);
+            if (playerData != null)
+                storage.addPlayerDataToCache(playerData);
+        }
+        return playerData;
     }
 
     @Override
