@@ -1,4 +1,4 @@
-package net.flawe.offlinemanager.api.util.v1_12_R1;
+package net.flawe.offlinemanager.api.util.v1_16_R3.inventory;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
@@ -51,5 +51,4 @@ public class ArmorInventory implements IArmorInventory {
         stack.setItemMeta(meta);
         return stack;
     }
-
 }
