@@ -1,7 +1,5 @@
 package net.flawe.offlinemanager.api.command;
 
-import net.flawe.offlinemanager.api.command.ICommand;
-
 import java.util.List;
 
 /**
