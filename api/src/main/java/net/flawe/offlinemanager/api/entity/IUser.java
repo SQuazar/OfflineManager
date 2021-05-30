@@ -1,5 +1,6 @@
-package net.flawe.offlinemanager.api;
+package net.flawe.offlinemanager.api.entity;
 
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.api.inventory.IArmorInventory;
 import net.flawe.offlinemanager.api.inventory.IEnderChest;
@@ -16,12 +17,14 @@ import java.util.UUID;
  *
  * @author flawe
  */
+@Deprecated
 public interface IUser {
     /**
      * Player from loaded user
      *
      * @return Player from user
      */
+
     Player getPlayer();
 
     /**
@@ -111,4 +114,11 @@ public interface IUser {
      * @see SavePlayerType
      */
     void save(SavePlayerType type);
+
+    /**
+     * It is recommended to receive via INMSManager
+     * @return Offline player data
+     */
+    @Deprecated
+    IPlayerData getPlayerData();
 }

@@ -1,4 +1,4 @@
-package net.flawe.offlinemanager.api.util.v1_16_R3;
+package net.flawe.offlinemanager.api.util.v1_16_R3.inventory;
 
 import net.flawe.offlinemanager.api.inventory.IInventory;
 import org.bukkit.Bukkit;
