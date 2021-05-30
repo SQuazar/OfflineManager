@@ -21,6 +21,7 @@ public interface IConfigManager {
      * @param s      Message to be filled
      * @return Formatted message with color and PAPI placeholders
      */
+    @Deprecated
     String getMessage(Player player, String s);
 
     /**
