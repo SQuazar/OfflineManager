@@ -4,12 +4,13 @@ import net.flawe.annotation.ConfigurationLoader;
 import net.flawe.annotation.util.Comment;
 import net.flawe.annotation.util.ConfigKey;
 import net.flawe.annotation.util.Indents;
+import net.flawe.offlinemanager.api.configuration.CacheConfiguration;
 import net.flawe.offlinemanager.api.configuration.CommandConfiguration;
 import net.flawe.offlinemanager.api.configuration.Configuration;
 import net.flawe.offlinemanager.api.configuration.ContainerConfiguration;
 import org.bukkit.configuration.file.FileConfiguration;
 
-@Comment({"#OfflineManager 3.0.0-SNAPSHOT", "Created by flawe, LOVEC3327", "Contact https://vk.com/flawe0ff or https://t.me/flawe_sv", "Configuration file"})
+@Comment({"OfflineManager 3.0.0-SNAPSHOT", "Created by flawe, LOVEC3327", "Contact https://vk.com/flawesv or https://t.me/flawe_sv", "Configuration file"})
 public class Settings implements Configuration {
 
     @Indents(1)
@@ -24,6 +25,27 @@ public class Settings implements Configuration {
     private boolean playerComplete = true;
     @ConfigKey("command-complete")
     private boolean commandComplete = true;
+    @Indents(1)
+    @Comment({"Cache configuration", "This cache stores the data of recently used players"})
+    @ConfigKey("cache")
+    private final CacheConfiguration cacheConfiguration = new CacheConfiguration() {
+        @ConfigKey("size")
+        @Comment({"Maximum cache size", "Set 0 if you want unlimited cache"})
+        private int size = 50;
+        @ConfigKey("life-time")
+        @Comment({"Cache node life time in minutes", "Set to 0 if you don't want to delete the cache over time"})
+        private int lifeTime = 0;
+
+        @Override
+        public int getSize() {
+            return size;
+        }
+
+        @Override
+        public int getLifeTime() {
+            return lifeTime;
+        }
+    };
     @Indents(1)
     @ConfigKey("offline-inventory")
     private final ContainerConfiguration inventoryConfiguration = new ContainerConfiguration() {
@@ -276,6 +298,10 @@ public class Settings implements Configuration {
 
     public boolean isCommandComplete() {
         return commandComplete;
+    }
+
+    public CacheConfiguration getCacheConfiguration() {
+        return cacheConfiguration;
     }
 
     public ContainerConfiguration getInventoryConfiguration() {
