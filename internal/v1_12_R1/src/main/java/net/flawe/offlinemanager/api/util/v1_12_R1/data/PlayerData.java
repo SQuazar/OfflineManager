@@ -1,4 +1,4 @@
-package net.flawe.offlinemanager.api.util.v1_16_R3.data;
+package net.flawe.offlinemanager.api.util.v1_12_R1.data;
 
 import com.mojang.authlib.GameProfile;
 import net.flawe.offlinemanager.api.OfflineManagerAPI;
@@ -10,12 +10,12 @@ import net.flawe.offlinemanager.api.events.data.SavePlayerEvent;
 import net.flawe.offlinemanager.api.inventory.AbstractPlayerInventory;
 import net.flawe.offlinemanager.api.inventory.IArmorInventory;
 import net.flawe.offlinemanager.api.inventory.IEnderChest;
-import net.flawe.offlinemanager.api.util.v1_16_R3.inventory.ArmorInventory;
-import net.flawe.offlinemanager.api.util.v1_16_R3.inventory.OfflineEnderChest;
-import net.minecraft.server.v1_16_R3.*;
+import net.flawe.offlinemanager.api.util.v1_12_R1.inventory.ArmorInventory;
+import net.flawe.offlinemanager.api.util.v1_12_R1.inventory.OfflineEnderChest;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftInventoryPlayer;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.Plugin;
 
@@ -32,7 +32,7 @@ public class PlayerData extends AbstractPlayerData {
     private final WorldNBTStorage worldNBTStorage;
     private final NBTTagCompound tag;
     private final File playerDir;
-    private final net.flawe.offlinemanager.api.util.v1_16_R3.inventory.PlayerInventory playerInventory;
+    private final net.flawe.offlinemanager.api.util.v1_12_R1.inventory.PlayerInventory playerInventory;
     private final ArmorInventory armorInventory;
     private final IEnderChest enderChest;
 
@@ -42,7 +42,7 @@ public class PlayerData extends AbstractPlayerData {
     }
 
     public PlayerData(UUID uuid, OfflineManagerAPI api) {
-        this(uuid, new TagCompound(((CraftServer) Bukkit.getServer()).getHandle().playerFileData.getPlayerData(uuid.toString())), api);
+        this(uuid, new TagCompound(((WorldNBTStorage) ((CraftServer) Bukkit.getServer()).getServer().getWorld().getDataManager()).getPlayerData(uuid.toString())), api);
     }
 
     public PlayerData(UUID uuid, TagCompound compound, OfflineManagerAPI api) {
@@ -50,21 +50,21 @@ public class PlayerData extends AbstractPlayerData {
         this.api = api;
         this.uuid = uuid;
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
-        WorldServer worldServer = server.getWorldServer(net.minecraft.server.v1_16_R3.World.OVERWORLD);
+        WorldServer worldServer = server.getWorldServer(0);
         if (worldServer == null)
             throw new NullPointerException("Overworld cannot be null!");
         GameProfile profile = new GameProfile(uuid, Bukkit.getOfflinePlayer(uuid).getName());
         EntityPlayer entityPlayer = new EntityPlayer(server, worldServer, profile, new PlayerInteractManager(worldServer));
-        entityPlayer.load(compound.getTag());
-        entityPlayer.loadData(compound.getTag());
+        entityPlayer.f(compound.getTag());
+        entityPlayer.a(compound.getTag());
         this.name = entityPlayer.getName();
-        this.worldNBTStorage = server.worldNBTStorage;
+        this.worldNBTStorage = (WorldNBTStorage) worldServer.getDataManager();
         this.tag = compound.getTag();
         this.playerDir = worldNBTStorage.getPlayerDir();
         NBTTagList inventoryList = (NBTTagList) tag.get("Inventory");
-        net.minecraft.server.v1_16_R3.PlayerInventory virtual = new net.minecraft.server.v1_16_R3.PlayerInventory(entityPlayer);
+        net.minecraft.server.v1_12_R1.PlayerInventory virtual = new net.minecraft.server.v1_12_R1.PlayerInventory(entityPlayer);
         virtual.b(inventoryList);
-        this.playerInventory = new net.flawe.offlinemanager.api.util.v1_16_R3.inventory.PlayerInventory(new CraftInventoryPlayer(virtual), tag);
+        this.playerInventory = new net.flawe.offlinemanager.api.util.v1_12_R1.inventory.PlayerInventory(new CraftInventoryPlayer(virtual), tag);
         this.armorInventory = new ArmorInventory(this);
         this.enderChest = new OfflineEnderChest(Bukkit.createInventory(null, InventoryType.ENDER_CHEST), tag);
         LoadPlayerEvent event = new LoadPlayerEvent(this);
@@ -116,5 +116,4 @@ public class PlayerData extends AbstractPlayerData {
     public IUser getUser() {
         return new OfflineUser((Plugin) api, uuid, tag);
     }
-
 }

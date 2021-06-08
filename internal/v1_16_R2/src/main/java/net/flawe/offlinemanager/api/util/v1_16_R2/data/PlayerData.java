@@ -1,4 +1,4 @@
-package net.flawe.offlinemanager.api.util.v1_16_R3.data;
+package net.flawe.offlinemanager.api.util.v1_16_R2.data;
 
 import com.mojang.authlib.GameProfile;
 import net.flawe.offlinemanager.api.OfflineManagerAPI;
@@ -10,12 +10,12 @@ import net.flawe.offlinemanager.api.events.data.SavePlayerEvent;
 import net.flawe.offlinemanager.api.inventory.AbstractPlayerInventory;
 import net.flawe.offlinemanager.api.inventory.IArmorInventory;
 import net.flawe.offlinemanager.api.inventory.IEnderChest;
-import net.flawe.offlinemanager.api.util.v1_16_R3.inventory.ArmorInventory;
-import net.flawe.offlinemanager.api.util.v1_16_R3.inventory.OfflineEnderChest;
-import net.minecraft.server.v1_16_R3.*;
+import net.flawe.offlinemanager.api.util.v1_16_R2.inventory.ArmorInventory;
+import net.flawe.offlinemanager.api.util.v1_16_R2.inventory.OfflineEnderChest;
+import net.minecraft.server.v1_16_R2.*;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryPlayer;
+import org.bukkit.craftbukkit.v1_16_R2.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R2.inventory.CraftInventoryPlayer;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.Plugin;
 
@@ -32,7 +32,7 @@ public class PlayerData extends AbstractPlayerData {
     private final WorldNBTStorage worldNBTStorage;
     private final NBTTagCompound tag;
     private final File playerDir;
-    private final net.flawe.offlinemanager.api.util.v1_16_R3.inventory.PlayerInventory playerInventory;
+    private final net.flawe.offlinemanager.api.util.v1_16_R2.inventory.PlayerInventory playerInventory;
     private final ArmorInventory armorInventory;
     private final IEnderChest enderChest;
 
@@ -50,7 +50,7 @@ public class PlayerData extends AbstractPlayerData {
         this.api = api;
         this.uuid = uuid;
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
-        WorldServer worldServer = server.getWorldServer(net.minecraft.server.v1_16_R3.World.OVERWORLD);
+        WorldServer worldServer = server.getWorldServer(net.minecraft.server.v1_16_R2.World.OVERWORLD);
         if (worldServer == null)
             throw new NullPointerException("Overworld cannot be null!");
         GameProfile profile = new GameProfile(uuid, Bukkit.getOfflinePlayer(uuid).getName());
@@ -62,13 +62,14 @@ public class PlayerData extends AbstractPlayerData {
         this.tag = compound.getTag();
         this.playerDir = worldNBTStorage.getPlayerDir();
         NBTTagList inventoryList = (NBTTagList) tag.get("Inventory");
-        net.minecraft.server.v1_16_R3.PlayerInventory virtual = new net.minecraft.server.v1_16_R3.PlayerInventory(entityPlayer);
+        net.minecraft.server.v1_16_R2.PlayerInventory virtual = new net.minecraft.server.v1_16_R2.PlayerInventory(entityPlayer);
         virtual.b(inventoryList);
-        this.playerInventory = new net.flawe.offlinemanager.api.util.v1_16_R3.inventory.PlayerInventory(new CraftInventoryPlayer(virtual), tag);
+        this.playerInventory = new net.flawe.offlinemanager.api.util.v1_16_R2.inventory.PlayerInventory(new CraftInventoryPlayer(virtual), tag);
         this.armorInventory = new ArmorInventory(this);
         this.enderChest = new OfflineEnderChest(Bukkit.createInventory(null, InventoryType.ENDER_CHEST), tag);
         LoadPlayerEvent event = new LoadPlayerEvent(this);
         Bukkit.getPluginManager().callEvent(event);
+
     }
 
     @Override
@@ -96,7 +97,7 @@ public class PlayerData extends AbstractPlayerData {
         SavePlayerEvent event = new SavePlayerEvent(this, type);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) {
-            api.getStorage().addPlayerDataToCache(new PlayerData(uuid, api));
+            api.getStorage().removePlayerDataFromCache(uuid);
             return;
         }
         try {
@@ -116,5 +117,4 @@ public class PlayerData extends AbstractPlayerData {
     public IUser getUser() {
         return new OfflineUser((Plugin) api, uuid, tag);
     }
-
 }
