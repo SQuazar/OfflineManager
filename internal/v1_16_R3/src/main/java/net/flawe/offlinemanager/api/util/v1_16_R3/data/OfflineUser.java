@@ -1,6 +1,7 @@
 package net.flawe.offlinemanager.api.util.v1_16_R3.data;
 
 import com.mojang.authlib.GameProfile;
+import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
@@ -199,7 +200,7 @@ public class OfflineUser implements IUser {
 
     @Override
     public IPlayerData getPlayerData() {
-        return new PlayerData(uuid, plugin);
+        return new PlayerData(uuid, (OfflineManagerAPI) plugin);
     }
 
     private void tagSave(NBTTagCompound tag, SavePlayerType type) {
