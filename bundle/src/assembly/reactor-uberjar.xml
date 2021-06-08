@@ -11,11 +11,13 @@
     </formats>
 
     <includeBaseDirectory>false</includeBaseDirectory>
-
     <moduleSets>
         <moduleSet>
 
             <useAllReactorProjects>true</useAllReactorProjects>
+            <excludes>
+                <exclude>net.flawe.offlinemanager.menus</exclude>
+            </excludes>
 
             <binaries>
                 <outputDirectory>/</outputDirectory>
