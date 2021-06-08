@@ -12,7 +12,6 @@ import net.flawe.offlinemanager.api.events.inventory.OfflineInventoryInteractEve
 import net.flawe.offlinemanager.api.events.inventory.OpenOfflineInventoryEvent;
 import net.flawe.offlinemanager.configuration.Settings;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -37,11 +36,8 @@ public class OfflineInventoryListener implements Listener {
                     break;
                 }
                 ItemStack stack;
-                playerData.getInventory().setItem(0, new ItemStack(Material.DIAMOND));
                 for (int i = 0; i < 36; i++) {
                     stack = e.getInventory().getItem(i);
-                    if (stack == null)
-                        continue;
                     playerData.getInventory().setItem(i, stack);
                 }
                 playerData.save(SavePlayerType.INVENTORY);
