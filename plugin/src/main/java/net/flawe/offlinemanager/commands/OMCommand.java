@@ -8,7 +8,6 @@ import net.flawe.offlinemanager.configuration.Messages;
 import net.flawe.offlinemanager.configuration.Settings;
 import net.flawe.offlinemanager.placeholders.Placeholder;
 import net.flawe.offlinemanager.placeholders.PlaceholderUtil;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.*;

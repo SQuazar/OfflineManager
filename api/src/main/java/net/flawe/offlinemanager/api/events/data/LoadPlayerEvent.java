@@ -3,7 +3,6 @@ package net.flawe.offlinemanager.api.events.data;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
