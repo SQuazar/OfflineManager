@@ -10,7 +10,7 @@ import net.flawe.offlinemanager.api.configuration.Configuration;
 import net.flawe.offlinemanager.api.configuration.ContainerConfiguration;
 import org.bukkit.configuration.file.FileConfiguration;
 
-@Comment({"OfflineManager 3.0.0-SNAPSHOT", "Created by flawe, LOVEC3327", "Contact https://vk.com/flawesv or https://t.me/flawe_sv", "Configuration file"})
+@Comment({"OfflineManager 3.0.1-SNAPSHOT", "Created by flawe, LOVEC3327", "Contact https://vk.com/flawesv or https://t.me/flawe_sv", "Configuration file"})
 public class Settings implements Configuration {
 
     @Indents(1)
@@ -18,11 +18,17 @@ public class Settings implements Configuration {
     @ConfigKey("only-api")
     private boolean onlyApi = false;
     @Indents(1)
+    @Comment("When the player is saved, it will write about it to the console")
+    @ConfigKey("save-player-notification")
+    private boolean savePlayerNotify = false;
+    @Indents(1)
     @ConfigKey("placeholders")
     private boolean placeholders = true;
     @Indents(1)
+    @Comment("Tab-complete by players")
     @ConfigKey("player-complete")
     private boolean playerComplete = true;
+    @Comment("Tab-complete by plugin commands")
     @ConfigKey("command-complete")
     private boolean commandComplete = true;
     @Indents(1)
@@ -32,19 +38,21 @@ public class Settings implements Configuration {
         @ConfigKey("size")
         @Comment({"Maximum cache size", "Set 0 if you want unlimited cache"})
         private int size = 50;
+/*
         @ConfigKey("life-time")
         @Comment({"Cache node life time in minutes", "Set to 0 if you don't want to delete the cache over time"})
         private int lifeTime = 0;
+*/
 
         @Override
         public int getSize() {
             return size;
         }
 
-        @Override
+/*        @Override
         public int getLifeTime() {
             return lifeTime;
-        }
+        }*/
     };
     @Indents(1)
     @ConfigKey("offline-inventory")
@@ -286,6 +294,10 @@ public class Settings implements Configuration {
 
     public boolean isOnlyApi() {
         return onlyApi;
+    }
+
+    public boolean savePlayerNotify() {
+        return savePlayerNotify;
     }
 
     public boolean placeholders() {
