@@ -1,6 +1,7 @@
-package net.flawe.offlinemanager.api.util.v1_16_R1;
+package net.flawe.offlinemanager.api.util.v1_12_R1.data;
 
 import com.mojang.authlib.GameProfile;
+import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
@@ -9,14 +10,12 @@ import net.flawe.offlinemanager.api.events.data.SavePlayerEvent;
 import net.flawe.offlinemanager.api.inventory.IArmorInventory;
 import net.flawe.offlinemanager.api.inventory.IEnderChest;
 import net.flawe.offlinemanager.api.inventory.IInventory;
-import net.minecraft.server.v1_16_R1.*;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.v1_16_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_16_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R1.entity.CraftPlayer;
+import net.flawe.offlinemanager.api.util.v1_12_R1.inventory.OfflineInventory;
+import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.World;
+import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -25,14 +24,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
+@Deprecated
 public class OfflineUser implements IUser {
 
     private final Plugin plugin;
     private final OfflinePlayer offlinePlayer;
     private final Player player;
-    private final WorldNBTStorage storage = getWorldServer().getMinecraftServer().getPlayerList().playerFileData;
+    private final NBTTagCompound nbtTagCompound;
     private final UUID uuid;
-    private final NBTTagCompound tag;
 
     @Deprecated
     public OfflineUser(Plugin plugin, String name) {
@@ -59,17 +58,16 @@ public class OfflineUser implements IUser {
             player.loadData();
         }
         this.uuid = offlinePlayer.getUniqueId();
-        this.tag = storage.getPlayerData(offlinePlayer.getUniqueId().toString());
+        nbtTagCompound = ((ServerNBTManager) getMinecraftServer().getWorld().getDataManager()).getPlayerData(uuid.toString());
     }
 
     public OfflineUser(Plugin plugin, UUID uuid, NBTTagCompound tagCompound) {
+        EntityPlayer entityPlayer = getEntityPlayer();
+        entityPlayer.a(tagCompound);
         this.plugin = plugin;
         this.offlinePlayer = Bukkit.getOfflinePlayer(uuid);
-        EntityPlayer entityPlayer = getEntityPlayer();
-        entityPlayer.loadData(tagCompound);
-        entityPlayer.load(tagCompound);
         this.player = entityPlayer.getBukkitEntity().getPlayer();
-        this.tag = tagCompound;
+        this.nbtTagCompound = tagCompound;
         this.uuid = uuid;
     }
 
@@ -83,7 +81,7 @@ public class OfflineUser implements IUser {
     }
 
     private WorldServer getWorldServer() {
-        return getMinecraftServer().getWorldServer(World.OVERWORLD);
+        return getMinecraftServer().getWorldServer(0);
     }
 
     @Override
@@ -103,17 +101,16 @@ public class OfflineUser implements IUser {
 
     @Override
     public Location getLocation() {
-        NBTTagCompound tag = storage.getPlayerData(offlinePlayer.getUniqueId().toString());
-        NBTTagList pos = (NBTTagList) tag.get("Pos");
-        NBTTagList rotation = (NBTTagList) tag.get("Rotation");
+        NBTTagList pos = (NBTTagList) nbtTagCompound.get("Pos");
+        NBTTagList rotation = (NBTTagList) nbtTagCompound.get("Rotation");
         if (pos == null || rotation == null)
             return player.getLocation();
-        double x = pos.h(0);
-        double y = pos.h(1);
-        double z = pos.h(2);
-        float yaw = rotation.i(0);
-        float pitch = rotation.i(1);
-        org.bukkit.World world = Bukkit.getWorld(new UUID(tag.getLong("WorldUUIDMost"), tag.getLong("WorldUUIDLeast")));
+        double x = pos.f(0);
+        double y = pos.f(1);
+        double z = pos.f(2);
+        float yaw = rotation.g(0);
+        float pitch = rotation.g(1);
+        World world = Bukkit.getWorld(new UUID(nbtTagCompound.getLong("WorldUUIDMost"), nbtTagCompound.getLong("WorldUUIDLeast")));
         return new Location(world, x, y, z, yaw, pitch);
     }
 
@@ -124,12 +121,13 @@ public class OfflineUser implements IUser {
 
     @Override
     public IEnderChest getEnderChest() {
-        return new OfflineEnderChest(player.getEnderChest(), tag);
+//        return new OfflineEnderChest(player);
+        return null;
     }
 
     @Override
     public IArmorInventory getArmorInventory() {
-        return new ArmorInventory(this);
+        return null;
     }
 
     @Override
@@ -145,30 +143,26 @@ public class OfflineUser implements IUser {
     @Override
     public void setGameMode(GameMode gameMode) {
         int value = gameMode.getValue();
-        NBTTagCompound tag = storage.getPlayerData(uuid.toString());
-        tag.setInt("playerGameType", value);
-        tagSave(tag, SavePlayerType.GAMEMODE);
+        nbtTagCompound.setInt("playerGameType", value);
+        tagSave(nbtTagCompound, SavePlayerType.GAMEMODE);
     }
 
     @Override
     public void teleport(Location location) {
-        NBTTagCompound tag = storage.getPlayerData(uuid.toString());
-        if (tag == null)
+        if (nbtTagCompound == null)
             return;
         NBTTagList pos = new NBTTagList();
         NBTTagList rotation = new NBTTagList();
-        pos.add(0, NBTTagDouble.a(location.getX()));
-        pos.add(1, NBTTagDouble.a(location.getY()));
-        pos.add(2, NBTTagDouble.a(location.getZ()));
-        rotation.add(0, NBTTagFloat.a(location.getYaw()));
-        rotation.add(1, NBTTagFloat.a(location.getPitch()));
-        tag.set("Pos", pos);
-        tag.set("Rotation", rotation);
-        tag.setLong("WorldUUIDMost", location.getWorld().getUID().getMostSignificantBits());
-        tag.setLong("WorldUUIDLeast", location.getWorld().getUID().getLeastSignificantBits());
-        WorldServer w = ((CraftWorld) location.getWorld()).getHandle();
-        tag.setString("Dimension", w.getDimensionKey().a().toString());
-        tagSave(tag, SavePlayerType.LOCATION);
+        pos.add(new NBTTagDouble(location.getX()));
+        pos.add(new NBTTagDouble(location.getY()));
+        pos.add(new NBTTagDouble(location.getZ()));
+        rotation.add(new NBTTagFloat(location.getYaw()));
+        rotation.add(new NBTTagFloat(location.getPitch()));
+        nbtTagCompound.set("Pos", pos);
+        nbtTagCompound.set("Rotation", rotation);
+        nbtTagCompound.setLong("WorldUUIDMost", location.getWorld().getUID().getMostSignificantBits());
+        nbtTagCompound.setLong("WorldUUIDLeast", location.getWorld().getUID().getLeastSignificantBits());
+        tagSave(nbtTagCompound, SavePlayerType.LOCATION);
     }
 
     @Override
@@ -196,7 +190,7 @@ public class OfflineUser implements IUser {
 
     @Override
     public IPlayerData getPlayerData() {
-        return new PlayerData(uuid, plugin);
+        return new PlayerData(uuid, (OfflineManagerAPI) plugin);
     }
 
     private void tagSave(NBTTagCompound tag, SavePlayerType type) {
@@ -204,10 +198,11 @@ public class OfflineUser implements IUser {
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        try (FileOutputStream stream = new FileOutputStream(new File(storage.getPlayerDir(), uuid + ".dat"))) {
+        try (FileOutputStream stream = new FileOutputStream(new File(((ServerNBTManager) getMinecraftServer().getWorld().getDataManager()).getPlayerDir(), uuid + ".dat"))) {
             NBTCompressedStreamTools.a(tag, stream);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

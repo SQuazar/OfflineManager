@@ -1,6 +1,7 @@
-package net.flawe.offlinemanager.api.util.v1_16_R2;
+package net.flawe.offlinemanager.api.util.v1_16_R2.data;
 
 import com.mojang.authlib.GameProfile;
+import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
@@ -9,6 +10,9 @@ import net.flawe.offlinemanager.api.events.data.SavePlayerEvent;
 import net.flawe.offlinemanager.api.inventory.IArmorInventory;
 import net.flawe.offlinemanager.api.inventory.IEnderChest;
 import net.flawe.offlinemanager.api.inventory.IInventory;
+import net.flawe.offlinemanager.api.util.v1_16_R2.inventory.ArmorInventory;
+import net.flawe.offlinemanager.api.util.v1_16_R2.inventory.OfflineEnderChest;
+import net.flawe.offlinemanager.api.util.v1_16_R2.inventory.OfflineInventory;
 import net.minecraft.server.v1_16_R2.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -196,7 +200,7 @@ public class OfflineUser implements IUser {
 
     @Override
     public IPlayerData getPlayerData() {
-        return new PlayerData(uuid, plugin);
+        return new PlayerData(uuid, (OfflineManagerAPI) plugin);
     }
 
     private void tagSave(NBTTagCompound tag, SavePlayerType type) {
