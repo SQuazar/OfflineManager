@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>net.flawe.offlinemanager</groupId>
     <artifactId>api</artifactId>
     <name>OfflineManagerAPI</name>
 
