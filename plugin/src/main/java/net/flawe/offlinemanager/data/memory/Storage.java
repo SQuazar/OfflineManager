@@ -14,23 +14,31 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Storage implements IStorage {
 
     private final List<String> players = new ArrayList<>();
-    private final Cache<UUID, IPlayerData> playerDataCache;
 
     private final OfflineManager plugin;
 
     public Storage(OfflineManager plugin) {
         this.plugin = plugin;
+        initCache();
+    }
+
+    private Cache<UUID, IPlayerData> playerDataCache;
+
+    private void initCache() {
+        if (playerDataCache != null) playerDataCache.asMap().clear();
+        CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder();
         CacheConfiguration cacheConfig = plugin.getSettings().getCacheConfiguration();
-        this.playerDataCache = CacheBuilder.newBuilder()
-                .maximumSize(cacheConfig.getSize() == 0 ? Long.MAX_VALUE : cacheConfig.getSize())
-                .expireAfterWrite(cacheConfig.getLifeTime() == 0 ? Long.MAX_VALUE : cacheConfig.getLifeTime(), TimeUnit.MINUTES)
-                .build();
+        if (cacheConfig.getSize() != 0) cacheBuilder.maximumSize(cacheConfig.getSize());
+        this.playerDataCache = cacheBuilder.removalListener(notification -> {
+            IPlayerData data = (IPlayerData) notification.getValue();
+            data.save();
+            plugin.getLogger().info(data.getName() + "(" + data.getUUID() + ") is successfully saved!");
+        }).build();
     }
 
     @Override
@@ -63,7 +71,11 @@ public class Storage implements IStorage {
     @Override
     public void addPlayerDataToCache(@NotNull IPlayerData playerData) {
         this.playerDataCache.put(playerData.getUUID(), playerData);
-        System.out.println("Added new player data to cache. Now size is " + playerDataCache.size());
+    }
+
+    @Override
+    public void removePlayerDataFromCache(UUID uuid) {
+        this.playerDataCache.invalidate(uuid);
     }
 
     @Override
@@ -72,9 +84,15 @@ public class Storage implements IStorage {
     }
 
     @Override
+    public Cache<UUID, IPlayerData> getPlayerDataCache() {
+        return playerDataCache;
+    }
+
+    @Override
     public void reload() {
         players.clear();
         init();
+        initCache();
     }
 
     @Override
