@@ -106,6 +106,7 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
 
     @Override
     public void onDisable() {
+        storage.getPlayerDataCache().asMap().clear();
         info("Disabled!");
     }
 
@@ -143,17 +144,17 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
     }
 
     @Override
-    public IUser getUser(String username) {
+    public synchronized IUser getUser(String username) {
         return nmsManager.getUser(username);
     }
 
     @Override
-    public IUser getUser(UUID uuid) {
+    public synchronized IUser getUser(UUID uuid) {
         return nmsManager.getUser(uuid);
     }
 
     @Override
-    public IPlayerData getPlayerData(String username) {
+    public synchronized IPlayerData getPlayerData(String username) {
         IPlayerData playerData = storage.getPlayerDataFromCache(Bukkit.getOfflinePlayer(username).getUniqueId());
         if (playerData == null) {
             playerData = nmsManager.getPlayerData(username);
@@ -164,7 +165,7 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
     }
 
     @Override
-    public IPlayerData getPlayerData(UUID uuid) {
+    public synchronized IPlayerData getPlayerData(UUID uuid) {
         IPlayerData playerData = storage.getPlayerDataFromCache(uuid);
         if (playerData == null) {
             playerData = nmsManager.getPlayerData(uuid);

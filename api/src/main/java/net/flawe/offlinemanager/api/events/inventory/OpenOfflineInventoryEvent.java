@@ -15,9 +15,9 @@ public class OpenOfflineInventoryEvent extends OfflineManagerEvent implements Ca
     private final Player player;
     private final IUser target;
     private final IPlayerData playerData;
-    private Inventory inventory;
+    private final Inventory inventory;
     private boolean cancelled;
-    private InventoryType inventoryType;
+    private final InventoryType inventoryType;
 
     @Deprecated
     public OpenOfflineInventoryEvent(Player player, IUser target) {
@@ -75,17 +75,9 @@ public class OpenOfflineInventoryEvent extends OfflineManagerEvent implements Ca
         return inventory;
     }
 
-    public void setInventoryType(InventoryType inventoryType) {
-        this.inventoryType = inventoryType;
-    }
-
     @NotNull
     public InventoryType getInventoryType() {
         return inventoryType;
-    }
-
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
     }
 
     @Override

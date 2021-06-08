@@ -77,7 +77,6 @@ public class ContainerCommand extends OMCommand {
             sendPlayerMessage(player, messages.getAlreadyBeingEdited());
             return;
         }
-        OpenOfflineInventoryEvent event = new OpenOfflineInventoryEvent(player, playerData, inventoryType);
         IOfflineInvHolder holder = null;
         Inventory inventory = null;
         switch (inventoryType) {
@@ -94,11 +93,11 @@ public class ContainerCommand extends OMCommand {
                 inventory = holder.getInventory();
                 break;
         }
+        OpenOfflineInventoryEvent event = new OpenOfflineInventoryEvent(player, playerData, inventory, inventoryType);
         if (holder == null) {
             sendPlayerMessage(player, messages.getErrorMessage());
             return;
         }
-        event.setInventory(inventory);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return;
         player.openInventory(inventory);
