@@ -1,4 +1,4 @@
-package net.flawe.offlinemanager.api.util.v1_12_R1;
+package net.flawe.offlinemanager.api.util.v1_12_R1.inventory;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;

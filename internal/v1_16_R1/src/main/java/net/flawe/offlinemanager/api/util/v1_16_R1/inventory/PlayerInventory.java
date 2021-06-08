@@ -1,10 +1,10 @@
-package net.flawe.offlinemanager.api.util.v1_16_R2;
+package net.flawe.offlinemanager.api.util.v1_16_R1.inventory;
 
 import net.flawe.offlinemanager.api.inventory.AbstractPlayerInventory;
-import net.minecraft.server.v1_16_R2.NBTTagCompound;
-import net.minecraft.server.v1_16_R2.NBTTagInt;
-import net.minecraft.server.v1_16_R2.NBTTagList;
-import org.bukkit.craftbukkit.v1_16_R2.inventory.CraftInventoryPlayer;
+import net.minecraft.server.v1_16_R1.NBTTagCompound;
+import net.minecraft.server.v1_16_R1.NBTTagInt;
+import net.minecraft.server.v1_16_R1.NBTTagList;
+import org.bukkit.craftbukkit.v1_16_R1.inventory.CraftInventoryPlayer;
 
 public class PlayerInventory extends AbstractPlayerInventory {
 

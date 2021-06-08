@@ -8,13 +8,11 @@ import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryPlayer;
 
 public class PlayerInventory extends AbstractPlayerInventory {
 
-    private final org.bukkit.inventory.PlayerInventory inventory;
     private final NBTTagCompound tag;
 
     public PlayerInventory(org.bukkit.inventory.PlayerInventory inventory, NBTTagCompound tag) {
         super(inventory);
         this.tag = tag;
-        this.inventory = inventory;
     }
 
     @Override
