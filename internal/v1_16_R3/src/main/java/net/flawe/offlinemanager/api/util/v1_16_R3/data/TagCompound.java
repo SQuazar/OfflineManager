@@ -7,7 +7,7 @@ import net.minecraft.server.v1_16_R3.*;
 
 public class TagCompound implements ITagCompound {
 
-    private NBTTagCompound tag;
+    private final NBTTagCompound tag;
 
     public TagCompound(NBTTagCompound tag) {
         this.tag = tag;
