@@ -78,17 +78,29 @@ public class ConfigurationLoader {
                 for (String s : comment.value())
                     out.add(skip + "# " + s);
             }
-            if (field.get(configuration) instanceof Configuration) {
+            Object value = field.get(configuration);
+            if (value instanceof Configuration) {
                 if (!field.isAnnotationPresent(ConfigKey.class))
                     continue;
-                Configuration configuration1 = (Configuration) field.get(configuration);
+                Configuration configuration1 = (Configuration) value;
                 out.add(skip + keyValue + ":");
                 dump(configuration1, "  ", out);
                 continue;
             }
-            Object value = field.get(configuration);
             if (value instanceof String) {
                 value = "\"" + value + "\"";
+            }
+            if (value instanceof List<?>) {
+                List<?> list = (List<?>) value;
+                StringBuilder builder = new StringBuilder("\n");
+                for (int a = 0; a < list.size(); a++) {
+                    Object obj = list.get(a);
+                    if (obj instanceof String)
+                        obj = "'" + obj + "'";
+                    builder.append(skip).append("  ").append('-').append(' ').append(obj);
+                    if (a < list.size() - 1) builder.append("\n");
+                }
+                value = builder.toString();
             }
             out.add(skip + keyValue + ": " + value);
         }

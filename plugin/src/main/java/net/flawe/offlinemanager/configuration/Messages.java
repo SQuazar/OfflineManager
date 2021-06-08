@@ -9,7 +9,7 @@ import net.flawe.offlinemanager.api.configuration.Configuration;
 import java.io.File;
 import java.io.IOException;
 
-@Comment({"#OfflineManager 3.0.0-SNAPSHOT", "Created by flawe, LOVEC3327", "Contact https://vk.com/flawe0ff or https://t.me/flawe_sv", "Messages configuration file"})
+@Comment({"#OfflineManager 3.0.0-SNAPSHOT", "Created by flawe, LOVEC3327", "Contact https://vk.com/flawesv or https://t.me/flawe_sv", "Messages configuration file"})
 public class Messages implements Configuration {
 
     public Messages(OfflineManager plugin) {
@@ -40,6 +40,8 @@ public class Messages implements Configuration {
     private String functionDisabled = "&a[OfflineManager] &eThe function %function% is disabled!";
     @ConfigKey("already-being-edited")
     private String alreadyBeingEdited = "&a[OfflineManager] &eThis player already being edited other player!";
+    @ConfigKey("err-message")
+    private String errorMessage = "&a[OfflineManager] &eSomething went wrong...";
     @Indents(1)
     @ConfigKey("teleport-success")
     private String teleportSuccess = "&a[OfflineManager] &eSuccessful teleportation to the player!";
@@ -88,6 +90,10 @@ public class Messages implements Configuration {
 
     public String getAlreadyBeingEdited() {
         return alreadyBeingEdited;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
     public String getTeleportSuccess() {

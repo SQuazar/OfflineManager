@@ -1,8 +1,9 @@
 package net.flawe.offlinemanager.inventory.holders;
 
-import net.flawe.offlinemanager.api.inventory.holder.IOfflineInvHolder;
-import net.flawe.offlinemanager.api.IUser;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.InventoryType;
+import net.flawe.offlinemanager.api.inventory.holder.IOfflineInvHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -14,51 +15,65 @@ public class OfflineInventoryHolder implements IOfflineInvHolder {
     private final IUser user;
     private final Player seen;
     private final String name;
+    private final IPlayerData playerData;
 
-    public OfflineInventoryHolder(IUser user) {
+    @Deprecated
+    public OfflineInventoryHolder(@NotNull IUser user) {
         this(user, null, "Inventory");
     }
 
-    public OfflineInventoryHolder(IUser user, Player seen) {
+    @Deprecated
+    public OfflineInventoryHolder(@NotNull IUser user, @Nullable Player seen) {
         this(user, seen, "Inventory");
     }
 
-    public OfflineInventoryHolder(IUser user, Player seen, String name) {
+    @Deprecated
+    public OfflineInventoryHolder(@NotNull IUser user, @Nullable Player seen, @NotNull String name) {
         this.user = user;
         this.seen = seen;
         this.name = name;
+        this.playerData = user.getPlayerData();
     }
 
-    @NotNull
+    public OfflineInventoryHolder(@NotNull IPlayerData playerData, @Nullable Player seen, @NotNull String name) {
+        this.user = playerData.getUser();
+        this.seen = seen;
+        this.name = name;
+        this.playerData = playerData;
+    }
+
     @Override
-    public Inventory getInventory() {
+    public @NotNull Inventory getInventory() {
         Inventory inventory = Bukkit.createInventory(this, 36, name);
-        inventory.setContents(user.getInventory().getInventory().getContents());
+        inventory.setContents(playerData.getInventory().getStorageContents());
         return inventory;
     }
 
     @Override
-    public Player getPlayer() {
+    public @NotNull Player getPlayer() {
         return user.getPlayer();
     }
 
+    public @NotNull IPlayerData getPlayerData() {
+        return playerData;
+    }
+
     @Override
-    public IUser getUser() {
+    public @NotNull IUser getUser() {
         return user;
     }
 
     @Override
-    public String getInventoryName() {
+    public @NotNull String getInventoryName() {
         return name;
     }
 
     @Override
-    public InventoryType getInventoryType() {
+    public @NotNull InventoryType getInventoryType() {
         return InventoryType.DEFAULT;
     }
 
-    @Nullable
-    public Player getWhoSeen() {
+    public @Nullable Player getWhoSeen() {
         return seen;
     }
 

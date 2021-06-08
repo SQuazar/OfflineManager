@@ -1,9 +1,11 @@
 package net.flawe.offlinemanager.api.inventory.holder;
 
-import net.flawe.offlinemanager.api.IUser;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.InventoryType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryHolder;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -16,18 +18,25 @@ public interface IOfflineInvHolder extends InventoryHolder {
      * User player who owns this inventory
      * @return User player
      */
+    @NotNull
     Player getPlayer();
 
     /**
      * Inventory owner
      * @return Offline player who owns this inventory
      */
+    @Deprecated
+    @NotNull
     IUser getUser();
+
+    @NotNull
+    IPlayerData getPlayerData();
 
     /**
      * Inventory name from configuration
      * @return Inventory name
      */
+    @NotNull
     String getInventoryName();
 
     /**
@@ -35,6 +44,7 @@ public interface IOfflineInvHolder extends InventoryHolder {
      * @see InventoryType
      * @return Type of this inventory
      */
+    @NotNull
     InventoryType getInventoryType();
 
     /**

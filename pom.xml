@@ -8,7 +8,7 @@
     <artifactId>OfflineManager</artifactId>
     <name>OfflineManager</name>
     <url>https://t.me/flawe_sv</url>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.0.1-SNAPSHOT</version>
 
     <developers>
         <developer>
@@ -131,7 +131,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>

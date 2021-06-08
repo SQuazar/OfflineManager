@@ -1,28 +1,35 @@
 package net.flawe.offlinemanager.api.events.data;
 
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class LoadPlayerEvent extends OfflineManagerEvent {
 
     private final Player player;
+    private final IPlayerData playerData;
 
-    public LoadPlayerEvent(Player player) {
+    @Deprecated
+    public LoadPlayerEvent(@NotNull Player player) {
         super(false);
         this.player = player;
+        this.playerData = null;
     }
 
-    private boolean canceled;
-
-    public boolean isCanceled() {
-        return canceled;
+    public LoadPlayerEvent(@NotNull IPlayerData playerData) {
+        this.player = null;
+        this.playerData = playerData;
     }
 
-    public void setCanceled(boolean b) {
-        this.canceled = b;
+    @Nullable
+    public IPlayerData getPlayerData() {
+        return playerData;
     }
 
-    public Player getPlayer() {
+    @Deprecated
+    public @Nullable Player getPlayer() {
         return player;
     }
 

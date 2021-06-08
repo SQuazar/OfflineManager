@@ -1,6 +1,9 @@
 package net.flawe.offlinemanager.api.data;
 
-import net.flawe.offlinemanager.api.IUser;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.entity.IUser;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +26,7 @@ public interface INMSManager {
      * @param s Player's username
      * @return Offline player with username from parameter
      */
+    @Deprecated
     IUser getUser(String s);
 
     /**
@@ -30,5 +34,23 @@ public interface INMSManager {
      * @param uuid Player's uuid
      * @return Offline player with uuid from parameter
      */
+    @Deprecated
     IUser getUser(UUID uuid);
+
+    /**
+     * Used to get player data
+     * @param uuid The UUID of the player you want to get
+     * @return The player's data that matches the entered parameters
+     */
+    @Nullable
+    IPlayerData getPlayerData(@NotNull UUID uuid);
+
+    /**
+     * Used to get player data
+     * @param name The name of the player you want to get
+     * @return The player's data that matches the entered parameters
+     */
+    @Nullable
+    IPlayerData getPlayerData(@NotNull String name);
+
 }
