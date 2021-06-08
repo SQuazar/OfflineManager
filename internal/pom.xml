@@ -21,7 +21,6 @@
     <packaging>pom</packaging>
 
     <profiles>
-
         <profile>
             <id>all</id>
             <modules>
