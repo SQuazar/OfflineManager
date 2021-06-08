@@ -24,7 +24,6 @@ public class KillPlayerCommand extends OMCommand {
     @Override
     public void execute(Player player, String[] args) {
         addPlaceholder(new Placeholder("%player%", player.getName()));
-        String msg;
         if (!settings.getCommandKillConfiguration().enabled()) {
             sendPlayerMessage(player, messages.getFunctionDisabled());
             return;
