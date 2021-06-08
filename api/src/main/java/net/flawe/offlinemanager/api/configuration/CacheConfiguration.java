@@ -4,6 +4,6 @@ public interface CacheConfiguration extends Configuration {
 
     int getSize();
 
-    int getLifeTime();
+//    int getLifeTime();
 
 }
