@@ -1,5 +1,6 @@
 package net.flawe.offlinemanager.api.memory;
 
+import com.google.common.cache.Cache;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,8 +35,12 @@ public interface IStorage {
 
     void addPlayerDataToCache(@NotNull IPlayerData playerData);
 
+    void removePlayerDataFromCache(UUID uuid);
+
     @Nullable
     IPlayerData getPlayerDataFromCache(UUID uuid);
+
+    Cache<UUID, IPlayerData> getPlayerDataCache();
 
     /**
      * Reinit storage
