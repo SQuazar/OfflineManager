@@ -1,9 +1,9 @@
-package net.flawe.offlinemanager.api.util.v1_16_R3.data;
+package net.flawe.offlinemanager.api.util.v1_12_R1.data;
 
 import net.flawe.offlinemanager.api.nbt.ITagCompound;
 import net.flawe.offlinemanager.api.nbt.TagValue;
 import net.flawe.offlinemanager.api.nbt.type.*;
-import net.minecraft.server.v1_16_R3.*;
+import net.minecraft.server.v1_12_R1.*;
 
 public class TagCompound implements ITagCompound {
 
@@ -34,19 +34,19 @@ public class TagCompound implements ITagCompound {
     private NBTBase getNBTValue(TagValue<?> value) {
         switch (value.getType()) {
             case BYTE:
-                return NBTTagByte.a(((TagByte) value).getValue());
+                return new NBTTagByte(((TagByte) value).getValue());
             case SHORT:
-                return NBTTagShort.a(((TagShort) value).getValue());
+                return new NBTTagShort(((TagShort) value).getValue());
             case INTEGER:
-                return NBTTagInt.a(((TagInteger) value).getValue());
+                return new NBTTagInt(((TagInteger) value).getValue());
             case LONG:
-                return NBTTagLong.a(((TagLong) value).getValue());
+                return new NBTTagLong(((TagLong) value).getValue());
             case FLOAT:
-                return NBTTagFloat.a(((TagFloat) value).getValue());
+                return new NBTTagFloat(((TagFloat) value).getValue());
             case DOUBLE:
-                return NBTTagDouble.a(((TagDouble) value).getValue());
+                return new NBTTagDouble(((TagDouble) value).getValue());
             case STRING:
-                return NBTTagString.a(((TagString) value).getValue());
+                return new NBTTagString(((TagString) value).getValue());
             case LIST:
                 NBTTagList list = new NBTTagList();
                 TagList tagList = (TagList) value;
@@ -61,23 +61,24 @@ public class TagCompound implements ITagCompound {
         if (base == null) return null;
         switch (base.getTypeId()) {
             case TagTypes.BYTE:
-                return new TagByte(((NBTTagByte) base).asByte());
+                return new TagByte(((NBTTagByte) base).g());
             case TagTypes.SHORT:
-                return new TagShort(((NBTTagShort) base).asShort());
+                return new TagShort(((NBTTagShort) base).f());
             case TagTypes.INTEGER:
-                return new TagInteger(((NBTTagInt) base).asInt());
+                return new TagInteger(((NBTTagInt) base).e());
             case TagTypes.LONG:
-                return new TagLong(((NBTTagLong) base).asLong());
+                return new TagLong(((NBTTagLong) base).d());
             case TagTypes.FLOAT:
-                return new TagFloat(((NBTTagFloat) base).asFloat());
+                return new TagFloat(((NBTTagFloat) base).i());
             case TagTypes.DOUBLE:
                 return new TagDouble(((NBTTagDouble) base).asDouble());
             case TagTypes.STRING:
-                return new TagString(base.asString());
+                return new TagString(((NBTTagString) base).c_());
             case TagTypes.LIST:
                 TagList list = new TagList();
-                for (NBTBase val : (NBTTagList) base)
-                    list.addValue(getTagValue(val));
+                NBTTagList tagList = (NBTTagList) base;
+                for (int i = 0; i < tagList.size(); i++)
+                    list.addValue(getTagValue(tagList.i(i)));
                 return list;
         }
         return null;

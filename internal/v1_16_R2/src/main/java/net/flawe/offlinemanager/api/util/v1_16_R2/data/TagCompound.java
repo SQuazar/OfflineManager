@@ -1,13 +1,13 @@
-package net.flawe.offlinemanager.api.util.v1_16_R3.data;
+package net.flawe.offlinemanager.api.util.v1_16_R2.data;
 
 import net.flawe.offlinemanager.api.nbt.ITagCompound;
 import net.flawe.offlinemanager.api.nbt.TagValue;
 import net.flawe.offlinemanager.api.nbt.type.*;
-import net.minecraft.server.v1_16_R3.*;
+import net.minecraft.server.v1_16_R2.*;
 
 public class TagCompound implements ITagCompound {
 
-    private NBTTagCompound tag;
+    private final NBTTagCompound tag;
 
     public TagCompound(NBTTagCompound tag) {
         this.tag = tag;
@@ -20,15 +20,15 @@ public class TagCompound implements ITagCompound {
     }
 
     @Override
+    public void setValue(String key, TagValue<?> value) {
+        tag.set(key, getNBTValue(value));
+    }
+
+    @Override
     public ITagCompound getTagCompound(String key) {
         NBTBase base = tag.get(key);
         if (!(base instanceof NBTTagCompound)) return null;
         return new TagCompound((NBTTagCompound) base);
-    }
-
-    @Override
-    public void setValue(String key, TagValue<?> value) {
-        tag.set(key, getNBTValue(value));
     }
 
     private NBTBase getNBTValue(TagValue<?> value) {
