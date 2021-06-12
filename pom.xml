@@ -74,7 +74,7 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>net.flawe</groupId>
+                <groupId>net.flawe.offlinemanager</groupId>
                 <artifactId>api</artifactId>
                 <version>${project.version}</version>
                 <scope>provided</scope>

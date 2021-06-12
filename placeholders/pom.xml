@@ -54,7 +54,7 @@
             <artifactId>spigot-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.flawe</groupId>
+            <groupId>net.flawe.offlinemanager</groupId>
             <artifactId>api</artifactId>
         </dependency>
     </dependencies>
