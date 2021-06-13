@@ -1,4 +1,4 @@
-package net.flawe.offlinemanager.api.events.inventory;
+package net.flawe.offlinemanager.api.event.inventory;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
@@ -7,6 +7,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Called when player clicks on slot in offline inventory
+ * @author flawe
+ */
 public class OfflineInventoryClickEvent extends OfflineInventoryInteractEvent {
 
     private final int slot;
@@ -24,6 +28,10 @@ public class OfflineInventoryClickEvent extends OfflineInventoryInteractEvent {
         this.slot = slot;
     }
 
+    /**
+     * Gets the clicked slot
+     * @return clicked slot
+     */
     public int getSlot() {
         return slot;
     }

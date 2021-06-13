@@ -1,12 +1,16 @@
-package net.flawe.offlinemanager.api.events.entity.player;
+package net.flawe.offlinemanager.api.event.entity.player;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
-import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
+import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 
+/**
+ * Called when offline player teleported to other player
+ * @author flawe
+ */
 public class OfflinePlayerTeleportEvent extends OfflineManagerEvent implements Cancellable {
 
     private final Player player;
@@ -33,22 +37,43 @@ public class OfflinePlayerTeleportEvent extends OfflineManagerEvent implements C
         this.from = from;
     }
 
+    /**
+     * Gets the player to which the offline player is teleported
+     * @return player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Gets the offline player
+     * @deprecated use getPlayerData
+     * @return offline player
+     */
     public IUser getTarget() {
         return target;
     }
 
+    /**
+     * Gets target location
+     * @return location to
+     */
     public Location getTo() {
         return to;
     }
 
+    /**
+     * Gets location from
+     * @return location from
+     */
     public Location getFrom() {
         return from;
     }
 
+    /**
+     * Gets the offline player data
+     * @return data of offline player
+     */
     public IPlayerData getPlayerData() {
         return playerData;
     }

@@ -1,13 +1,17 @@
-package net.flawe.offlinemanager.api.events.entity.player;
+package net.flawe.offlinemanager.api.event.entity.player;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
-import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
+import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Called when player was teleported to offline player
+ * @author flawe
+ */
 public class TeleportToOfflinePlayerEvent extends OfflineManagerEvent implements Cancellable {
 
     private final Player player;
@@ -34,27 +38,48 @@ public class TeleportToOfflinePlayerEvent extends OfflineManagerEvent implements
         this.to = to;
     }
 
+    /**
+     * Gets the player who teleported
+     * @return player who teleported
+     */
     @NotNull
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Gets the player to whom teleport
+     * @deprecated use getPlayerData
+     * @return target player
+     */
     @Deprecated
     @NotNull
     public IUser getTarget() {
         return target;
     }
 
+    /**
+     * Gets the player to whom teleport
+     * @return target player
+     */
     @NotNull
     public IPlayerData getPlayerData() {
         return playerData;
     }
 
+    /**
+     * Gets the location from
+     * @return location from
+     */
     @NotNull
     public Location getFrom() {
         return from;
     }
 
+    /**
+     * Gets the target player location
+     * @return target player location
+     */
     @NotNull
     public Location getTo() {
         return to;
