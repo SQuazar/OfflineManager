@@ -1,13 +1,13 @@
-package net.flawe.offlinemanager.api.events.command;
+package net.flawe.offlinemanager.api.event.command;
 
 import net.flawe.offlinemanager.api.command.ICommand;
-import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
+import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 
 /**
  * Called when player execute the command
- * @author flaweoff
+ * @author flawe
  */
 public class CommandEvent extends OfflineManagerEvent implements Cancellable {
 
@@ -29,24 +29,24 @@ public class CommandEvent extends OfflineManagerEvent implements Cancellable {
     }
 
     /**
-     *
-     * @return The player command sender
+     * Gets the command executor
+     * @return command sender
      */
     public Player getPlayer() {
         return player;
     }
 
     /**
-     *
-     * @return The executable command
+     * Gets the command
+     * @return the executable command
      */
     public ICommand getCommand() {
         return command;
     }
 
     /**
-     *
-     * @return The full player message
+     * Gets the command label
+     * @return the full player message
      */
     public String getMessage() {
         return message;

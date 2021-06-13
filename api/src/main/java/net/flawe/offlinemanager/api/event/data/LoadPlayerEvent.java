@@ -1,11 +1,15 @@
-package net.flawe.offlinemanager.api.events.data;
+package net.flawe.offlinemanager.api.event.data;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
-import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
+import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Called when the offline player is loaded
+ * @author flawe
+ */
 public class LoadPlayerEvent extends OfflineManagerEvent {
 
     private final Player player;
@@ -23,11 +27,19 @@ public class LoadPlayerEvent extends OfflineManagerEvent {
         this.playerData = playerData;
     }
 
+    /**
+     * Gets the player data that has been loaded
+     * @return player data than been loaded
+     */
     @Nullable
     public IPlayerData getPlayerData() {
         return playerData;
     }
 
+    /**
+     * Gets the player that has been loaded
+     * @return player that has been loaded
+     */
     @Deprecated
     public @Nullable Player getPlayer() {
         return player;

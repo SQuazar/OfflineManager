@@ -1,15 +1,15 @@
-package net.flawe.offlinemanager.api.events.inventory;
+package net.flawe.offlinemanager.api.event.inventory;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
-import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
+import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Called when the player clears the offline player's inventory
- * @author flaweoff
+ * @author flawe
  */
 public class ClearOfflineInventoryEvent extends OfflineManagerEvent implements Cancellable {
 
@@ -18,11 +18,6 @@ public class ClearOfflineInventoryEvent extends OfflineManagerEvent implements C
     private final IPlayerData playerData;
     private boolean cancelled;
 
-    /**
-     *
-     * @param player who clear inventory
-     * @param user who's inventory was cleared
-     */
     @Deprecated
     public ClearOfflineInventoryEvent(@NotNull Player player, @NotNull IUser user) {
         this.player = player;
@@ -37,8 +32,8 @@ public class ClearOfflineInventoryEvent extends OfflineManagerEvent implements C
     }
 
     /**
-     *
-     * @return The player who cleared the inventory
+     * Gets the player who cleared the inventory
+     * @return the player who cleared the inventory
      */
     @NotNull
     public Player getPlayer() {
@@ -46,8 +41,9 @@ public class ClearOfflineInventoryEvent extends OfflineManagerEvent implements C
     }
 
     /**
-     *
-     * @return Player whose inventory was deducted
+     * Gets the inventory owner
+     * @deprecated use getPlayerData
+     * @return inventory owner
      */
     @Deprecated
     @NotNull
@@ -55,6 +51,10 @@ public class ClearOfflineInventoryEvent extends OfflineManagerEvent implements C
         return user;
     }
 
+    /**
+     * Gets the owner of inventory
+     * @return inventory owner
+     */
     @NotNull
     public IPlayerData getPlayerData() {
         return playerData;

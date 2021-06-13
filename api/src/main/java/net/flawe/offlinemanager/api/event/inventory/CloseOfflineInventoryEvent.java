@@ -1,16 +1,16 @@
-package net.flawe.offlinemanager.api.events.inventory;
+package net.flawe.offlinemanager.api.event.inventory;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.InventoryType;
-import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
+import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Called when a player closes another player's offline inventory
- * @author flaweoff
+ * @author flawe
  */
 public class CloseOfflineInventoryEvent extends OfflineManagerEvent {
 
@@ -21,7 +21,6 @@ public class CloseOfflineInventoryEvent extends OfflineManagerEvent {
     private final InventoryType inventoryType;
 
     /**
-     *
      * @param player who close offline inventory
      * @param user who's offline inventory was closed
      * @param inventory offline inventory that has been closed
@@ -45,8 +44,8 @@ public class CloseOfflineInventoryEvent extends OfflineManagerEvent {
     }
 
     /**
-     *
-     * @return The player who close the offline inventory
+     * Gets the player who close the offline inventory
+     * @return player who close the offline inventory
      */
     @NotNull
     public Player getPlayer() {
@@ -54,8 +53,8 @@ public class CloseOfflineInventoryEvent extends OfflineManagerEvent {
     }
 
     /**
-     *
-     * @return Ohe offline inventory owner
+     * Gets the inventory owner
+     * @return offline inventory owner
      */
     @Deprecated
     @NotNull
@@ -63,13 +62,17 @@ public class CloseOfflineInventoryEvent extends OfflineManagerEvent {
         return user;
     }
 
+    /**
+     * Gets the inventory owner
+     * @return offline inventory owner
+     */
     public IPlayerData getPlayerData() {
         return playerData;
     }
 
     /**
-     *
-     * @return Offline inventory owner by player
+     * Gets the inventory owner of player equal to getUser().getPlayer()
+     * @return offline inventory owner by player
      */
     @NotNull
     public Player getTarget() {
@@ -77,8 +80,8 @@ public class CloseOfflineInventoryEvent extends OfflineManagerEvent {
     }
 
     /**
-     *
-     * @return Offline inventory that has been closed
+     * Gets the closed inventory
+     * @return offline inventory that has been closed
      */
     @NotNull
     public Inventory getInventory() {
@@ -86,8 +89,8 @@ public class CloseOfflineInventoryEvent extends OfflineManagerEvent {
     }
 
     /**
-     *
-     * @return Offline inventory type
+     * Gets the inventory type
+     * @return offline inventory type
      */
     @NotNull
     public InventoryType getInventoryType() {

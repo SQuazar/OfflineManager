@@ -1,17 +1,18 @@
-package net.flawe.offlinemanager.api.events.entity.player;
+package net.flawe.offlinemanager.api.event.entity.player;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
-import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
+import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Called when a player heal the offline player
- * @author flaweoff
+ * Called when an offline player has been fed by another player
+ *
+ * @author flawe
  */
-public class HealOfflinePlayerEvent extends OfflineManagerEvent implements Cancellable {
+public class FeedOfflinePlayerEvent extends OfflineManagerEvent implements Cancellable {
 
     private final Player player;
     private final IUser target;
@@ -19,26 +20,25 @@ public class HealOfflinePlayerEvent extends OfflineManagerEvent implements Cance
     private boolean cancelled;
 
     /**
-     *
-     * @param player the player who healing offline player
-     * @param target the player who was healed
+     * @param player the player who restored the hunger of the offline player
+     * @param target the player who was fed
      */
     @Deprecated
-    public HealOfflinePlayerEvent(@NotNull Player player, @NotNull IUser target) {
+    public FeedOfflinePlayerEvent(@NotNull Player player, @NotNull IUser target) {
         this.player = player;
         this.target = target;
         this.playerData = target.getPlayerData();
     }
 
-    public HealOfflinePlayerEvent(@NotNull Player player, @NotNull IPlayerData playerData) {
+    public FeedOfflinePlayerEvent(@NotNull Player player, @NotNull IPlayerData playerData) {
         this.player = player;
         this.playerData = playerData;
         this.target = playerData.getUser();
     }
 
     /**
-     *
-     * @return The player who healing offline player
+     * Gets the player who restored the hunger of the offline player
+     * @return The player who restored the hunger of the offline player
      */
     @NotNull
     public Player getPlayer() {
@@ -46,15 +46,20 @@ public class HealOfflinePlayerEvent extends OfflineManagerEvent implements Cance
     }
 
     /**
-     *
-     * @return The player who was healed
+     * Gets the player who was fed
+     * @deprecated getPlayerData
+     * @return The player who was fed
      */
-    @Deprecated
     @NotNull
+    @Deprecated
     public IUser getTarget() {
         return target;
     }
 
+    /**
+     * Gets the player who was fed
+     * @return The player who was fed
+     */
     @NotNull
     public IPlayerData getPlayerData() {
         return playerData;
