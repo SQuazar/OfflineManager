@@ -18,9 +18,9 @@ public class Settings implements Configuration {
     @ConfigKey("only-api")
     private boolean onlyApi = false;
     @Indents(1)
-    @Comment("When the player is saved, it will write about it to the console")
-    @ConfigKey("save-player-notification")
-    private boolean savePlayerNotify = false;
+    @Comment("When the player is removed from cache, it will write about it to the console")
+    @ConfigKey("remove-from-cache-notification")
+    private boolean removeFromCacheNotify = false;
     @Indents(1)
     @ConfigKey("placeholders")
     private boolean placeholders = true;
@@ -296,8 +296,8 @@ public class Settings implements Configuration {
         return onlyApi;
     }
 
-    public boolean savePlayerNotify() {
-        return savePlayerNotify;
+    public boolean removeFromCacheNotify() {
+        return removeFromCacheNotify;
     }
 
     public boolean placeholders() {

@@ -5,8 +5,8 @@ import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
-import net.flawe.offlinemanager.api.events.data.LoadPlayerEvent;
-import net.flawe.offlinemanager.api.events.data.SavePlayerEvent;
+import net.flawe.offlinemanager.api.event.data.LoadPlayerEvent;
+import net.flawe.offlinemanager.api.event.data.SavePlayerEvent;
 import net.flawe.offlinemanager.api.inventory.IArmorInventory;
 import net.flawe.offlinemanager.api.inventory.IEnderChest;
 import net.flawe.offlinemanager.api.inventory.IInventory;
@@ -174,8 +174,6 @@ public class OfflineUser implements IUser {
     public void save() {
         SavePlayerEvent event = new SavePlayerEvent(player, SavePlayerType.DEFAULT);
         Bukkit.getPluginManager().callEvent(event);
-        if (event.isCancelled())
-            return;
         player.saveData();
     }
 
@@ -183,8 +181,6 @@ public class OfflineUser implements IUser {
     public void save(SavePlayerType type) {
         SavePlayerEvent event = new SavePlayerEvent(player, type);
         Bukkit.getPluginManager().callEvent(event);
-        if (event.isCancelled())
-            return;
         player.saveData();
     }
 
@@ -196,8 +192,6 @@ public class OfflineUser implements IUser {
     private void tagSave(NBTTagCompound tag, SavePlayerType type) {
         SavePlayerEvent event = new SavePlayerEvent(player, type);
         Bukkit.getPluginManager().callEvent(event);
-        if (event.isCancelled())
-            return;
         try (FileOutputStream stream = new FileOutputStream(new File(((ServerNBTManager) getMinecraftServer().getWorld().getDataManager()).getPlayerDir(), uuid + ".dat"))) {
             NBTCompressedStreamTools.a(tag, stream);
         } catch (IOException e) {

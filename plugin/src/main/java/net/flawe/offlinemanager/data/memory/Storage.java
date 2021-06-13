@@ -37,7 +37,8 @@ public class Storage implements IStorage {
         this.playerDataCache = cacheBuilder.removalListener(notification -> {
             IPlayerData data = (IPlayerData) notification.getValue();
             data.save();
-            plugin.getLogger().info(data.getName() + "(" + data.getUUID() + ") is successfully saved!");
+            if (plugin.getSettings().removeFromCacheNotify())
+                plugin.getLogger().info(data.getName() + "(" + data.getUUID() + ") is successfully removed from cache and saved!");
         }).build();
     }
 
@@ -74,12 +75,12 @@ public class Storage implements IStorage {
     }
 
     @Override
-    public void removePlayerDataFromCache(UUID uuid) {
+    public void removePlayerDataFromCache(@NotNull UUID uuid) {
         this.playerDataCache.invalidate(uuid);
     }
 
     @Override
-    public @Nullable IPlayerData getPlayerDataFromCache(UUID uuid) {
+    public @Nullable IPlayerData getPlayerDataFromCache(@NotNull UUID uuid) {
         return playerDataCache.getIfPresent(uuid);
     }
 

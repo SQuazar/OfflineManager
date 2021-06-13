@@ -4,7 +4,7 @@ import net.flawe.offlinemanager.api.configuration.ContainerConfiguration;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.enums.ActiveType;
 import net.flawe.offlinemanager.api.enums.InventoryType;
-import net.flawe.offlinemanager.api.events.inventory.OpenOfflineInventoryEvent;
+import net.flawe.offlinemanager.api.event.inventory.OpenOfflineInventoryEvent;
 import net.flawe.offlinemanager.api.inventory.holder.IOfflineInvHolder;
 import net.flawe.offlinemanager.commands.OMCommand;
 import net.flawe.offlinemanager.inventory.holders.OfflineArmorInventoryHolder;
@@ -19,7 +19,7 @@ public class ContainerCommand extends OMCommand {
 
     private final ContainerConfiguration config;
     private final InventoryType inventoryType;
-    private ActiveType activeType;
+    private final ActiveType activeType;
 
     public ContainerCommand(String name, String help, String permission, InventoryType inventoryType, ContainerConfiguration config) {
         this(name, help, permission, new String[]{}, inventoryType, config);

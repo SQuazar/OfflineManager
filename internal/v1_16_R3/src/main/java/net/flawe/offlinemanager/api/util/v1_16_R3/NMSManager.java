@@ -42,12 +42,12 @@ public class NMSManager implements INMSManager {
     }
 
     @Override
-    public @Nullable IPlayerData getPlayerData(@NotNull UUID uuid) {
+    public IPlayerData getPlayerData(@NotNull UUID uuid) {
         return new PlayerData(uuid, api);
     }
 
     @Override
-    public @Nullable IPlayerData getPlayerData(@NotNull String name) {
+    public IPlayerData getPlayerData(@NotNull String name) {
         return new PlayerData(name, api);
     }
 

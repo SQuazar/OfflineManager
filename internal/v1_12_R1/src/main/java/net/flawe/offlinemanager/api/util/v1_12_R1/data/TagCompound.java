@@ -4,6 +4,7 @@ import net.flawe.offlinemanager.api.nbt.ITagCompound;
 import net.flawe.offlinemanager.api.nbt.TagValue;
 import net.flawe.offlinemanager.api.nbt.type.*;
 import net.minecraft.server.v1_12_R1.*;
+import org.jetbrains.annotations.NotNull;
 
 public class TagCompound implements ITagCompound {
 
@@ -14,20 +15,20 @@ public class TagCompound implements ITagCompound {
     }
 
     @Override
-    public TagValue<?> getTagValue(String key) {
+    public TagValue<?> getTagValue(@NotNull String key) {
         NBTBase nbtBase = tag.get(key);
         return getTagValue(nbtBase);
     }
 
     @Override
-    public ITagCompound getTagCompound(String key) {
+    public ITagCompound getTagCompound(@NotNull String key) {
         NBTBase base = tag.get(key);
         if (!(base instanceof NBTTagCompound)) return null;
         return new TagCompound((NBTTagCompound) base);
     }
 
     @Override
-    public void setValue(String key, TagValue<?> value) {
+    public void setValue(@NotNull String key, @NotNull TagValue<?> value) {
         tag.set(key, getNBTValue(value));
     }
 

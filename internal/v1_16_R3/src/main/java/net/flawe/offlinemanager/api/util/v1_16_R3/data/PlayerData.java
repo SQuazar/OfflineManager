@@ -5,8 +5,8 @@ import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.entity.AbstractPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
-import net.flawe.offlinemanager.api.events.data.LoadPlayerEvent;
-import net.flawe.offlinemanager.api.events.data.SavePlayerEvent;
+import net.flawe.offlinemanager.api.event.data.LoadPlayerEvent;
+import net.flawe.offlinemanager.api.event.data.SavePlayerEvent;
 import net.flawe.offlinemanager.api.inventory.AbstractPlayerInventory;
 import net.flawe.offlinemanager.api.inventory.IArmorInventory;
 import net.flawe.offlinemanager.api.inventory.IEnderChest;
@@ -95,10 +95,6 @@ public class PlayerData extends AbstractPlayerData {
     public void save(SavePlayerType type) {
         SavePlayerEvent event = new SavePlayerEvent(this, type);
         Bukkit.getPluginManager().callEvent(event);
-        if (event.isCancelled()) {
-            api.getStorage().addPlayerDataToCache(new PlayerData(uuid, api));
-            return;
-        }
         try {
             File file = new File(this.playerDir, uuid + ".dat.tmp");
             File file1 = new File(this.playerDir, uuid + ".dat");

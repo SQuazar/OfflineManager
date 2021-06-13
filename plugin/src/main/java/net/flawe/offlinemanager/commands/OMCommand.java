@@ -95,7 +95,7 @@ public abstract class OMCommand implements ICommand {
     }
 
     @Override
-    public Map<String, String> getPlaceholdersMap() {
+    public Map<String, String> getPlaceholdersAsMap() {
         Map<String, String> map = new HashMap<>();
         for (IPlaceholder placeholder : placeholders)
             map.put(placeholder.getKey(), placeholder.getValue());

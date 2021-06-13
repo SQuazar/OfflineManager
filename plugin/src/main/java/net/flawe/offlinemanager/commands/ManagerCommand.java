@@ -4,7 +4,7 @@ import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.command.ICommand;
 import net.flawe.offlinemanager.api.enums.InventoryType;
-import net.flawe.offlinemanager.api.events.command.CommandEvent;
+import net.flawe.offlinemanager.api.event.command.CommandEvent;
 import net.flawe.offlinemanager.commands.sub.*;
 import net.flawe.offlinemanager.configuration.Messages;
 import net.flawe.offlinemanager.configuration.Settings;

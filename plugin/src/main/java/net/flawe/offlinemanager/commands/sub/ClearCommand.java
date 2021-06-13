@@ -2,7 +2,7 @@ package net.flawe.offlinemanager.commands.sub;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
-import net.flawe.offlinemanager.api.events.inventory.ClearOfflineInventoryEvent;
+import net.flawe.offlinemanager.api.event.inventory.ClearOfflineInventoryEvent;
 import net.flawe.offlinemanager.commands.OMCommand;
 import net.flawe.offlinemanager.placeholders.Placeholder;
 import org.bukkit.Bukkit;
