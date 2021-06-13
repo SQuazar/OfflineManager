@@ -14,6 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * Abstract player inventory. Equal to bukkit inventory but working with player data
+ * @author flawe
+ */
 public abstract class AbstractInventory implements Inventory {
 
     protected final Inventory inventory;
@@ -206,6 +210,9 @@ public abstract class AbstractInventory implements Inventory {
         return inventory.getLocation();
     }
 
+    /**
+     * Update inventory in player tag compound
+     */
     protected abstract void update();
 
 }

@@ -19,60 +19,52 @@ import java.util.UUID;
  */
 @Deprecated
 public interface IUser {
-    /**
-     * Player from loaded user
-     *
-     * @return Player from user
-     */
 
+    /**
+     * Gets the bukkit player from offline player
+     * @return bukkit player
+     */
     Player getPlayer();
 
     /**
-     * User offline player
-     *
-     * @return User offline player
+     * Gets the bukkit offline player
+     * @return bukkit offline player
      */
     OfflinePlayer getOfflinePlayer();
 
     /**
-     * User UUID
-     *
-     * @return User UUID
+     * Gets the offline player uuid
+     * @return uuid
      */
     UUID getUUID();
 
     /**
-     * User offline location
-     *
-     * @return User location
+     * Gets the offline player location
+     * @return offline player location
      */
     Location getLocation();
 
     /**
-     * User offline inventory
-     *
-     * @return User inventory
+     * Gets the offline player inventory
+     * @return offline inventory
      */
     IInventory getInventory();
 
     /**
-     * User offline enderchest
-     *
-     * @return User enderchest
+     * Gets the player ender chers
+     * @return ender chest
      */
     IEnderChest getEnderChest();
 
     /**
-     * User offline armor inventory
-     *
-     * @return User armor inventory
+     * Gets the offline player armor inventory
+     * @return armor inventory
      */
     IArmorInventory getArmorInventory();
 
     /**
-     * User offline gamemode
-     *
-     * @return User gamemode
+     * Gets the offline player game mode
+     * @return game mode
      */
     GameMode getGameMode();
 
@@ -82,41 +74,38 @@ public interface IUser {
     void kill();
 
     /**
-     * Set user new gamemode
-     *
-     * @param gameMode New gamemode
+     * Change game mode for offline player
+     * @param gameMode new game mode
      */
     void setGameMode(GameMode gameMode);
 
     /**
-     * Change offline user location to new location
-     *
-     * @param location New user location
+     * Change offline player location
+     * @param location new location
      */
     void teleport(Location location);
 
     /**
-     * Change offline user location to player location
-     *
-     * @param player Target player
+     * Change offline player location
+     * @param player target player
      */
     void teleport(Player player);
 
     /**
-     * Save offline user
+     * Save the offline player
      */
     void save();
 
     /**
-     * Save offline user with save type
-     *
-     * @param type Save type
+     * Save the offline player with save type
+     * @param type save type
      * @see SavePlayerType
      */
     void save(SavePlayerType type);
 
     /**
-     * It is recommended to receive via INMSManager
+     * Gets the player data
+     * @deprecated it is recommended to receive via INMSManager
      * @return Offline player data
      */
     @Deprecated

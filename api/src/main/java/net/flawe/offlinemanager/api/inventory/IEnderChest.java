@@ -9,9 +9,8 @@ import org.bukkit.inventory.Inventory;
  */
 public interface IEnderChest {
     /**
-     * Inventory with parameters from configuration
-     *
-     * @return Ender chest inventory with parameters from configuration
+     * Gets the offline player ender chest
+     * @return ender chest inventory
      */
     Inventory getEnderChest();
 }

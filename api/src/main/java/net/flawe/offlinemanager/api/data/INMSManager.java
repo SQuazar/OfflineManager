@@ -14,43 +14,43 @@ import java.util.UUID;
  * @author flawe
  */
 public interface INMSManager {
+
     /**
-     * Used for storage offline players and tab complete
-     *
-     * @return All players from playerdata folder
+     * Gets the offline players nicknames
+     * @return all players from playerdata folder
      */
     List<String> getSeenPlayers();
 
     /**
-     * Used to get an offline player by username
-     * @param s Player's username
-     * @return Offline player with username from parameter
+     * Gets the offline player by name
+     * @deprecated use getPlayerData
+     * @param s player's username
+     * @return offline player with username from parameter
      */
     @Deprecated
     IUser getUser(String s);
 
     /**
-     * Used to get an offline player by UUID
-     * @param uuid Player's uuid
-     * @return Offline player with uuid from parameter
+     * Gets the offline player by uuid
+     * @deprecated use getPlayerData
+     * @param uuid player's uuid
+     * @return offline player with uuid from parameter
      */
     @Deprecated
     IUser getUser(UUID uuid);
 
     /**
-     * Used to get player data
-     * @param uuid The UUID of the player you want to get
-     * @return The player's data that matches the entered parameters
+     * Gets the offline player data
+     * @param uuid player uuid
+     * @return the player's data that matches the entered parameters
      */
-    @Nullable
     IPlayerData getPlayerData(@NotNull UUID uuid);
 
     /**
-     * Used to get player data
-     * @param name The name of the player you want to get
-     * @return The player's data that matches the entered parameters
+     * Gets the offline player data
+     * @param name player name
+     * @return the player's data that matches the entered parameters
      */
-    @Nullable
     IPlayerData getPlayerData(@NotNull String name);
 
 }

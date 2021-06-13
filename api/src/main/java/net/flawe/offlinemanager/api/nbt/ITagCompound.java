@@ -1,13 +1,41 @@
 package net.flawe.offlinemanager.api.nbt;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/**
+ * The class adapter for using nms tag compound
+ * @author flawe
+ */
 public interface ITagCompound {
 
-    TagValue<?> getTagValue(String key);
+    /**
+     * Gets the tag value by key
+     * @param key tag key
+     * @return search results
+     */
+    @Nullable
+    TagValue<?> getTagValue(@NotNull String key);
 
-    ITagCompound getTagCompound(String key);
+    /**
+     * Gets the tag compound by key
+     * @param key tag key
+     * @return search results
+     */
+    @Nullable
+    ITagCompound getTagCompound(@NotNull String key);
 
-    void setValue(String key, TagValue<?> value);
+    /**
+     * Set value in tag compound
+     * @param key new tag key
+     * @param value new tag value
+     */
+    void setValue(@NotNull String key, @NotNull TagValue<?> value);
 
+    /**
+     * Tag types
+     * @author flawe
+     */
     class TagTypes {
         public static final byte BYTE = 1;
         public static final byte SHORT = 2;

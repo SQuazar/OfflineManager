@@ -15,81 +15,89 @@ import java.util.Set;
  */
 public interface ICommand {
     /**
-     * Used for searching command and usage command
-     *
-     * @return Command name
+     * Gets the command name
+     * @return command name
      */
     String getName();
 
     /**
-     * Used for check command sender permission
-     *
-     * @return Command permission
+     * Gets the command permission
+     * @return command permission
      */
     String getPermission();
 
     /**
-     * Used for command list
-     *
-     * @return Command help information
+     * Gets the help for command
+     * @return command help information
      */
     String getHelp();
 
     /**
-     * Used for searching and usage command
-     *
-     * @return Command aliases
+     * Gets the command aliases
+     * @return command aliases
      */
     String[] getAliases();
 
     /**
-     * Method for executing command
-     *
-     * @param player Command executor
-     * @param args   Command arguments
+     * Executes the command
+     * @param player the command executor
+     * @param args   command arguments
      */
     void execute(Player player, String[] args);
 
     /**
-     * Check player permission
-     *
-     * @param player Player for check
-     * @return True if player has permission to command
+     * Checks if player has permission on command
+     * @param player command sender
+     * @return true if player has permission on command
      */
     default boolean hasPermission(Player player) {
         return player.hasPermission(getPermission());
     }
 
     /**
-     * Add placeholder to command response
-     *
-     * @param key   Placeholder key
-     * @param value Placeholder value
+     * Adds the placeholder to command
+     * @param key   placeholder key
+     * @param value placeholder value
      */
+    @Deprecated
     default void addPlaceholder(String key, String value) { }
 
+    /**
+     * Adds the placeholder to command
+     * @param placeholder placeholder
+     */
     default void addPlaceholder(IPlaceholder placeholder) { }
 
+    /**
+     * Adds the placeholders to command
+     * @param placeholders placeholders
+     */
     default void addPlaceholders(IPlaceholder... placeholders) { }
 
     /**
-     * Remove placeholder in command response by placeholder key
-     *
-     * @param key Placeholder key
+     * Removes the placeholder from command
+     * @param key placeholder key
      */
     default void removePlaceholder(String key) { }
 
+    /**
+     * Removes the placeholder from command
+     * @param placeholder placeholder
+     */
     default void removePlaceholder(IPlaceholder placeholder) { }
 
     /**
-     * Used for filling placeholders in command response
-     *
-     * @return Map with placeholders
+     * Gets the placeholders as map
+     * @return placeholders as map
      */
-    default Map<String, String> getPlaceholdersMap() {
+    default Map<String, String> getPlaceholdersAsMap() {
         return new HashMap<>();
     }
 
+    /**
+     * Gets the placeholders set collection
+     * @return placeholders set collection
+     */
     default Set<IPlaceholder> getPlaceholders() {
         return new HashSet<>();
     }

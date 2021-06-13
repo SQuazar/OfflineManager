@@ -14,21 +14,21 @@ public interface ISession {
     /**
      * Used for get active players by ActiveType
      *
-     * @param type Active type
-     * @return Map by active type in parameter
+     * @param type active type
+     * @return map by active type in parameter
      */
     Map<UUID, UUID> getActive(ActiveType type);
 
     /**
      * Check if active is empty by ActiveType
      *
-     * @param type Active type
-     * @return True if active by ActiveType is empty
+     * @param type active type
+     * @return true if active by ActiveType is empty
      */
     boolean isEmpty(ActiveType type);
 
     /**
-     * Used for clear all actives by ActiveType
+     * used for clear all actives by ActiveType
      *
      * @param type ActiveType by which the active map will be cleared
      */
@@ -37,52 +37,52 @@ public interface ISession {
     /**
      * Remove node by key in active by ActiveType
      *
-     * @param uuid Key in active
-     * @param type Active type
+     * @param uuid key in active
+     * @param type active type
      */
     void removeByKey(UUID uuid, ActiveType type);
 
     /**
      * Remove node by value in active by ActiveType
      *
-     * @param uuid Value in active
-     * @param type Active type
+     * @param uuid value in active
+     * @param type active type
      */
     void removeByValue(UUID uuid, ActiveType type);
 
     /**
      * Add active by ActiveType
      *
-     * @param uuid  Active key
-     * @param uuid2 Active value
-     * @param type  Active type
+     * @param uuid  active key
+     * @param uuid2 active value
+     * @param type  active type
      */
     void add(UUID uuid, UUID uuid2, ActiveType type);
 
     /**
      * Check to contains value in active by type
      *
-     * @param uuid Value in active
-     * @param type Active type
-     * @return True, if active contains the value from parameter
+     * @param uuid value in active
+     * @param type active type
+     * @return true, if active contains the value from parameter
      */
     boolean containsValue(UUID uuid, ActiveType type);
 
     /**
      * Check to contains key in active by active type
      *
-     * @param uuid Key in active
-     * @param type Active type
-     * @return True, if active contains the key from parameter
+     * @param uuid key in active
+     * @param type active type
+     * @return true, if active contains the key from parameter
      */
     boolean containsKey(UUID uuid, ActiveType type);
 
     /**
      * Usage for getting key by value using value and active type
      *
-     * @param uuid Value in active
-     * @param type Active type
-     * @return Search result by value and active type
+     * @param uuid value in active
+     * @param type active type
+     * @return search result by value and active type
      */
     UUID getKeyByValue(UUID uuid, ActiveType type);
 }

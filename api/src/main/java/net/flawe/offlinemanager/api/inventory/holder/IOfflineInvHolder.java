@@ -15,26 +15,33 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface IOfflineInvHolder extends InventoryHolder {
     /**
-     * User player who owns this inventory
-     * @return User player
+     * Inventory owner but player instance from user equal getUser().getPlayer()
+     * @deprecated use getPlayerData
+     * @return player instance from user
      */
+    @Deprecated
     @NotNull
     Player getPlayer();
 
     /**
      * Inventory owner
-     * @return Offline player who owns this inventory
+     * @deprecated use getPlayerData
+     * @return offline player who owns this inventory
      */
     @Deprecated
     @NotNull
     IUser getUser();
 
+    /**
+     * Inventory owner
+     * @return data of inventory owner
+     */
     @NotNull
     IPlayerData getPlayerData();
 
     /**
      * Inventory name from configuration
-     * @return Inventory name
+     * @return inventory name
      */
     @NotNull
     String getInventoryName();
@@ -42,21 +49,22 @@ public interface IOfflineInvHolder extends InventoryHolder {
     /**
      * Current inventory type
      * @see InventoryType
-     * @return Type of this inventory
+     * @return type of this inventory
      */
     @NotNull
     InventoryType getInventoryType();
 
     /**
      * Player whose seen offline inventory
-     * @return Player whose seen offline inventory
+     * @return player whose seen offline inventory
      */
     @Nullable
     Player getWhoSeen();
 
     /**
-     * Inventory view status by player
-     * @return True if this inventory viewed by player
+     * Inventory view status by player. Currently not used or working
+     * @return true if this inventory viewed by player
+     *
      */
     boolean isViewed();
 }

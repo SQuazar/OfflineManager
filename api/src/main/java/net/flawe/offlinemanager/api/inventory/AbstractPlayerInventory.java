@@ -6,6 +6,9 @@ import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * The player inventory. Equal to bukkit player inventory, but working with player data
+ */
 public abstract class AbstractPlayerInventory extends AbstractInventory {
 
     protected final PlayerInventory inventory;
@@ -121,6 +124,9 @@ public abstract class AbstractPlayerInventory extends AbstractInventory {
 
     public abstract void setHeldItemSlot(int i);
 
+    /**
+     * Update inventory in player tag compound
+     */
     protected abstract void update();
 
 }

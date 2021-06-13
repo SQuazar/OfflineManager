@@ -7,9 +7,8 @@ package net.flawe.offlinemanager.api.configuration;
  */
 public interface CommandConfiguration extends Configuration {
     /**
-     * Command enabled option
-     *
-     * @return True if option in configuration is true
+     * Checks if command is enabled
+     * @return true if command is enabled
      */
     boolean enabled();
 
@@ -18,16 +17,14 @@ public interface CommandConfiguration extends Configuration {
      */
     interface CommandKillConfiguration extends CommandConfiguration {
         /**
-         * Clear items in inventory
-         *
-         * @return Result by specific path in configuration
+         * Checks if item cleanup is enabled
+         * @return true if item cleanup is enabled
          */
         boolean clearItems();
 
         /**
-         * Drop items from player or not
-         *
-         * @return Result by specific path in configuration
+         * Checks if drop items is enabled
+         * @return true if drop items is enabled
          */
         boolean dropItems();
     }

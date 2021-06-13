@@ -7,23 +7,20 @@ package net.flawe.offlinemanager.api.configuration;
  */
 public interface ContainerConfiguration extends Configuration {
     /**
-     * Inventory enabled check
-     *
-     * @return True if option in configuration is true
+     * Checks if inventory is enabled
+     * @return true if option in configuration is true
      */
     boolean enabled();
 
     /**
-     * Can player interact with inventory or not.
-     *
-     * @return Result by specific path in configuration
+     * Checks if interact is enabled
+     * @return true if interact is enabled
      */
     boolean interact();
 
     /**
-     * Inventory name
-     *
-     * @return Inventory name from configuration
+     * Gets the inventory name
+     * @return inventory name
      */
     String getName();
 }

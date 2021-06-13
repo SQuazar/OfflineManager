@@ -9,30 +9,26 @@ import java.util.List;
  */
 public interface ICommandManager {
     /**
-     * Used for searching sub commands and tab complete
-     *
-     * @return Sub command list
+     * Gets the sub command list
+     * @return sub command list
      */
     List<ICommand> getSubCommands();
 
     /**
-     * Add sub command to list in command manager
-     *
-     * @param command Sub command whose will added to list in command manager
+     * Adds the sub command to main plugin command
+     * @param command new sub command
      */
     void addSubCommand(ICommand command);
 
     /**
-     * Remove sub command from list in command manager
-     *
-     * @param command Sub command whose will removed from list in command manager
+     * Removes the sub command from sub command list
+     * @param command sub command
      */
     void removeSubCommand(ICommand command);
 
     /**
-     * Remove sub command from list in command manager by command name
-     *
-     * @param name Command name whose will removed from list in command manager
+     * Removes the sub command from sub command list
+     * @param name sub command name
      */
     void removeSubCommand(String name);
 }

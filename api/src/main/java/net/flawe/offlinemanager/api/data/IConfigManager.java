@@ -15,11 +15,11 @@ public interface IConfigManager {
     void update();
 
     /**
-     * Colorize and fill PAPI placeholders (if enabled) in message
+     * Gets the colorized and filled PAPI placeholders (if enabled) in message
      *
-     * @param player Player for %player% placeholder
-     * @param s      Message to be filled
-     * @return Formatted message with color and PAPI placeholders
+     * @param player player for %player% placeholder
+     * @param s      message to be filled
+     * @return formatted message with color and PAPI placeholders
      */
     @Deprecated
     String getMessage(Player player, String s);
@@ -30,18 +30,18 @@ public interface IConfigManager {
     void reloadConfig();
 
     /**
-     * Fill message with placeholders
-     * @param player Command sender / Placeholder owner
-     * @param s Message for fill
-     * @return Filled message
+     * Gets the filled message with placeholders
+     * @param player command sender / placeholder owner
+     * @param s message for fill
+     * @return filled message
      */
     String fillMessage(Player player, String s);
 
     /**
-     * Colorize message from parameter
+     * Gets the colorized message from parameter
      *
-     * @param s Message to be formatting
-     * @return Formatted message from parameter
+     * @param s message to be formatting
+     * @return formatted message from parameter
      */
     @Deprecated
     String getMessage(String s);

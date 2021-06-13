@@ -9,9 +9,8 @@ import org.bukkit.inventory.Inventory;
  */
 public interface IInventory {
     /**
-     * Inventory with parameters from configuration
-     *
-     * @return Inventory with parameters from configuration
+     * Gets the offline player inventory
+     * @return inventory
      */
     Inventory getInventory();
 }
