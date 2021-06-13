@@ -1,18 +1,20 @@
-package net.flawe.offlinemanager.api.events.data;
+package net.flawe.offlinemanager.api.event.data;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
-import net.flawe.offlinemanager.api.events.OfflineManagerEvent;
+import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class SavePlayerEvent extends OfflineManagerEvent implements Cancellable {
+/**
+ * Called when player data is saving
+ * @author flawe
+ */
+public class SavePlayerEvent extends OfflineManagerEvent {
 
     private final Player player;
     private final IPlayerData playerData;
-    private boolean cancelled;
     private final SavePlayerType saveType;
 
     @Deprecated
@@ -29,26 +31,29 @@ public class SavePlayerEvent extends OfflineManagerEvent implements Cancellable 
         this.saveType = type;
     }
 
+    /**
+     * Gets the save type
+     * @return save type
+     */
     @NotNull
     public SavePlayerType getSaveType() {
         return saveType;
     }
 
-    @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
-    }
-
+    /**
+     * Gets the player who was saved
+     * @deprecated use getPlayerData
+     * @return player who was saved
+     */
     @Deprecated
     public @Nullable Player getPlayer() {
         return player;
     }
 
+    /**
+     * Gets the player data that has been saved
+     * @return player data that has been saved
+     */
     @Nullable
     public IPlayerData getPlayerData() {
         return playerData;
