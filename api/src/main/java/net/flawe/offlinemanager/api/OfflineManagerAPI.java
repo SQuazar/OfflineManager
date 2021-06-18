@@ -7,6 +7,8 @@ import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.memory.ISession;
 import net.flawe.offlinemanager.api.memory.IStorage;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.InventoryView;
 
 import java.util.UUID;
 
