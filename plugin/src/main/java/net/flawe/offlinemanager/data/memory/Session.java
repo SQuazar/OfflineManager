@@ -62,11 +62,11 @@ public class Session implements ISession {
             for (ActiveType active : ActiveType.values()) {
                 if (active == ActiveType.ALL)
                     continue;
-                getActive(active).values().removeIf(value -> value == uuid);
+                getActive(active).values().removeIf(value -> value.equals(uuid));
             }
             return;
         }
-        getActive(type).values().removeIf(value -> value == uuid);
+        getActive(type).values().removeIf(value -> value.equals(uuid));
     }
 
     @Override
@@ -117,7 +117,7 @@ public class Session implements ISession {
             for (ActiveType active : ActiveType.values()) {
                 Map<UUID, UUID> map = getActive(active);
                 if (map.containsValue(uuid)) {
-                    Optional<UUID> optional = map.keySet().stream().filter(k -> map.get(k) == uuid).findFirst();
+                    Optional<UUID> optional = map.keySet().stream().filter(k -> map.get(k).equals(uuid)).findFirst();
                     if (!optional.isPresent())
                         continue;
                     key = optional.get();
@@ -126,7 +126,7 @@ public class Session implements ISession {
         }
         Map<UUID, UUID> map = getActive(type);
         if (map.containsValue(uuid)) {
-            Optional<UUID> optional = map.keySet().stream().filter(k -> map.get(k) == uuid).findFirst();
+            Optional<UUID> optional = map.keySet().stream().filter(k -> map.get(k).equals(uuid)).findFirst();
             if (optional.isPresent())
                 key = optional.get();
         }
