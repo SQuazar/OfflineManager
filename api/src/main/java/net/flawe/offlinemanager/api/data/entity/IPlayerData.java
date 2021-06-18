@@ -9,6 +9,8 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.InventoryView;
 
 import java.util.UUID;
 
@@ -235,6 +237,14 @@ public interface IPlayerData {
      * @param exp new exp total
      */
     void setExpTotal(int exp);
+
+    /**
+     * Changes the data online status
+     * Set true if you would like load data to player
+     * Set false if you would like load player to data
+     * @param b online status
+     */
+    void setOnline(boolean b);
 
     /**
      * Save player data
