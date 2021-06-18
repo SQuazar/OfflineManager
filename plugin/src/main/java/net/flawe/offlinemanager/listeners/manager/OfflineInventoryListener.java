@@ -18,6 +18,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Arrays;
+
 public class OfflineInventoryListener implements Listener {
 
     private final OfflineManagerAPI api = OfflineManager.getApi();
