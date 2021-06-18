@@ -7,6 +7,8 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.InventoryView;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -14,7 +16,7 @@ import java.util.UUID;
 public abstract class AbstractPlayerData implements IPlayerData {
 
     private final UUID uuid;
-    private final ITagCompound compound;
+    protected ITagCompound compound;
 
     protected AbstractPlayerData(UUID uuid, ITagCompound compound) {
         this.uuid = uuid;
