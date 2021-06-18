@@ -5,19 +5,18 @@ import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.enums.ActiveType;
 import net.flawe.offlinemanager.api.enums.InventoryType;
-import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.api.event.inventory.CloseOfflineInventoryEvent;
 import net.flawe.offlinemanager.api.event.inventory.OfflineInventoryClickEvent;
 import net.flawe.offlinemanager.api.event.inventory.OfflineInventoryInteractEvent;
 import net.flawe.offlinemanager.api.event.inventory.OpenOfflineInventoryEvent;
+import net.flawe.offlinemanager.api.inventory.AbstractPlayerInventory;
 import net.flawe.offlinemanager.configuration.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 public class OfflineInventoryListener implements Listener {
 
@@ -28,56 +27,15 @@ public class OfflineInventoryListener implements Listener {
     public void onClose(CloseOfflineInventoryEvent e) {
         IPlayerData playerData = e.getPlayerData();
         switch (e.getInventoryType()) {
-            case DEFAULT: {
-                if (!settings.getInventoryConfiguration().enabled()) break;
-                if (!settings.getInventoryConfiguration().interact()) {
-                    if (api.getSession().containsKey(e.getPlayer().getUniqueId(), ActiveType.INVENTORY))
-                        api.getSession().removeByKey(e.getPlayer().getUniqueId(), ActiveType.INVENTORY);
-                    break;
-                }
-                ItemStack stack;
-                for (int i = 0; i < 36; i++) {
-                    stack = e.getInventory().getItem(i);
-                    playerData.getInventory().setItem(i, stack);
-                }
-                playerData.save(SavePlayerType.INVENTORY);
-                if (api.getSession().containsKey(e.getPlayer().getUniqueId(), ActiveType.INVENTORY))
-                    api.getSession().removeByKey(e.getPlayer().getUniqueId(), ActiveType.INVENTORY);
-            }
-            break;
-            case ARMOR: {
-                if (!settings.getArmorInventoryConfiguration().enabled()) break;
-                if (!settings.getArmorInventoryConfiguration().interact()) {
-                    if (api.getSession().containsKey(e.getPlayer().getUniqueId(), ActiveType.ARMOR_INVENTORY))
-                        api.getSession().removeByKey(e.getPlayer().getUniqueId(), ActiveType.ARMOR_INVENTORY);
-                    break;
-                }
-                Inventory inv = e.getInventory();
-                playerData.getInventory().setArmorContents(new ItemStack[]{inv.getItem(0), inv.getItem(1), inv.getItem(2), inv.getItem(3)});
-                playerData.getInventory().setItemInOffHand(inv.getItem(4));
-                playerData.save(SavePlayerType.ARMOR_INVENTORY);
-                if (api.getSession().containsKey(e.getPlayer().getUniqueId(), ActiveType.ARMOR_INVENTORY))
-                    api.getSession().removeByKey(e.getPlayer().getUniqueId(), ActiveType.ARMOR_INVENTORY);
-            }
-            break;
-            case ENDER_CHEST: {
-                if (!settings.getEnderChestConfiguration().enabled()) break;
-                if (!settings.getEnderChestConfiguration().interact()) {
-                    if (api.getSession().containsKey(e.getPlayer().getUniqueId(), ActiveType.ENDER_CHEST))
-                        api.getSession().removeByKey(e.getPlayer().getUniqueId(), ActiveType.ENDER_CHEST);
-                    break;
-                }
-                e.getPlayerData().getEnderChest().getEnderChest().setContents(e.getInventory().getContents());
-                e.getPlayerData().save(SavePlayerType.ENDER_CHEST);
-                if (api.getSession().containsKey(e.getPlayer().getUniqueId(), ActiveType.ENDER_CHEST))
-                    api.getSession().removeByKey(e.getPlayer().getUniqueId(), ActiveType.ENDER_CHEST);
-            }
-            break;
-        }
-        if (Bukkit.getOfflinePlayer(playerData.getUUID()).isOnline()) {
-            Player target = Bukkit.getPlayer(playerData.getUUID());
-            if (target != null)
-                target.getInventory().setContents(playerData.getInventory().getContents());
+            case ARMOR:
+                api.getSession().removeByValue(playerData.getUUID(), ActiveType.ARMOR_INVENTORY);
+                break;
+            case ENDER_CHEST:
+                api.getSession().removeByValue(playerData.getUUID(), ActiveType.ENDER_CHEST);
+                break;
+            case DEFAULT:
+                api.getSession().removeByValue(playerData.getUUID(), ActiveType.INVENTORY);
+                break;
         }
     }
 
@@ -96,15 +54,56 @@ public class OfflineInventoryListener implements Listener {
 
     @EventHandler
     public void onInteract(OfflineInventoryInteractEvent e) {
+        Player player;
         switch (e.getInventoryType()) {
             case DEFAULT:
-                e.setCancelled(!settings.getInventoryConfiguration().interact());
+                if (!settings.getInventoryConfiguration().interact()) {
+                    e.setCancelled(true);
+                    break;
+                }
+                player = Bukkit.getPlayer(e.getPlayerData().getUUID());
+                if (player == null) {
+                    Bukkit.getScheduler().runTask((Plugin) api, () -> e.getPlayerData().getInventory().setStorageContents(e.getInventory().getContents()));
+                    break;
+                }
+                Bukkit.getScheduler().runTask((Plugin) api, () -> player.getInventory().setStorageContents(e.getInventory().getContents()));
                 break;
             case ARMOR:
-                e.setCancelled(!settings.getArmorInventoryConfiguration().interact());
+                if (!settings.getArmorInventoryConfiguration().interact()) {
+                    e.setCancelled(true);
+                    break;
+                }
+                player = Bukkit.getPlayer(e.getPlayerData().getUUID());
+                if (player == null) {
+                    AbstractPlayerInventory inventory = e.getPlayerData().getInventory();
+                    Bukkit.getScheduler().runTask((Plugin) api, () -> {
+                        inventory.setBoots(e.getInventory().getItem(0));
+                        inventory.setLeggings(e.getInventory().getItem(1));
+                        inventory.setChestplate(e.getInventory().getItem(2));
+                        inventory.setHelmet(e.getInventory().getItem(3));
+                        inventory.setItemInOffHand(e.getInventory().getItem(4));
+                    });
+                    break;
+                }
+                Bukkit.getScheduler().runTask((Plugin) api, () -> {
+                    player.getInventory().setBoots(e.getInventory().getItem(0));
+                    player.getInventory().setLeggings(e.getInventory().getItem(1));
+                    player.getInventory().setChestplate(e.getInventory().getItem(2));
+                    player.getInventory().setHelmet(e.getInventory().getItem(3));
+                    player.getInventory().setItemInOffHand(e.getInventory().getItem(4));
+                });
                 break;
             case ENDER_CHEST:
-                e.setCancelled(!settings.getEnderChestConfiguration().interact());
+                if (!settings.getEnderChestConfiguration().interact()) {
+                    e.setCancelled(true);
+                    break;
+                }
+                player = Bukkit.getPlayer(e.getPlayerData().getUUID());
+                if (player == null) {
+                    Bukkit.getScheduler().runTask((Plugin) api, () -> e.getPlayerData().getEnderChest().getEnderChest().setContents(e.getInventory().getContents()));
+                    break;
+                }
+                Bukkit.getScheduler().runTask((Plugin) api, () -> player.getEnderChest().setContents(e.getInventory().getContents()));
                 break;
         }
     }

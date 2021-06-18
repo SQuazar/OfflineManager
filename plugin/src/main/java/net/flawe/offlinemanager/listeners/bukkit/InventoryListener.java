@@ -1,6 +1,9 @@
 package net.flawe.offlinemanager.listeners.bukkit;
 
+import net.flawe.offlinemanager.OfflineManager;
+import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.enums.ActiveType;
 import net.flawe.offlinemanager.api.event.inventory.CloseOfflineInventoryEvent;
 import net.flawe.offlinemanager.api.event.inventory.OfflineInventoryClickEvent;
 import net.flawe.offlinemanager.api.event.inventory.OfflineInventoryInteractEvent;
@@ -13,6 +16,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.Plugin;
 
 public class InventoryListener implements Listener {
 
@@ -50,7 +55,40 @@ public class InventoryListener implements Listener {
         onInteract(e);
     }
 
+    private final OfflineManagerAPI api = OfflineManager.getApi();
+
     private void onInteract(InventoryInteractEvent e) {
+        Player player = (Player) e.getWhoClicked();
+        Player viewer;
+        if (api.getSession().containsValue(player.getUniqueId(), ActiveType.INVENTORY)) {
+            viewer = Bukkit.getPlayer(api.getSession().getKeyByValue(player.getUniqueId(), ActiveType.INVENTORY));
+            if (viewer != null) {
+                Inventory inventory = viewer.getOpenInventory().getTopInventory();
+                Bukkit.getScheduler().runTask((Plugin) api, () -> {
+                    inventory.setContents(player.getInventory().getStorageContents());
+                });
+            }
+        }
+        if (api.getSession().containsValue(player.getUniqueId(), ActiveType.ENDER_CHEST)) {
+            viewer = Bukkit.getPlayer(api.getSession().getKeyByValue(player.getUniqueId(), ActiveType.ENDER_CHEST));
+            if (viewer != null) {
+                Inventory inventory = viewer.getOpenInventory().getTopInventory();
+                Bukkit.getScheduler().runTask((Plugin) api, () -> {
+                   inventory.setContents(player.getEnderChest().getContents());
+                });
+            }
+        }
+        if (api.getSession().containsValue(player.getUniqueId(), ActiveType.ARMOR_INVENTORY)) {
+            viewer = Bukkit.getPlayer(api.getSession().getKeyByValue(player.getUniqueId(), ActiveType.ARMOR_INVENTORY));
+            if (viewer != null) {
+                Inventory inventory = viewer.getOpenInventory().getTopInventory();
+                Bukkit.getScheduler().runTask((Plugin) api, () -> {
+                    for (int i = 0; i < 4; i++)
+                        inventory.setItem(i, player.getInventory().getArmorContents()[i]);
+                    inventory.setItem(4, player.getInventory().getItemInOffHand());
+                });
+            }
+        }
         if (e.getInventory().getHolder() == null)
             return;
         if (e.getInventory().getHolder() instanceof IOfflineInvHolder) {
