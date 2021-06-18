@@ -5,6 +5,7 @@ import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.enums.ActiveType;
 import net.flawe.offlinemanager.api.enums.InventoryType;
+import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.api.event.inventory.CloseOfflineInventoryEvent;
 import net.flawe.offlinemanager.api.event.inventory.OfflineInventoryClickEvent;
 import net.flawe.offlinemanager.api.event.inventory.OfflineInventoryInteractEvent;
@@ -39,6 +40,9 @@ public class OfflineInventoryListener implements Listener {
                 api.getSession().removeByValue(playerData.getUUID(), ActiveType.INVENTORY);
                 break;
         }
+        Player player = Bukkit.getPlayer(e.getPlayerData().getUUID());
+        if (player == null)
+            e.getPlayerData().save(SavePlayerType.DEFAULT);
     }
 
     @EventHandler
