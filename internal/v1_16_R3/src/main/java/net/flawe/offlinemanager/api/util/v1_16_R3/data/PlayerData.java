@@ -15,8 +15,11 @@ import net.flawe.offlinemanager.api.util.v1_16_R3.inventory.OfflineEnderChest;
 import net.minecraft.server.v1_16_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftInventoryPlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
@@ -29,12 +32,12 @@ public class PlayerData extends AbstractPlayerData {
     private final OfflineManagerAPI api;
     private final UUID uuid;
     private final String name;
-    private final WorldNBTStorage worldNBTStorage;
-    private final NBTTagCompound tag;
+    private WorldNBTStorage worldNBTStorage;
+    private NBTTagCompound tag;
     private final File playerDir;
-    private final net.flawe.offlinemanager.api.util.v1_16_R3.inventory.PlayerInventory playerInventory;
-    private final ArmorInventory armorInventory;
-    private final IEnderChest enderChest;
+    private net.flawe.offlinemanager.api.util.v1_16_R3.inventory.PlayerInventory playerInventory;
+    private ArmorInventory armorInventory;
+    private IEnderChest enderChest;
 
     public PlayerData(String name, OfflineManagerAPI api) {
         //noinspection deprecation
@@ -84,6 +87,41 @@ public class PlayerData extends AbstractPlayerData {
     @Override
     public IEnderChest getEnderChest() {
         return enderChest;
+    }
+
+    @Override
+    public void setOnline(boolean b) {
+        Player player = Bukkit.getPlayer(uuid);
+        if (b) {
+            if (player == null) return;
+            EntityPlayer e = ((CraftPlayer) player).getHandle();
+            e.load(tag);
+            e.loadData(tag);
+            return;
+        }
+        MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
+        WorldServer worldServer = server.getWorldServer(World.OVERWORLD);
+        if (worldServer == null)
+            throw new NullPointerException("Overworld cannot be null!");
+        GameProfile profile = new GameProfile(uuid, Bukkit.getOfflinePlayer(uuid).getName());
+        EntityPlayer ep;
+        worldNBTStorage = ((CraftServer) Bukkit.getServer()).getServer().worldNBTStorage;
+        compound = new TagCompound(worldNBTStorage.getPlayerData(uuid.toString()));
+        tag = ((TagCompound) compound).getTag();
+        if (player != null) {
+            ep = ((CraftPlayer) player).getHandle();
+            compound = new TagCompound(ep.save(tag));
+            ep.saveData(tag);
+        }
+        ep = new EntityPlayer(server, worldServer, profile, new PlayerInteractManager(worldServer));
+        ep.load(tag);
+        ep.loadData(tag);
+        NBTTagList inventoryList = (NBTTagList) tag.get("Inventory");
+        PlayerInventory virtual = new PlayerInventory(ep);
+        virtual.b(inventoryList);
+        this.playerInventory = new net.flawe.offlinemanager.api.util.v1_16_R3.inventory.PlayerInventory(new CraftInventoryPlayer(virtual), tag);
+        this.armorInventory = new ArmorInventory(this);
+        this.enderChest = new OfflineEnderChest(Bukkit.createInventory(null, InventoryType.ENDER_CHEST), tag);
     }
 
     @Override
