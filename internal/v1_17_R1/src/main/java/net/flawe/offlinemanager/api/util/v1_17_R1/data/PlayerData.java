@@ -1,3 +1,25 @@
+/*
+ * Copyright (c) 2021 flaweoff
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package net.flawe.offlinemanager.api.util.v1_17_R1.data;
 
 import com.mojang.authlib.GameProfile;
@@ -52,10 +74,10 @@ public class PlayerData extends AbstractPlayerData {
     }
 
     public PlayerData(UUID uuid, OfflineManagerAPI api) {
-        this(uuid, new TagCompound(((CraftServer) Bukkit.getServer()).getHandle().r.getPlayerData(uuid.toString())), api);
+        this(uuid, new TagAdapter(((CraftServer) Bukkit.getServer()).getHandle().r.getPlayerData(uuid.toString())), api);
     }
 
-    public PlayerData(UUID uuid, TagCompound compound, OfflineManagerAPI api) {
+    public PlayerData(UUID uuid, TagAdapter compound, OfflineManagerAPI api) {
         super(uuid, compound);
         this.api = api;
         this.uuid = uuid;
@@ -98,11 +120,11 @@ public class PlayerData extends AbstractPlayerData {
         GameProfile profile = new GameProfile(uuid, Bukkit.getOfflinePlayer(uuid).getName());
         EntityPlayer ep;
         worldNBTStorage = ((CraftServer) Bukkit.getServer()).getHandle().r;
-        compound = new TagCompound(worldNBTStorage.getPlayerData(uuid.toString()));
-        tag = ((TagCompound) compound).getTag();
+        adapter = new TagAdapter(worldNBTStorage.getPlayerData(uuid.toString()));
+        tag = ((TagAdapter) adapter).getTag();
         if (player != null) {
             ep = ((CraftPlayer) player).getHandle();
-            compound = new TagCompound(ep.save(tag));
+            adapter = new TagAdapter(ep.save(tag));
             ep.saveData(tag);
         }
         ep = new EntityPlayer(server, worldServer, profile);
