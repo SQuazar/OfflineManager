@@ -1,6 +1,30 @@
+/*
+ * Copyright (c) 2021 flaweoff
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package net.flawe.offlinemanager.api.data.entity;
 
-import net.flawe.offlinemanager.api.nbt.ITagCompound;
+import net.flawe.offlinemanager.api.inventory.view.OfflineInventoryView;
+import net.flawe.offlinemanager.api.nbt.ITagAdapter;
+import net.flawe.offlinemanager.api.nbt.TagValue;
 import net.flawe.offlinemanager.api.nbt.type.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -8,7 +32,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.InventoryView;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -16,11 +39,11 @@ import java.util.UUID;
 public abstract class AbstractPlayerData implements IPlayerData {
 
     private final UUID uuid;
-    protected ITagCompound compound;
+    protected ITagAdapter adapter;
 
-    protected AbstractPlayerData(UUID uuid, ITagCompound compound) {
+    protected AbstractPlayerData(UUID uuid, ITagAdapter adapter) {
         this.uuid = uuid;
-        this.compound = compound;
+        this.adapter = adapter;
     }
 
     @Override
@@ -30,72 +53,72 @@ public abstract class AbstractPlayerData implements IPlayerData {
 
     @Override
     public String getName() {
-        return ((TagString) compound.getTagCompound("bukkit").getTagValue("lastKnownName")).getValue();
+        return ((TagString) adapter.getTagCompound("bukkit").getTagValue("lastKnownName")).getValue();
     }
 
     @Override
     public float getFallDistance() {
-        return ((TagFloat) compound.getTagValue("FallDistance")).getValue();
+        return ((TagFloat) adapter.getTagValue("FallDistance")).getValue();
     }
 
     @Override
     public void setFallDistance(float distance) {
-        compound.setValue("FallDistance", new TagFloat(distance));
+        adapter.setValue("FallDistance", new TagFloat(distance));
     }
 
     @Override
     public short getFireTicks() {
-        return ((TagShort) compound.getTagValue("Fire")).getValue();
+        return ((TagShort) adapter.getTagValue("Fire")).getValue();
     }
 
     @Override
     public void setFireTicks(short ticks) {
-        compound.setValue("Fire", new TagShort(ticks));
+        adapter.setValue("Fire", new TagShort(ticks));
     }
 
     @Override
     public float getExhaustion() {
-        return ((TagFloat) compound.getTagValue("foodExhaustionLevel")).getValue();
+        return ((TagFloat) adapter.getTagValue("foodExhaustionLevel")).getValue();
     }
 
     @Override
     public void setExhaustion(float exhaustion) {
-        compound.setValue("foodExhaustionLevel", new TagFloat(exhaustion));
+        adapter.setValue("foodExhaustionLevel", new TagFloat(exhaustion));
     }
 
     @Override
     public int getFoodLevel() {
-        return ((TagInteger) compound.getTagValue("foodLevel")).getValue();
+        return ((TagInteger) adapter.getTagValue("foodLevel")).getValue();
     }
 
     @Override
     public void setFoodLevel(int level) {
-        compound.setValue("foodLevel", new TagInteger(level));
+        adapter.setValue("foodLevel", new TagInteger(level));
     }
 
     @Override
     public float getSaturation() {
-        return ((TagFloat) compound.getTagValue("foodSaturationLevel")).getValue();
+        return ((TagFloat) adapter.getTagValue("foodSaturationLevel")).getValue();
     }
 
     @Override
     public void setSaturation(float saturation) {
-        compound.setValue("foodSaturationLevel", new TagFloat(saturation));
+        adapter.setValue("foodSaturationLevel", new TagFloat(saturation));
     }
 
     @Override
     public float getHealth() {
-        return ((TagFloat) compound.getTagValue("Health")).getValue();
+        return ((TagFloat) adapter.getTagValue("Health")).getValue();
     }
 
     @Override
     public void setHealth(float health) {
-        compound.setValue("Health", new TagFloat(health));
+        adapter.setValue("Health", new TagFloat(health));
     }
 
     @Override
     public boolean isInvulnerable() {
-        return ((TagByte) compound.getTagValue("Invulnerable")).getValue() != 0;
+        return ((TagByte) adapter.getTagValue("Invulnerable")).getValue() != 0;
     }
 
     private static final TagByte byteFalse = new TagByte((byte) 0);
@@ -103,55 +126,55 @@ public abstract class AbstractPlayerData implements IPlayerData {
 
     @Override
     public void setInvulnerable(boolean b) {
-        compound.setValue("Invulnerable", b ? byteTrue : byteFalse);
+        adapter.setValue("Invulnerable", b ? byteTrue : byteFalse);
     }
 
     @Override
     public boolean isOnGround() {
-        return ((TagByte) compound.getTagValue("OnGround")).getValue() != 0;
+        return ((TagByte) adapter.getTagValue("OnGround")).getValue() != 0;
     }
 
     @Override
     public GameMode getGameMode() {
-        return GameMode.getByValue(((TagInteger) compound.getTagValue("playerGameType")).getValue());
+        return GameMode.getByValue(((TagInteger) adapter.getTagValue("playerGameType")).getValue());
     }
 
     @Override
     public void setGameMode(GameMode gameMode) {
-        compound.setValue("playerGameType", new TagInteger(gameMode.getValue()));
+        adapter.setValue("playerGameType", new TagInteger(gameMode.getValue()));
     }
 
     @Override
     public int getPortalCooldown() {
-        return ((TagInteger) compound.getTagValue("PortalCooldown")).getValue();
+        return ((TagInteger) adapter.getTagValue("PortalCooldown")).getValue();
     }
 
     @Override
     public void setPortalCooldown(int cooldown) {
-        compound.setValue("PortalCooldown", new TagInteger(cooldown));
+        adapter.setValue("PortalCooldown", new TagInteger(cooldown));
     }
 
     @Override
     public int getSelectedSlot() {
-        return ((TagInteger) compound.getTagValue("SelectedItemSlot")).getValue();
+        return ((TagInteger) adapter.getTagValue("SelectedItemSlot")).getValue();
     }
 
     @Override
     public void setSelectedSlot(int slot) {
-        compound.setValue("SelectedItemSlot", new TagInteger(slot));
+        adapter.setValue("SelectedItemSlot", new TagInteger(slot));
     }
 
     @Override
     public World getWorld() {
-        long most = ((TagLong) compound.getTagValue("WorldUUIDMost")).getValue();
-        long least = ((TagLong) compound.getTagValue("WorldUUIDLeast")).getValue();
+        long most = ((TagLong) adapter.getTagValue("WorldUUIDMost")).getValue();
+        long least = ((TagLong) adapter.getTagValue("WorldUUIDLeast")).getValue();
         return Bukkit.getWorld(new UUID(most, least));
     }
 
     @Override
     public Location getLocation() {
-        TagList pos = (TagList) compound.getTagValue("Pos");
-        TagList rotation = (TagList) compound.getTagValue("Rotation");
+        TagList pos = (TagList) adapter.getTagValue("Pos");
+        TagList rotation = (TagList) adapter.getTagValue("Rotation");
         double x = 0, y = 0, z = 0;
         if (pos != null) {
             x = ((TagDouble) pos.getTagValue(0)).getValue();
@@ -173,15 +196,16 @@ public abstract class AbstractPlayerData implements IPlayerData {
         pos.addValue(new TagDouble(location.getX()));
         pos.addValue(new TagDouble(location.getY()));
         pos.addValue(new TagDouble(location.getZ()));
+
         TagList rotation = new TagList();
         rotation.addValue(new TagFloat(location.getYaw()));
         rotation.addValue(new TagFloat(location.getPitch()));
         TagLong worldUuidMost = new TagLong(location.getWorld().getUID().getMostSignificantBits());
         TagLong worldUuidLeast = new TagLong(location.getWorld().getUID().getLeastSignificantBits());
-        compound.setValue("Pos", pos);
-        compound.setValue("Rotation", rotation);
-        compound.setValue("WorldUUIDLeast", worldUuidLeast);
-        compound.setValue("WorldUUIDMost", worldUuidMost);
+        adapter.setValue("Pos", pos);
+        adapter.setValue("Rotation", rotation);
+        adapter.setValue("WorldUUIDLeast", worldUuidLeast);
+        adapter.setValue("WorldUUIDMost", worldUuidMost);
     }
 
     @Override
@@ -191,32 +215,54 @@ public abstract class AbstractPlayerData implements IPlayerData {
 
     @Override
     public int getExpLevel() {
-        return ((TagInteger) compound.getTagValue("XpLevel")).getValue();
+        return ((TagInteger) adapter.getTagValue("XpLevel")).getValue();
     }
 
     @Override
     public void setExpLevel(int level) {
-        compound.setValue("XpLevel", new TagInteger(level));
+        adapter.setValue("XpLevel", new TagInteger(level));
     }
 
     @Override
     public float getExp() {
-        return ((TagFloat) compound.getTagValue("XpP")).getValue();
+        return ((TagFloat) adapter.getTagValue("XpP")).getValue();
     }
 
     @Override
     public void setExp(float exp) {
-        compound.setValue("XpP", new TagFloat(exp));
+        adapter.setValue("XpP", new TagFloat(exp));
     }
 
     @Override
     public int getExpTotal() {
-        return ((TagInteger) compound.getTagValue("XpTotal")).getValue();
+        return ((TagInteger) adapter.getTagValue("XpTotal")).getValue();
     }
 
     @Override
     public void setExpTotal(int exp) {
-        compound.setValue("XpTotal", new TagInteger(exp));
+        adapter.setValue("XpTotal", new TagInteger(exp));
+    }
+
+    @Override
+    public void setTag(String key, TagValue<?> tagValue) {
+        adapter.setValue(key, tagValue);
+    }
+
+    @Override
+    public void removeTag(String key) {
+        adapter.setValue(key, null);
+    }
+
+    @Override
+    public TagValue<?> getTagValue(String key) {
+        return adapter.getTagValue(key);
+    }
+
+    @Override
+    public void openInventory(Player player) {
+        throw new UnsupportedOperationException("Not supported in this version");
+        /*OfflineInventoryView view = new OfflineInventoryView(this, player);
+        player.openInventory(view);*/
     }
 
     @Override
