@@ -1,3 +1,25 @@
+/*
+ * Copyright (c) 2021 flaweoff
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package net.flawe.offlinemanager.api.data.entity;
 
 import net.flawe.offlinemanager.api.entity.IUser;
@@ -5,6 +27,7 @@ import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.api.inventory.AbstractPlayerInventory;
 import net.flawe.offlinemanager.api.inventory.IArmorInventory;
 import net.flawe.offlinemanager.api.inventory.IEnderChest;
+import net.flawe.offlinemanager.api.nbt.TagValue;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -39,6 +62,8 @@ public interface IPlayerData {
      * @return inventory
      */
     AbstractPlayerInventory getInventory();
+
+    void openInventory(Player player);
 
     /**
      * Gets the offline player armor inventory
@@ -245,6 +270,26 @@ public interface IPlayerData {
      * @param b online status
      */
     void setOnline(boolean b);
+
+    /**
+     * Sets new tag value with specified key
+     * @param key tag key
+     * @param tagValue new tag value
+     */
+    void setTag(String key, TagValue<?> tagValue);
+
+    /**
+     * Removes a tag
+     * @param key tag key
+     */
+    void removeTag(String key);
+
+    /**
+     * Returns tag value
+     * @param key tag key
+     * @return tag value
+     */
+    TagValue<?> getTagValue(String key);
 
     /**
      * Save player data
