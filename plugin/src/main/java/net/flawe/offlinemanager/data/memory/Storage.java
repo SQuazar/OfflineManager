@@ -51,12 +51,14 @@ public class Storage implements IStorage {
                 UUID uuid = UUID.fromString(id);
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
                 if (offlinePlayer.hasPlayedBefore() && !offlinePlayer.isOnline()) {
-                    players.add(offlinePlayer.getName());
+                    if (offlinePlayer.getName() != null)
+                        players.add(offlinePlayer.getName());
                 }
             } catch (IllegalArgumentException exception) {
                 plugin.err(id + " file is broken. Replace or remove it to resolve this error.");
             }
         });
+        plugin.info("Players loaded successfully!");
     }
 
     @Override
@@ -111,7 +113,7 @@ public class Storage implements IStorage {
         List<String> list = players;
         if (args[1].isEmpty())
             return list.subList(0, Math.min(list.size(), 50));
-        list = list.parallelStream().filter(s -> s.toLowerCase().startsWith(args[1].toLowerCase())).collect(Collectors.toList());
+        list = list.parallelStream().filter(s -> s != null && s.toLowerCase().startsWith(args[1].toLowerCase())).collect(Collectors.toList());
         List<String> nList = new ArrayList<>();
         int size = 0;
         for (String s : list) {
