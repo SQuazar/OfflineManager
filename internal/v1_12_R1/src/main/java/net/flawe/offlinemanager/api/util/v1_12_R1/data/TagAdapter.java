@@ -1,16 +1,39 @@
+/*
+ * Copyright (c) 2021 flaweoff
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package net.flawe.offlinemanager.api.util.v1_12_R1.data;
 
-import net.flawe.offlinemanager.api.nbt.ITagCompound;
+import net.flawe.offlinemanager.api.nbt.ITagAdapter;
 import net.flawe.offlinemanager.api.nbt.TagValue;
 import net.flawe.offlinemanager.api.nbt.type.*;
 import net.minecraft.server.v1_12_R1.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class TagCompound implements ITagCompound {
+public class TagAdapter implements ITagAdapter {
 
     private final NBTTagCompound tag;
 
-    public TagCompound(NBTTagCompound tag) {
+    public TagAdapter(NBTTagCompound tag) {
         this.tag = tag;
     }
 
@@ -21,14 +44,18 @@ public class TagCompound implements ITagCompound {
     }
 
     @Override
-    public ITagCompound getTagCompound(@NotNull String key) {
+    public ITagAdapter getTagCompound(@NotNull String key) {
         NBTBase base = tag.get(key);
         if (!(base instanceof NBTTagCompound)) return null;
-        return new TagCompound((NBTTagCompound) base);
+        return new TagAdapter((NBTTagCompound) base);
     }
 
     @Override
-    public void setValue(@NotNull String key, @NotNull TagValue<?> value) {
+    public void setValue(@NotNull String key, @Nullable TagValue<?> value) {
+        if (value == null) {
+            tag.remove(key);
+            return;
+        }
         tag.set(key, getNBTValue(value));
     }
 
@@ -51,9 +78,21 @@ public class TagCompound implements ITagCompound {
             case LIST:
                 NBTTagList list = new NBTTagList();
                 TagList tagList = (TagList) value;
-                for (TagValue<?> val : tagList.getValue())
+                for (TagValue<?> val : tagList)
                     list.add(getNBTValue(val));
                 return list;
+            case COMPOUND: {
+                NBTTagCompound compound = new NBTTagCompound();
+                CompoundTag compoundTag = (CompoundTag) value;
+                TagValue<?> val;
+                for (String key : compoundTag.getKeys()) {
+                    val = compoundTag.get(key);
+                    if (val == null) continue;
+                    compound.set(key, getNBTValue(val));
+                }
+                return compound;
+            }
+
         }
         return null;
     }
@@ -81,6 +120,17 @@ public class TagCompound implements ITagCompound {
                 for (int i = 0; i < tagList.size(); i++)
                     list.addValue(getTagValue(tagList.i(i)));
                 return list;
+            case TagTypes.COMPOUND: {
+                CompoundTag compoundTag = new CompoundTag();
+                NBTTagCompound compound = (NBTTagCompound) base;
+                NBTBase val;
+                for (String key : compound.c()) {
+                    val = compound.get(key);
+                    if (val == null) continue;
+                    compoundTag.set(key, getTagValue(val));
+                }
+                return compoundTag;
+            }
         }
         return null;
     }
