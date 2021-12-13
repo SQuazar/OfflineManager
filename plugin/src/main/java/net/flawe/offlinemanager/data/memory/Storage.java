@@ -127,7 +127,7 @@ public class Storage implements IStorage {
 
     @Override
     public List<String> getList() {
-        return players;
+        return new ArrayList<>(players);
     }
 
     @Override
@@ -135,7 +135,7 @@ public class Storage implements IStorage {
         List<String> list = players;
         if (args[1].isEmpty())
             return list.subList(0, Math.min(list.size(), 50));
-        list = list.parallelStream().filter(s -> s != null && s.toLowerCase().startsWith(args[1].toLowerCase())).collect(Collectors.toList());
+        list = list.parallelStream().filter(s -> s.toLowerCase().startsWith(args[1].toLowerCase())).collect(Collectors.toList());
         List<String> nList = new ArrayList<>();
         int size = 0;
         for (String s : list) {
