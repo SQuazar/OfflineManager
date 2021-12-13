@@ -1,0 +1,19 @@
+title: "Teleport menu"
+size: 9
+permission: "offlinemanager.teleport.menu"
+
+items:
+  3:
+    type: "ENDER_EYE"
+    name: "Teleport to here"
+    lore:
+      - "Teleport the player to your location"
+    action: "command"
+    command: "om tphere %player%"
+  5:
+    type: "ENDER_PEARL"
+    name: "Teleport to player location"
+    lore:
+      - "Teleport to last player location"
+    action: "command"
+    command: "om tp %player%"

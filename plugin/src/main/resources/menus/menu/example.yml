@@ -1,0 +1,31 @@
+#Example menu file
+#For example, I will be created the main menu
+
+title: "OfflineManager"
+size: 27
+permission: "offlinemanager.menu"
+
+#Replace or add the plugin command and open menu
+open-command:
+  - om
+  - offlinemanager
+
+items:
+  12:
+    type: "CHEST"
+    name: "Open inventory"
+    action: "command"
+    command: "om invsee %player%"
+    permission: "offlinemanager.invsee"
+  13:
+    type: "PLAYER_HEAD"
+    name: "Info about %player%"
+    lore:
+      - "Location: %player_x% %player_y% $player_z$"
+    action: "none"
+  14:
+    type: "ENDER_PEARL"
+    name: "Teleportation"
+    action: "open_inventory"
+    menu: "teleport_menu"
+    permission: "offlinemanager.teleport"
