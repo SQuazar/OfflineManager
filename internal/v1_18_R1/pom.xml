@@ -28,7 +28,7 @@
     <parent>
         <artifactId>internal</artifactId>
         <groupId>net.flawe</groupId>
-        <version>3.0.2-SNAPSHOT</version>
+        <version>3.0.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>v1_18_R1</artifactId>
