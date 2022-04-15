@@ -41,7 +41,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>OfflineManagerMenus-${version}</finalName>
+        <finalName>OfflineManagerMenus-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
