@@ -27,20 +27,19 @@ import com.google.common.cache.CacheBuilder;
 import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.configuration.CacheConfiguration;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
 import net.flawe.offlinemanager.api.memory.IStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Storage implements IStorage {
 
-    private final List<String> players = new ArrayList<>();
+    private final Set<PlayerProfile> players = new HashSet<>();
 
     private final OfflineManager plugin;
 
@@ -60,7 +59,8 @@ public class Storage implements IStorage {
             IPlayerData data = (IPlayerData) notification.getValue();
             data.save();
             if (plugin.getSettings().removeFromCacheNotify())
-                plugin.getLogger().info(data.getName() + "(" + data.getUUID() + ") is successfully removed from cache and saved!");
+                plugin.getLogger().info(String.format("%s (%s) is successfully removed from cache and saved!",
+                        data.getPlayerProfile().getName(), data.getPlayerProfile().getUuid().toString()));
         }).build();
     }
 
@@ -74,7 +74,7 @@ public class Storage implements IStorage {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
                 if (offlinePlayer.hasPlayedBefore() && !offlinePlayer.isOnline()) {
                     if (offlinePlayer.getName() != null)
-                        players.add(offlinePlayer.getName());
+                        players.add(PlayerProfile.of(uuid, offlinePlayer.getName()));
                 }
             } catch (IllegalArgumentException exception) {
                 plugin.err(id + " file is broken. Replace or remove it to resolve this error.");
@@ -84,13 +84,29 @@ public class Storage implements IStorage {
     }
 
     @Override
-    public void add(String s) {
-        players.add(s);
+    public void add(PlayerProfile profile) {
+        players.add(profile);
     }
 
     @Override
-    public void remove(String s) {
-        players.remove(s);
+    public void remove(PlayerProfile profile) {
+        players.remove(profile);
+    }
+
+    @Override
+    public PlayerProfile getPlayerProfile(String name) {
+        for (PlayerProfile profile : players)
+            if (profile.getName().equalsIgnoreCase(name))
+                return profile;
+        return null;
+    }
+
+    @Override
+    public PlayerProfile getPlayerProfile(UUID uuid) {
+        for (PlayerProfile profile : players)
+            if (profile.getUuid().equals(uuid))
+                return profile;
+        return null;
     }
 
     @Override
@@ -121,21 +137,33 @@ public class Storage implements IStorage {
     }
 
     @Override
-    public boolean hasPlayer(String s) {
-        return players.contains(s);
+    public boolean hasPlayer(PlayerProfile profile) {
+        return players.contains(profile);
+    }
+
+    @Override
+    public boolean hasPlayer(String name) {
+        return players.stream().anyMatch(profile -> profile.getName().equalsIgnoreCase(name));
     }
 
     @Override
     public List<String> getList() {
-        return new ArrayList<>(players);
+        return players.stream().map(PlayerProfile::getName).collect(Collectors.toList());
     }
 
     @Override
     public List<String> getListForComplete(String[] args) {
         if (args[1].isEmpty())
-            return players.subList(0, Math.min(players.size(), 50));
-        List<String> list = players;
-        list = list.parallelStream().filter(s -> s.toLowerCase().startsWith(args[1].toLowerCase())).collect(Collectors.toList());
+            return players
+                    .stream()
+                    .limit(Math.min(players.size(), 50))
+                    .map(PlayerProfile::getName)
+                    .collect(Collectors.toList());
+        List<String> list = players
+                .stream()
+                .map(PlayerProfile::getName)
+                .filter(s -> s.toLowerCase().startsWith(args[1].toLowerCase()))
+                .collect(Collectors.toList());
         List<String> nList = new ArrayList<>();
         int size = 0;
         for (String s : list) {
