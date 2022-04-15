@@ -35,7 +35,7 @@
     </modules>
 
     <parent>
-        <groupId>net.flawe</groupId>
+        <groupId>net.flawe.offlinemanager</groupId>
         <artifactId>offlinemanager</artifactId>
         <version>3.0.4-SNAPSHOT</version>
     </parent>

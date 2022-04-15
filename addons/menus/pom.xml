@@ -26,7 +26,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>addons</artifactId>
-        <groupId>net.flawe</groupId>
+        <groupId>net.flawe.offlinemanager</groupId>
         <version>3.0.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -81,7 +81,7 @@
             <artifactId>api</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.flawe</groupId>
+            <groupId>net.flawe.offlinemanager</groupId>
             <artifactId>annotations</artifactId>
         </dependency>
     </dependencies>
