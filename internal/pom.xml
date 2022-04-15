@@ -35,11 +35,12 @@
     </modules>
 
     <parent>
-        <groupId>net.flawe.offlinemanager</groupId>
         <artifactId>offlinemanager</artifactId>
+        <groupId>net.flawe</groupId>
         <version>3.0.4-SNAPSHOT</version>
     </parent>
 
+    <groupId>net.flawe.offlinemanager</groupId>
     <artifactId>internal</artifactId>
     <name>OfflineManagerAdapter</name>
 
