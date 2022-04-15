@@ -30,6 +30,7 @@ import net.flawe.offlinemanager.api.command.ICommandManager;
 import net.flawe.offlinemanager.api.data.IConfigManager;
 import net.flawe.offlinemanager.api.data.INMSManager;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.memory.ISession;
 import net.flawe.offlinemanager.api.memory.IStorage;
@@ -55,6 +56,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -188,9 +190,11 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
 
     @Override
     public synchronized IPlayerData getPlayerData(String username) {
-        IPlayerData playerData = storage.getPlayerDataFromCache(Bukkit.getOfflinePlayer(username).getUniqueId());
+        PlayerProfile profile = Objects.requireNonNull(storage.getPlayerProfile(username),
+                String.format("Cannot load player profile with name %s.", username));
+        IPlayerData playerData = storage.getPlayerDataFromCache(profile.getUuid());
         if (playerData == null) {
-            playerData = nmsManager.getPlayerData(username);
+            playerData = nmsManager.getPlayerData(PlayerProfile.of(profile.getUuid(), username));
             if (playerData != null)
                 storage.addPlayerDataToCache(playerData);
         }
@@ -199,9 +203,22 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
 
     @Override
     public synchronized IPlayerData getPlayerData(UUID uuid) {
+        PlayerProfile profile = Objects.requireNonNull(storage.getPlayerProfile(uuid),
+                String.format("Cannot load player profile with uuid %s", uuid.toString()));
         IPlayerData playerData = storage.getPlayerDataFromCache(uuid);
         if (playerData == null) {
-            playerData = nmsManager.getPlayerData(uuid);
+            playerData = nmsManager.getPlayerData(profile);
+            if (playerData != null)
+                storage.addPlayerDataToCache(playerData);
+        }
+        return playerData;
+    }
+
+    @Override
+    public synchronized IPlayerData getPlayerData(PlayerProfile profile) {
+        IPlayerData playerData = storage.getPlayerDataFromCache(profile.getUuid());
+        if (playerData == null) {
+            playerData = nmsManager.getPlayerData(profile);
             if (playerData != null)
                 storage.addPlayerDataToCache(playerData);
         }

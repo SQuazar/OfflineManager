@@ -25,6 +25,7 @@ package net.flawe.offlinemanager.api.util.v1_12_R1.data;
 import com.mojang.authlib.GameProfile;
 import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.entity.AbstractPlayerData;
+import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.api.event.data.LoadPlayerEvent;
@@ -46,6 +47,7 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.UUID;
 
 public class PlayerData extends AbstractPlayerData {
@@ -66,24 +68,28 @@ public class PlayerData extends AbstractPlayerData {
     }
 
     public PlayerData(UUID uuid, OfflineManagerAPI api) {
-        this(uuid, new TagAdapter(((WorldNBTStorage) ((CraftServer) Bukkit.getServer()).getServer().getWorld().getDataManager()).getPlayerData(uuid.toString())), api);
+        this(PlayerProfile.of(uuid, Bukkit.getOfflinePlayer(uuid).getName()), new TagAdapter(((WorldNBTStorage) ((CraftServer) Bukkit.getServer()).getServer().getWorld().getDataManager()).getPlayerData(uuid.toString())), api);
     }
 
-    public PlayerData(UUID uuid, TagAdapter compound, OfflineManagerAPI api) {
-        super(uuid, compound);
+    public PlayerData(PlayerProfile profile, OfflineManagerAPI api) {
+        this(profile, new TagAdapter(((WorldNBTStorage) ((CraftServer) Bukkit.getServer()).getServer().getWorld().getDataManager()).getPlayerData(profile.getUuid().toString())), api);
+    }
+
+    public PlayerData(PlayerProfile profile, TagAdapter compound, OfflineManagerAPI api) {
+        super(profile, compound);
         this.api = api;
-        this.uuid = uuid;
+        this.uuid = profile.getUuid();
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer worldServer = server.getWorldServer(0);
         if (worldServer == null)
             throw new NullPointerException("Overworld cannot be null!");
-        GameProfile profile = new GameProfile(uuid, Bukkit.getOfflinePlayer(uuid).getName());
-        EntityPlayer entityPlayer = new EntityPlayer(server, worldServer, profile, new PlayerInteractManager(worldServer));
-        entityPlayer.f(compound.getTag());
-        entityPlayer.a(compound.getTag());
+        GameProfile gameProfile = new GameProfile(uuid, profile.getName());
+        EntityPlayer entityPlayer = new EntityPlayer(server, worldServer, gameProfile, new PlayerInteractManager(worldServer));
+        this.tag = Objects.requireNonNull(compound.getTag(), "Player file cannot be loaded! File name is " + uuid);
+        entityPlayer.f(tag);
+        entityPlayer.a(tag);
         this.name = entityPlayer.getName();
         this.worldNBTStorage = (WorldNBTStorage) worldServer.getDataManager();
-        this.tag = compound.getTag();
         this.playerDir = worldNBTStorage.getPlayerDir();
         NBTTagList inventoryList = (NBTTagList) tag.get("Inventory");
         net.minecraft.server.v1_12_R1.PlayerInventory virtual = new net.minecraft.server.v1_12_R1.PlayerInventory(entityPlayer);
@@ -159,8 +165,10 @@ public class PlayerData extends AbstractPlayerData {
             File file1 = new File(this.playerDir, uuid + ".dat");
             NBTCompressedStreamTools.a(tag, new FileOutputStream(file));
             if (file1.exists())
-                if (!file1.delete()) throw new IOException(String.format("Failed to delete tmp player file %s", uuid.toString()));
-            if (!file.renameTo(file1)) throw new IOException(String.format("Failed to rename player file %s", uuid.toString()));
+                if (!file1.delete())
+                    throw new IOException(String.format("Failed to delete tmp player file %s", uuid.toString()));
+            if (!file.renameTo(file1))
+                throw new IOException(String.format("Failed to rename player file %s", uuid.toString()));
         } catch (Exception e) {
             ((Plugin) api).getLogger().warning("Failed to save player data for " + name);
             e.printStackTrace();

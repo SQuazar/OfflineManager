@@ -28,6 +28,7 @@ import net.flawe.offlinemanager.api.command.ICommandManager;
 import net.flawe.offlinemanager.api.data.IConfigManager;
 import net.flawe.offlinemanager.api.data.INMSManager;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.memory.ISession;
 import net.flawe.offlinemanager.api.memory.IStorage;
@@ -72,6 +73,13 @@ public interface OfflineManagerAPI {
      * @return data of player
      */
     IPlayerData getPlayerData(UUID uuid);
+
+    /**
+     * Gets the offline player data
+     * @param profile player profile
+     * @return data of player
+     */
+    IPlayerData getPlayerData(PlayerProfile profile);
 
     /**
      * Gets the plugin configuration manager

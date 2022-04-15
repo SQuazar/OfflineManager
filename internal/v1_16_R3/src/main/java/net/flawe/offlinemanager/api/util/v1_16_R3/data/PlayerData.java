@@ -25,6 +25,7 @@ package net.flawe.offlinemanager.api.util.v1_16_R3.data;
 import com.mojang.authlib.GameProfile;
 import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.entity.AbstractPlayerData;
+import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.api.event.data.LoadPlayerEvent;
@@ -46,6 +47,7 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.UUID;
 
 public class PlayerData extends AbstractPlayerData {
@@ -66,24 +68,28 @@ public class PlayerData extends AbstractPlayerData {
     }
 
     public PlayerData(UUID uuid, OfflineManagerAPI api) {
-        this(uuid, new TagAdapter(((CraftServer) Bukkit.getServer()).getHandle().playerFileData.getPlayerData(uuid.toString())), api);
+        this(PlayerProfile.of(uuid, Bukkit.getOfflinePlayer(uuid).getName()), new TagAdapter(((CraftServer) Bukkit.getServer()).getHandle().playerFileData.getPlayerData(uuid.toString())), api);
     }
 
-    public PlayerData(UUID uuid, TagAdapter compound, OfflineManagerAPI api) {
-        super(uuid, compound);
+    public PlayerData(PlayerProfile profile, OfflineManagerAPI api) {
+        this(profile, new TagAdapter(((CraftServer) Bukkit.getServer()).getHandle().playerFileData.getPlayerData(profile.getUuid().toString())), api);
+    }
+
+    public PlayerData(PlayerProfile profile, TagAdapter compound, OfflineManagerAPI api) {
+        super(profile, compound);
         this.api = api;
-        this.uuid = uuid;
+        this.uuid = profile.getUuid();
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer worldServer = server.getWorldServer(net.minecraft.server.v1_16_R3.World.OVERWORLD);
         if (worldServer == null)
             throw new NullPointerException("Overworld cannot be null!");
-        GameProfile profile = new GameProfile(uuid, Bukkit.getOfflinePlayer(uuid).getName());
-        EntityPlayer entityPlayer = new EntityPlayer(server, worldServer, profile, new PlayerInteractManager(worldServer));
-        entityPlayer.load(compound.getTag());
-        entityPlayer.loadData(compound.getTag());
+        GameProfile gameProfile = new GameProfile(uuid, profile.getName());
+        EntityPlayer entityPlayer = new EntityPlayer(server, worldServer, gameProfile, new PlayerInteractManager(worldServer));
+        this.tag = Objects.requireNonNull(compound.getTag(), "Player file cannot be loaded! File name is " + uuid);
+        entityPlayer.load(tag);
+        entityPlayer.loadData(tag);
         this.name = entityPlayer.getName();
         this.worldNBTStorage = server.worldNBTStorage;
-        this.tag = compound.getTag();
         this.playerDir = worldNBTStorage.getPlayerDir();
         NBTTagList inventoryList = (NBTTagList) tag.get("Inventory");
         net.minecraft.server.v1_16_R3.PlayerInventory virtual = new net.minecraft.server.v1_16_R3.PlayerInventory(entityPlayer);
