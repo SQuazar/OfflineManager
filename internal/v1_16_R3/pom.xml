@@ -31,7 +31,6 @@
     </parent>
 
     <artifactId>v1_16_R3</artifactId>
-    <name>OfflineManagerAdapter1_16_R3</name>
 
     <repositories>
         <repository>

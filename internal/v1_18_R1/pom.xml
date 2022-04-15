@@ -32,7 +32,6 @@
     </parent>
 
     <artifactId>v1_18_R1</artifactId>
-    <name>OfflineManagerAdapter1_18_R1</name>
 
     <repositories>
         <repository>
