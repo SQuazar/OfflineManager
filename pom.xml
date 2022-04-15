@@ -27,7 +27,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.flawe</groupId>
-    <artifactId>OfflineManager</artifactId>
+    <artifactId>offlinemanager</artifactId>
     <name>OfflineManager</name>
     <url>https://t.me/flawe_sv</url>
     <version>3.0.4-SNAPSHOT</version>
