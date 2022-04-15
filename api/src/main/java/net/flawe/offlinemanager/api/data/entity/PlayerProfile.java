@@ -22,7 +22,9 @@
 
 package net.flawe.offlinemanager.api.data.entity;
 
-import java.util.Objects;
+import lombok.*;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.UUID;
 
 /**
@@ -30,36 +32,14 @@ import java.util.UUID;
  * @since 3.0.3
  * @author flawe
  */
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
+@EqualsAndHashCode(of = {"name", "uuid"})
+@ToString
 public class PlayerProfile {
 
-    private final String name;
-    private final UUID uuid;
-
-    /**
-     * Player profile constructor
-     * @param name player name
-     * @param uuid player uuid
-     */
-    private PlayerProfile(String name, UUID uuid) {
-        this.name = name;
-        this.uuid = uuid;
-    }
-
-    /**
-     * Gets player name
-     * @return player name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Gets player uuid
-     * @return player uuid
-     */
-    public UUID getUuid() {
-        return uuid;
-    }
+    private final @NotNull String name;
+    private final @NotNull UUID uuid;
 
     /**
      * Creates player profile
@@ -71,16 +51,4 @@ public class PlayerProfile {
         return new PlayerProfile(name, uuid);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PlayerProfile that = (PlayerProfile) o;
-        return Objects.equals(name, that.name) && Objects.equals(uuid, that.uuid);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, uuid);
-    }
 }

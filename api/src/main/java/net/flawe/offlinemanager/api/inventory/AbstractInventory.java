@@ -22,6 +22,7 @@
 
 package net.flawe.offlinemanager.api.inventory;
 
+import lombok.RequiredArgsConstructor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -40,13 +41,10 @@ import java.util.ListIterator;
  * Abstract player inventory. Equal to bukkit inventory but working with player data
  * @author flawe
  */
+@RequiredArgsConstructor
 public abstract class AbstractInventory implements Inventory {
 
     protected final Inventory inventory;
-
-    public AbstractInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
 
     @Override
     public int getSize() {

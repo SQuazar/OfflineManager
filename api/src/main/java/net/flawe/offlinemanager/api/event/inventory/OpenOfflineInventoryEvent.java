@@ -22,6 +22,8 @@
 
 package net.flawe.offlinemanager.api.event.inventory;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.InventoryType;
@@ -41,8 +43,9 @@ public class OpenOfflineInventoryEvent extends OfflineManagerEvent implements Ca
     private final IUser target;
     private final IPlayerData playerData;
     private final Inventory inventory;
-    private boolean cancelled;
     private final InventoryType inventoryType;
+    @Getter @Setter
+    private boolean cancelled;
 
     @Deprecated
     public OpenOfflineInventoryEvent(@NotNull Player player, @NotNull IUser target, @NotNull Inventory inventory, @NotNull InventoryType type) {
@@ -106,15 +109,4 @@ public class OpenOfflineInventoryEvent extends OfflineManagerEvent implements Ca
     public InventoryType getInventoryType() {
         return inventoryType;
     }
-
-    @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean b) {
-        this.cancelled = b;
-    }
-
 }

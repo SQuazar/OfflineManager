@@ -22,6 +22,8 @@
 
 package net.flawe.offlinemanager.api.event.entity.player;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
@@ -38,6 +40,7 @@ public class HealOfflinePlayerEvent extends OfflineManagerEvent implements Cance
     private final Player player;
     private final IUser target;
     private final IPlayerData playerData;
+    @Getter @Setter
     private boolean cancelled;
 
     /**
@@ -85,15 +88,5 @@ public class HealOfflinePlayerEvent extends OfflineManagerEvent implements Cance
     @NotNull
     public IPlayerData getPlayerData() {
         return playerData;
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean b) {
-        this.cancelled = b;
     }
 }

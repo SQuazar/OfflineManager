@@ -22,25 +22,21 @@
 
 package net.flawe.offlinemanager.api.nbt.type;
 
+import lombok.*;
 import net.flawe.offlinemanager.api.nbt.TagValue;
+import org.jetbrains.annotations.NotNull;
 
+/**
+ * NBT Tag integer class
+ * @author flawe
+ */
+@AllArgsConstructor
+@Getter @Setter
+@EqualsAndHashCode
+@ToString
 public class TagInteger implements TagValue<Integer> {
 
-    private int value;
-
-    public TagInteger(int value) {
-        this.value = value;
-    }
-
-    @Override
-    public Integer getValue() {
-        return value;
-    }
-
-    @Override
-    public void setValue(Integer value) {
-        this.value = value;
-    }
+    private @NotNull Integer value;
 
     @Override
     public TagType getType() {

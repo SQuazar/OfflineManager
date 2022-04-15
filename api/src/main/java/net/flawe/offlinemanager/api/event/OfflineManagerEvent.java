@@ -22,6 +22,7 @@
 
 package net.flawe.offlinemanager.api.event;
 
+import lombok.NoArgsConstructor;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
@@ -30,16 +31,13 @@ import org.jetbrains.annotations.NotNull;
  * Parent class for all plugin events
  * @author flawe
  */
+@NoArgsConstructor
 public class OfflineManagerEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
     public OfflineManagerEvent(boolean async) {
         super(async);
-    }
-
-    public OfflineManagerEvent() {
-
     }
 
     @NotNull

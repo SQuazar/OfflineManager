@@ -22,6 +22,8 @@
 
 package net.flawe.offlinemanager.api.event.inventory;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
@@ -38,6 +40,7 @@ public class ClearOfflineInventoryEvent extends OfflineManagerEvent implements C
     private final Player player;
     private final IUser user;
     private final IPlayerData playerData;
+    @Getter @Setter
     private boolean cancelled;
 
     @Deprecated
@@ -80,15 +83,5 @@ public class ClearOfflineInventoryEvent extends OfflineManagerEvent implements C
     @NotNull
     public IPlayerData getPlayerData() {
         return playerData;
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean b) {
-        this.cancelled = b;
     }
 }

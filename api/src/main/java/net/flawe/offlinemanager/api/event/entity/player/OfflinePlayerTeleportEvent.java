@@ -22,6 +22,8 @@
 
 package net.flawe.offlinemanager.api.event.entity.player;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
@@ -40,6 +42,7 @@ public class OfflinePlayerTeleportEvent extends OfflineManagerEvent implements C
     private final IPlayerData playerData;
     private final Location to;
     private final Location from;
+    @Getter @Setter
     private boolean cancelled;
 
     @Deprecated
@@ -98,15 +101,5 @@ public class OfflinePlayerTeleportEvent extends OfflineManagerEvent implements C
      */
     public IPlayerData getPlayerData() {
         return playerData;
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean b) {
-        this.cancelled = b;
     }
 }

@@ -22,25 +22,21 @@
 
 package net.flawe.offlinemanager.api.nbt.type;
 
+import lombok.*;
 import net.flawe.offlinemanager.api.nbt.TagValue;
+import org.jetbrains.annotations.NotNull;
 
+/**
+ * NBT Tag short class
+ * @author flawe
+ */
+@AllArgsConstructor
+@Getter @Setter
+@EqualsAndHashCode
+@ToString
 public class TagShort implements TagValue<Short> {
 
-    private short value;
-
-    public TagShort(short value) {
-        this.value = value;
-    }
-
-    @Override
-    public Short getValue() {
-        return value;
-    }
-
-    @Override
-    public void setValue(Short value) {
-        this.value = value;
-    }
+    private @NotNull Short value;
 
     @Override
     public TagType getType() {

@@ -22,6 +22,8 @@
 
 package net.flawe.offlinemanager.api.event.entity.player;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
@@ -40,6 +42,7 @@ public class GameModeChangeEvent extends OfflineManagerEvent implements Cancella
     private final IPlayerData playerData;
     private final Player player;
     private final GameMode gameMode;
+    @Getter @Setter
     private boolean cancelled;
 
     @Deprecated
@@ -93,15 +96,5 @@ public class GameModeChangeEvent extends OfflineManagerEvent implements Cancella
     @NotNull
     public GameMode getGameMode() {
         return gameMode;
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean b) {
-        this.cancelled = b;
     }
 }

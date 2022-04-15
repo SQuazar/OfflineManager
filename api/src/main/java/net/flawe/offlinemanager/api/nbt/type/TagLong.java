@@ -22,25 +22,21 @@
 
 package net.flawe.offlinemanager.api.nbt.type;
 
+import lombok.*;
 import net.flawe.offlinemanager.api.nbt.TagValue;
+import org.jetbrains.annotations.NotNull;
 
+/**
+ * NBT Tag long class
+ * @author flawe
+ */
+@AllArgsConstructor
+@Getter @Setter
+@EqualsAndHashCode
+@ToString
 public class TagLong implements TagValue<Long> {
 
-    private long value;
-
-    public TagLong(long value) {
-        this.value = value;
-    }
-
-    @Override
-    public Long getValue() {
-        return value;
-    }
-
-    @Override
-    public void setValue(Long value) {
-        this.value = value;
-    }
+    private @NotNull Long value;
 
     @Override
     public TagType getType() {
