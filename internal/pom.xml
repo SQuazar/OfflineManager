@@ -37,7 +37,7 @@
     <parent>
         <groupId>net.flawe</groupId>
         <artifactId>OfflineManager</artifactId>
-        <version>3.0.3-SNAPSHOT</version>
+        <version>3.0.4-SNAPSHOT</version>
     </parent>
 
     <artifactId>internal</artifactId>
