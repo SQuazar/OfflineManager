@@ -334,48 +334,102 @@ In order to get information from the player you need, you must:
 <h3>Also messages support the placeholders from PlaceholderAPI</h3>
 </div>
 
+# Maven
+
+```xml
+<repositories>
+    <repository>
+        <id>codemc-repo</id>
+        <url>https://repo.codemc.io/repository/maven-public/</url>
+    </repository>
+</repositories>
+```
+```xml
+<dependencies>
+    <dependency>
+        <groupId>net.flawe.offlinemanager</groupId>
+        <artifactId>api</artifactId>
+        <version>VERSION</version>
+        <scope>provided</scope>
+    </dependency>
+</dependencies>
+```
+
+# Gradle
+
+```groovy
+repositories {
+    maven {
+        url 'https://repo.codemc.io/repository/maven-public/'
+    }
+}
+```
+```groovy
+dependencies {
+    implementation 'net.flawe.offlinemanager:api:VERSION'
+}
+```
+
 # API Usage
 
 ### Installation & Usage
+
 ```java
 package net.example;
 
-import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.OfflineManagerAPI;
+import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
-public class ExamplePlugin extends JavaPlugin implements CommandExecutor {
+public class Example extends JavaPlugin {
 
     private OfflineManagerAPI offlineManagerAPI;
 
     @Override
     public void onEnable() {
-        if (Bukkit.getPluginManager().getPlugin("OfflineManager") == null) {
+        Plugin plugin = Bukkit.getPluginManager().getPlugin("OfflineManager");
+        if (plugin == null) {
             getLogger().severe("Could not find OfflineManager! This plugin is required!");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
-        offlineManagerAPI = OfflineManager.getApi();
+        offlineManagerAPI = (OfflineManagerAPI) plugin; 
         Bukkit.getPluginCommand("example").setExecutor(this);
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player))
             return false;
         Player player = (Player) sender;
         String playerName = args[0];
-        if (offlineManagerAPI.getStorage().hasPlayer(playerName))
-            player.teleport(offlineManagerAPI.getUser(playerName).getLocation());
+        if (!offlineManagerAPI.getStorage().hasPlayer(playerName))
+            return false;
+        String sub = args[1];
+        IPlayerData playerData;
+        switch (sub.toLowerCase()) {
+            case "teleport":
+                playerData = offlineManagerAPI.getPlayerData(playerName);
+                player.teleport(playerData.getLocation());
+                break;
+            case "feed":
+                playerData = offlineManagerAPI.getPlayerData(playerName);
+                playerData.setFoodLevel(20);
+                playerData.save(SavePlayerType.FOOD_LEVEL);
+                break;
+            default:
+                sender.sendMessage("Sub command not found");
+                break;
+        }
         return true;
     }
 }
-
 ```
 
 # Support
