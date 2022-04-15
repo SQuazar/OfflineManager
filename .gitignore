@@ -9,3 +9,5 @@ target
 out
 gen
 *.versionsBackup
+/internal/v1_16_R1/
+/internal/v1_16_R2/
