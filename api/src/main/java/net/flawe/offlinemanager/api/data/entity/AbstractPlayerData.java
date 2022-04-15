@@ -22,7 +22,6 @@
 
 package net.flawe.offlinemanager.api.data.entity;
 
-import net.flawe.offlinemanager.api.inventory.view.OfflineInventoryView;
 import net.flawe.offlinemanager.api.nbt.ITagAdapter;
 import net.flawe.offlinemanager.api.nbt.TagValue;
 import net.flawe.offlinemanager.api.nbt.type.*;
@@ -36,14 +35,26 @@ import org.bukkit.entity.Player;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * An abstract class that implements IPlayerData to reduce repetitive code
+ * @since 3.0.0
+ * @author flawe
+ */
 public abstract class AbstractPlayerData implements IPlayerData {
 
     private final UUID uuid;
+    private final PlayerProfile playerProfile;
     protected ITagAdapter adapter;
 
-    protected AbstractPlayerData(UUID uuid, ITagAdapter adapter) {
-        this.uuid = uuid;
+    protected AbstractPlayerData(PlayerProfile playerProfile, ITagAdapter adapter) {
+        this.playerProfile = playerProfile;
+        this.uuid = playerProfile.getUuid();
         this.adapter = adapter;
+    }
+
+    @Deprecated
+    protected AbstractPlayerData(UUID uuid, ITagAdapter adapter) {
+        this(PlayerProfile.of(uuid, Bukkit.getOfflinePlayer(uuid).getName()), adapter);
     }
 
     @Override
@@ -54,6 +65,11 @@ public abstract class AbstractPlayerData implements IPlayerData {
     @Override
     public String getName() {
         return ((TagString) adapter.getTagCompound("bukkit").getTagValue("lastKnownName")).getValue();
+    }
+
+    @Override
+    public PlayerProfile getPlayerProfile() {
+        return playerProfile;
     }
 
     @Override
@@ -259,7 +275,7 @@ public abstract class AbstractPlayerData implements IPlayerData {
     }
 
     @Override
-    public void openInventory(Player player) {
+    public void openInventory(Player player) throws UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported in this version");
         /*OfflineInventoryView view = new OfflineInventoryView(this, player);
         player.openInventory(view);*/
