@@ -25,6 +25,7 @@ package net.flawe.offlinemanager.api.util.v1_12_R1;
 import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.INMSManager;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
 import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.util.v1_12_R1.data.OfflineUser;
 import net.flawe.offlinemanager.api.util.v1_12_R1.data.PlayerData;
@@ -70,6 +71,11 @@ public class NMSManager implements INMSManager {
     @Override
     public IPlayerData getPlayerData(@NotNull String name) {
         return new PlayerData(name, api);
+    }
+
+    @Override
+    public IPlayerData getPlayerData(@NotNull PlayerProfile profile) {
+        return new PlayerData(profile, api);
     }
 
 }
