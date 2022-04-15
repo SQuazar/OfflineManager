@@ -24,6 +24,7 @@ package net.flawe.offlinemanager.api.memory;
 
 import com.google.common.cache.Cache;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,23 +38,37 @@ import java.util.UUID;
  */
 public interface IStorage {
     /**
-     * Add all current players nickname from playerdata
+     * Add all current players profiles from playerdata folder to collection
      */
     void init();
 
     /**
-     * Add new player nickname to list in storage
+     * Add new player profile to collection
      *
-     * @param s player nickname
+     * @param profile player profile
      */
-    void add(String s);
+    void add(PlayerProfile profile);
 
     /**
-     * Remove player nickname from list in storage
+     * Remove player profile from collection
      *
-     * @param s player nickname
+     * @param profile player profile
      */
-    void remove(String s);
+    void remove(PlayerProfile profile);
+
+    /**
+     * Gets player profile by name from collection
+     * @param name player name
+     * @return player profile
+     */
+    PlayerProfile getPlayerProfile(String name);
+
+    /**
+     * Gets player profile by UUID from collection
+     * @param uuid player uuid
+     * @return player profile
+     */
+    PlayerProfile getPlayerProfile(UUID uuid);
 
     /**
      * Adding a player to cache
@@ -87,19 +102,27 @@ public interface IStorage {
     void reload();
 
     /**
-     * Player contains in list
-     * @param s player nickname
-     * @return true, if player in list
+     * Checks player profile contains in collection
+     * @param profile player profile
+     * @return true, if player profile contains in collection
      */
-    boolean hasPlayer(String s);
+    boolean hasPlayer(PlayerProfile profile);
 
     /**
-     * List of player nicknames
+     * Checks player profile contains in collection
+     * @param name player name
+     * @return true, if player profile contains in collection
+     */
+    boolean hasPlayer(String name);
+
+    /**
+     * Gets list of player nicknames
      * @return list of player nicknames
      */
     List<String> getList();
 
     /**
+     * Gets list for tab complete
      * Used to optimize tab completions
      * @param args command arguments
      * @return formatted player nickname list

@@ -23,6 +23,7 @@
 package net.flawe.offlinemanager.api.data;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
 import net.flawe.offlinemanager.api.entity.IUser;
 import org.jetbrains.annotations.NotNull;
 
@@ -65,6 +66,7 @@ public interface INMSManager {
      * @param uuid player uuid
      * @return the player's data that matches the entered parameters
      */
+    @Deprecated
     IPlayerData getPlayerData(@NotNull UUID uuid);
 
     /**
@@ -72,6 +74,14 @@ public interface INMSManager {
      * @param name player name
      * @return the player's data that matches the entered parameters
      */
+    @Deprecated
     IPlayerData getPlayerData(@NotNull String name);
+
+    /**
+     * Gets the offline player data
+     * @param profile player profile
+     * @return the player's data that matchers the entered parameters
+     */
+    IPlayerData getPlayerData(@NotNull PlayerProfile profile);
 
 }

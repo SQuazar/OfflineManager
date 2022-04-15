@@ -33,7 +33,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.InventoryView;
 
 import java.util.UUID;
 
@@ -49,13 +48,21 @@ public interface IPlayerData {
      * Gets the uuid
      * @return uuid
      */
+    @Deprecated
     UUID getUUID();
 
     /**
      * Gets the name
      * @return name
      */
+    @Deprecated
     String getName();
+
+    /**
+     * Gets the player profile
+     * @return player profile
+     */
+    PlayerProfile getPlayerProfile();
 
     /**
      * Gets the offline player inventory
