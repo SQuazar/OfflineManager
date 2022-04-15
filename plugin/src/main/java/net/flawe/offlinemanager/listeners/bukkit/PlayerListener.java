@@ -25,9 +25,11 @@ package net.flawe.offlinemanager.listeners.bukkit;
 import net.flawe.offlinemanager.OfflineManager;
 import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
+import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
 import net.flawe.offlinemanager.api.memory.ISession;
 import net.flawe.offlinemanager.api.memory.IStorage;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -52,16 +54,18 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (storage.hasPlayer(e.getPlayer().getName()))
-            storage.remove(e.getPlayer().getName());
+        Player player = e.getPlayer();
+        if (storage.hasPlayer(player.getName()))
+            storage.remove(PlayerProfile.of(player.getUniqueId(), player.getName()));
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
-        if (!storage.hasPlayer(e.getPlayer().getName()))
-            storage.add(e.getPlayer().getName());
-        UUID player = e.getPlayer().getUniqueId();
-        IPlayerData data = storage.getPlayerDataFromCache(player);
+        Player player = e.getPlayer();
+        if (!storage.hasPlayer(player.getName()))
+            storage.add(PlayerProfile.of(player.getUniqueId(), player.getName()));
+        UUID playerUUID = e.getPlayer().getUniqueId();
+        IPlayerData data = storage.getPlayerDataFromCache(playerUUID);
         if (data != null)
             data.setOnline(false);
     }
