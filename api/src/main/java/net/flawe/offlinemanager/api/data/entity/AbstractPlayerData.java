@@ -41,7 +41,6 @@ import java.util.UUID;
  * @author flawe
  */
 public abstract class AbstractPlayerData implements IPlayerData {
-
     private final UUID uuid;
     private final PlayerProfile playerProfile;
     protected ITagAdapter adapter;
