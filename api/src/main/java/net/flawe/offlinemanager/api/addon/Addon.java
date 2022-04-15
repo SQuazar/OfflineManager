@@ -37,9 +37,19 @@ public interface Addon {
      */
     AddonConfiguration getConfiguration();
 
+    /**
+     * Gets addon type
+     * @return addon type
+     */
     AddonType getType();
 
+    /**
+     * Loads addon
+     */
     void load();
 
+    /**
+     * Reloads addon
+     */
     void reload();
 }

@@ -24,6 +24,15 @@ package net.flawe.offlinemanager.api.configuration;
 
 import net.flawe.offlinemanager.api.addon.AddonType;
 
+/**
+ * Configurable addon section
+ * @author flawe
+ */
 public interface AddonsSection extends Configuration {
+    /**
+     * Gets the addon configuration with current addon type
+     * @param type addon type
+     * @return addon configuration
+     */
     AddonConfiguration getAddon(AddonType type);
 }

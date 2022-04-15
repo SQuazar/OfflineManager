@@ -27,6 +27,7 @@ import net.flawe.offlinemanager.api.nbt.type.TagType;
 /**
  * Tag value
  * @param <T> tag type
+ * @author flawe
  */
 public interface TagValue<T> {
 

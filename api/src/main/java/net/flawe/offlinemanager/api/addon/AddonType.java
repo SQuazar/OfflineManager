@@ -22,6 +22,13 @@
 
 package net.flawe.offlinemanager.api.addon;
 
+/**
+ * Addon types
+ * @author flawe
+ */
 public enum AddonType {
+    /**
+     * Menus addon type
+     */
     MENUS
 }

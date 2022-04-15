@@ -22,6 +22,10 @@
 
 package net.flawe.offlinemanager.api.enums;
 
+/**
+ * Player active types in container
+ * @author flawe
+ */
 public enum ActiveType {
     INVENTORY,
     ARMOR_INVENTORY,

@@ -117,6 +117,12 @@ public interface OfflineManagerAPI {
      */
     String getVersion();
 
+    /**
+     * Test method
+     * Not used in current version
+     * @param type addon type
+     * @return registered addon with current type
+     */
     @Nullable
     Addon getAddon(AddonType type);
 
