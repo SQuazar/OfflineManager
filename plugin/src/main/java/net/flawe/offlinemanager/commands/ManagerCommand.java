@@ -43,6 +43,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static net.flawe.offlinemanager.util.ColorUtils.getFormattedString;
@@ -85,15 +86,14 @@ public class ManagerCommand implements CommandExecutor, TabCompleter {
                     .replace("%player%", p.getName())));
             return true;
         }
-        if (!hasCommand(args[0])) {
+        Optional<ICommand> commandOptional = findCommand(args[0]);
+        if (!commandOptional.isPresent()) {
             p.sendMessage(getFormattedString(messages.getCommandNotFound()
                     .replace("%player%", p.getName())
                     .replace("%command%", args[0])));
             return true;
         }
-        ICommand command = getCommand(args[0]);
-        if (command == null)
-            return true;
+        ICommand command = commandOptional.get();
         if (!sender.hasPermission(command.getPermission())) {
             sender.sendMessage(PlaceholderUtil.fillPlaceholders(getFormattedString(messages.getPermissionDeny()), command.getPlaceholders()));
             return true;
@@ -106,21 +106,11 @@ public class ManagerCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    private ICommand getCommand(String name) {
-        if (api.getCommandManager().getSubCommands()
-                .stream()
-                .noneMatch(cmd -> cmd.getName().equalsIgnoreCase(name) || Arrays.stream(cmd.getAliases()).anyMatch(a -> a.equalsIgnoreCase(name))))
-            return null;
+    private Optional<ICommand> findCommand(String name) {
         return api.getCommandManager().getSubCommands()
                 .stream()
                 .filter(cmd -> cmd.getName().equalsIgnoreCase(name) || Arrays.stream(cmd.getAliases()).anyMatch(a -> a.equalsIgnoreCase(name)))
-                .findFirst().orElse(null);
-    }
-
-    private boolean hasCommand(String name) {
-        return api.getCommandManager().getSubCommands()
-                .stream()
-                .anyMatch(cmd -> cmd.getName().equalsIgnoreCase(name) || Arrays.stream(cmd.getAliases()).anyMatch(a -> a.equalsIgnoreCase(name)));
+                .findFirst();
     }
 
     @Nullable
@@ -128,13 +118,16 @@ public class ManagerCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player))
             return Collections.emptyList();
+        if (!settings.isCommandComplete())
+            return Collections.emptyList();
         Player p = (Player) sender;
-        if (args.length == 1 && settings.isCommandComplete())
-            return api.getCommandManager().getSubCommands().stream()
+        if (args.length == 1)
+            return api.getCommandManager().getSubCommands()
+                    .stream()
                     .filter(c -> p.hasPermission(c.getPermission()) && c.getName().toLowerCase().startsWith(args[0].toLowerCase()))
                     .flatMap(c -> Arrays.stream(c.getAliases()))
                     .collect(Collectors.toList());
-        if (args.length == 2 && settings.isPlayerComplete())
+        if (args.length == 2)
             return api.getStorage().getListForComplete(args);
         return Collections.emptyList();
     }
