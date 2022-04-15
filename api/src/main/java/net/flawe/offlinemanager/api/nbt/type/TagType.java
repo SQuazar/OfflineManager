@@ -22,6 +22,10 @@
 
 package net.flawe.offlinemanager.api.nbt.type;
 
+/**
+ * NBT tag types
+ * @author flawe
+ */
 public enum TagType {
     BYTE((byte) 1),
     SHORT((byte) 2),
@@ -35,10 +39,18 @@ public enum TagType {
 
     private final byte type;
 
+    /**
+     * TagType constructor
+     * @param type tag type from byte representation
+     */
     TagType(byte type) {
         this.type = type;
     }
 
+    /**
+     * Gets the tag type from its byte representation
+     * @return tag type from byte representation
+     */
     public byte getType() {
         return type;
     }

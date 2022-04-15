@@ -32,6 +32,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Test class
+ * Not used in current version
+ */
 @AllArgsConstructor
 public class OfflineInventoryView extends InventoryView {
 

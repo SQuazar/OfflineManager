@@ -22,6 +22,10 @@
 
 package net.flawe.offlinemanager.api.enums;
 
+/**
+ * Offline inventory types
+ * @author flawe
+ */
 public enum InventoryType {
     DEFAULT,
     ARMOR,
