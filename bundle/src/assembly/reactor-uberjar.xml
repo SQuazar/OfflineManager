@@ -36,7 +36,7 @@
 
             <useAllReactorProjects>true</useAllReactorProjects>
             <excludes>
-                <exclude>net.flawe.offlinemanager.menus</exclude>
+                <exclude>net.flawe.offlinemanager:menus</exclude>
             </excludes>
 
             <binaries>

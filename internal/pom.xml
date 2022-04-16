@@ -51,8 +51,6 @@
             <id>all</id>
             <modules>
                 <module>v1_12_R1</module>
-<!--                <module>v1_16_R1</module>-->
-<!--                <module>v1_16_R2</module>-->
                 <module>v1_16_R3</module>
                 <module>v1_17_R1</module>
                 <module>v1_18_R1</module>
@@ -61,6 +59,17 @@
         </profile>
 
     </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
