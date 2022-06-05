@@ -114,7 +114,7 @@ public class OfflineUser implements IUser {
     }
 
     private WorldServer getWorldServer() {
-        return getMinecraftServer().a(World.f);
+        return getMinecraftServer().a(World.e);
     }
 
     @Override
@@ -236,4 +236,3 @@ public class OfflineUser implements IUser {
         }
     }
 }
-
