@@ -24,7 +24,6 @@ package net.flawe.offlinemanager.api.event.data;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,19 +32,9 @@ import org.jetbrains.annotations.Nullable;
  * @author flawe
  */
 public class LoadPlayerEvent extends OfflineManagerEvent {
-
-    private final Player player;
     private final IPlayerData playerData;
 
-    @Deprecated
-    public LoadPlayerEvent(@NotNull Player player) {
-        super(false);
-        this.player = player;
-        this.playerData = null;
-    }
-
     public LoadPlayerEvent(@NotNull IPlayerData playerData) {
-        this.player = null;
         this.playerData = playerData;
     }
 
@@ -56,15 +45,6 @@ public class LoadPlayerEvent extends OfflineManagerEvent {
     @Nullable
     public IPlayerData getPlayerData() {
         return playerData;
-    }
-
-    /**
-     * Gets the player that has been loaded
-     * @return player that has been loaded
-     */
-    @Deprecated
-    public @Nullable Player getPlayer() {
-        return player;
     }
 
 }

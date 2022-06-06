@@ -26,13 +26,10 @@ import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.INMSManager;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
-import net.flawe.offlinemanager.api.entity.IUser;
-import net.flawe.offlinemanager.api.util.v1_17_R1.data.OfflineUser;
 import net.flawe.offlinemanager.api.util.v1_17_R1.data.PlayerData;
 import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_17_R1.CraftServer;
-import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -40,7 +37,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class NMSManager implements INMSManager {
-
     private final OfflineManagerAPI api;
 
     public NMSManager(OfflineManagerAPI api) {
@@ -51,16 +47,6 @@ public class NMSManager implements INMSManager {
     public List<String> getSeenPlayers() {
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         return Arrays.asList(server.k.getSeenPlayers());
-    }
-
-    @Override
-    public IUser getUser(String s) {
-        return new OfflineUser((Plugin) api, s);
-    }
-
-    @Override
-    public IUser getUser(UUID uuid) {
-        return new OfflineUser((Plugin) api, uuid);
     }
 
     @Override

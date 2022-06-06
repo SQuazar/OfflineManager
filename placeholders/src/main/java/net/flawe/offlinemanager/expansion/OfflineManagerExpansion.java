@@ -31,7 +31,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class OfflineManagerExpansion extends PlaceholderExpansion {
-
     private final OfflineManagerAPI api;
 
     public OfflineManagerExpansion(OfflineManagerAPI api) {
@@ -92,7 +91,7 @@ public class OfflineManagerExpansion extends PlaceholderExpansion {
         if (params.toLowerCase().startsWith("player_loc")) {
             Location loc = player.getLocation();
             if (api.getStorage().hasPlayer(player.getName())) {
-                loc = api.getUser(player.getUniqueId()).getLocation();
+                loc = api.getPlayerData(player.getUniqueId()).getLocation();
             }
             if (params.equalsIgnoreCase("player_locX")) {
                 return String.valueOf(loc.getX());
@@ -122,7 +121,7 @@ public class OfflineManagerExpansion extends PlaceholderExpansion {
 
     public synchronized String onPlaceholderRequest(IPlayerData playerData, @NotNull String params) {
         if (params.equalsIgnoreCase("player_name")) {
-            return playerData.getName();
+            return playerData.getPlayerProfile().getName();
         }
         if (params.equalsIgnoreCase("player_healths")) {
             return String.valueOf(playerData.getHealth());
@@ -153,7 +152,7 @@ public class OfflineManagerExpansion extends PlaceholderExpansion {
             }
         }
         if (params.equalsIgnoreCase("player_uuid")) {
-            return playerData.getUUID().toString();
+            return playerData.getPlayerProfile().getUuid().toString();
         }
         return null;
     }

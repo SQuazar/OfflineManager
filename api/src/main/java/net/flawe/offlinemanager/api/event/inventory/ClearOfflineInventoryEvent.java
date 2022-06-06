@@ -25,7 +25,6 @@ package net.flawe.offlinemanager.api.event.inventory;
 import lombok.Getter;
 import lombok.Setter;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
-import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -36,24 +35,14 @@ import org.jetbrains.annotations.NotNull;
  * @author flawe
  */
 public class ClearOfflineInventoryEvent extends OfflineManagerEvent implements Cancellable {
-
     private final Player player;
-    private final IUser user;
     private final IPlayerData playerData;
     @Getter @Setter
     private boolean cancelled;
 
-    @Deprecated
-    public ClearOfflineInventoryEvent(@NotNull Player player, @NotNull IUser user) {
-        this.player = player;
-        this.user = user;
-        this.playerData = user.getPlayerData();
-    }
-
     public ClearOfflineInventoryEvent(@NotNull Player player, @NotNull IPlayerData playerData) {
         this.player = player;
         this.playerData = playerData;
-        this.user = playerData.getUser();
     }
 
     /**
@@ -63,17 +52,6 @@ public class ClearOfflineInventoryEvent extends OfflineManagerEvent implements C
     @NotNull
     public Player getPlayer() {
         return player;
-    }
-
-    /**
-     * Gets the inventory owner
-     * @deprecated use getPlayerData
-     * @return inventory owner
-     */
-    @Deprecated
-    @NotNull
-    public IUser getUser() {
-        return user;
     }
 
     /**

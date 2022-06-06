@@ -31,7 +31,6 @@ import net.flawe.offlinemanager.api.data.IConfigManager;
 import net.flawe.offlinemanager.api.data.INMSManager;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
-import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.memory.ISession;
 import net.flawe.offlinemanager.api.memory.IStorage;
 import net.flawe.offlinemanager.commands.CommandManager;
@@ -66,7 +65,6 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
     private IConfigManager configManager;
     private ISession session;
     private IStorage storage;
-    private ClassAccessor accessor;
     private ICommandManager commandManager;
     private INMSManager nmsManager;
     private PAPIHelper papiHelper;
@@ -74,6 +72,7 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
     private Settings settings;
     private Messages messages;
 
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private final Set<Addon> addons = new HashSet<>();
 
     @Override
@@ -112,7 +111,7 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
     private void init() {
         storage = new Storage(this);
         session = new Session();
-        accessor = new ClassAccessor(this);
+        ClassAccessor accessor = new ClassAccessor(this);
         nmsManager = accessor.getNMSManager();
         storage.init();
     }
@@ -176,16 +175,6 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
 
     public static String getServerVersion() {
         return Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1);
-    }
-
-    @Override
-    public synchronized IUser getUser(String username) {
-        return nmsManager.getUser(username);
-    }
-
-    @Override
-    public synchronized IUser getUser(UUID uuid) {
-        return nmsManager.getUser(uuid);
     }
 
     @Override

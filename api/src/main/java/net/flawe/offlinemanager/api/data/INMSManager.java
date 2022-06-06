@@ -24,7 +24,6 @@ package net.flawe.offlinemanager.api.data;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
-import net.flawe.offlinemanager.api.entity.IUser;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -42,24 +41,6 @@ public interface INMSManager {
      * @return all players from playerdata folder
      */
     List<String> getSeenPlayers();
-
-    /**
-     * Gets the offline player by name
-     * @deprecated use getPlayerData
-     * @param s player's username
-     * @return offline player with username from parameter
-     */
-    @Deprecated
-    IUser getUser(String s);
-
-    /**
-     * Gets the offline player by uuid
-     * @deprecated use getPlayerData
-     * @param uuid player's uuid
-     * @return offline player with uuid from parameter
-     */
-    @Deprecated
-    IUser getUser(UUID uuid);
 
     /**
      * Gets the offline player data

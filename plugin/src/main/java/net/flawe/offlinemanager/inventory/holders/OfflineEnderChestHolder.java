@@ -23,7 +23,6 @@
 package net.flawe.offlinemanager.inventory.holders;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
-import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.InventoryType;
 import net.flawe.offlinemanager.api.inventory.holder.IOfflineInvHolder;
 import org.bukkit.Bukkit;
@@ -33,45 +32,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class OfflineEnderChestHolder implements IOfflineInvHolder {
-
-    private final IUser user;
     private final IPlayerData playerData;
     private final Player seen;
     private final String name;
 
-    @Deprecated
-    public OfflineEnderChestHolder(@NotNull IUser user) {
-        this(user, null, "EnderChest");
-    }
-
-    @Deprecated
-    public OfflineEnderChestHolder(@NotNull IUser user, @Nullable Player seen) {
-        this(user, seen, "EnderChest");
-    }
-
-    @Deprecated
-    public OfflineEnderChestHolder(@NotNull IUser user, @Nullable Player seen, @NotNull String name) {
-        this.user = user;
-        this.playerData = user.getPlayerData();
-        this.seen = seen;
-        this.name = name;
-    }
-
     public OfflineEnderChestHolder(@NotNull IPlayerData playerData, @Nullable Player seen, @NotNull String name) {
         this.playerData = playerData;
-        this.user = playerData.getUser();
         this.seen = seen;
         this.name = name;
-    }
-
-    @Override
-    public @NotNull Player getPlayer() {
-        return user.getPlayer();
-    }
-
-    @Override
-    public @NotNull IUser getUser() {
-        return user;
     }
 
     @Override

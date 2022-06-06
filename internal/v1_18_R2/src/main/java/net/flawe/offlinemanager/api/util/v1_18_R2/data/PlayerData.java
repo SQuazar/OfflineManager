@@ -26,7 +26,6 @@ import com.mojang.authlib.GameProfile;
 import net.flawe.offlinemanager.api.OfflineManagerAPI;
 import net.flawe.offlinemanager.api.data.entity.AbstractPlayerData;
 import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
-import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.api.event.data.LoadPlayerEvent;
 import net.flawe.offlinemanager.api.event.data.SavePlayerEvent;
@@ -59,7 +58,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class PlayerData extends AbstractPlayerData {
-
     private final OfflineManagerAPI api;
     private final UUID uuid;
     private final String name;
@@ -181,11 +179,6 @@ public class PlayerData extends AbstractPlayerData {
             ((Plugin) api).getLogger().warning("Failed to save player data for " + name);
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public IUser getUser() {
-        return new OfflineUser((Plugin) api, uuid, tag);
     }
 
 }

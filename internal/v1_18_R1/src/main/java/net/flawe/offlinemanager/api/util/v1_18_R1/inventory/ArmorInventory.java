@@ -23,7 +23,6 @@
 package net.flawe.offlinemanager.api.util.v1_18_R1.inventory;
 
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
-import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.inventory.IArmorInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -32,12 +31,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class ArmorInventory implements IArmorInventory {
-
     private final IPlayerData playerData;
-
-    public ArmorInventory(IUser user) {
-        this.playerData = user.getPlayerData();
-    }
 
     public ArmorInventory(IPlayerData playerData) {
         this.playerData = playerData;

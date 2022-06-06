@@ -22,7 +22,6 @@
 
 package net.flawe.offlinemanager.api.data.entity;
 
-import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.enums.SavePlayerType;
 import net.flawe.offlinemanager.api.inventory.AbstractPlayerInventory;
 import net.flawe.offlinemanager.api.inventory.IArmorInventory;
@@ -308,11 +307,4 @@ public interface IPlayerData {
      * @param type save player type
      */
     void save(SavePlayerType type);
-
-    /**
-     * Gets the user. Not recommended.
-     * @return user
-     */
-    @Deprecated
-    IUser getUser();
 }

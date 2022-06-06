@@ -29,7 +29,6 @@ import net.flawe.offlinemanager.api.data.IConfigManager;
 import net.flawe.offlinemanager.api.data.INMSManager;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
 import net.flawe.offlinemanager.api.data.entity.PlayerProfile;
-import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.memory.ISession;
 import net.flawe.offlinemanager.api.memory.IStorage;
 import org.jetbrains.annotations.Nullable;
@@ -41,24 +40,6 @@ import java.util.UUID;
  * @author flawe
  */
 public interface OfflineManagerAPI {
-
-    /**
-     * Gets the offline user.
-     * @deprecated use getPlayerData method
-     * @param username target player username
-     * @return offline player instance
-     */
-    @Deprecated
-    IUser getUser(String username);
-
-    /**
-     * Gets the offline user.
-     * @deprecated use getPlayerData method
-     * @param uuid target player uuid
-     * @return offline player instance
-     */
-    @Deprecated
-    IUser getUser(UUID uuid);
 
     /**
      * Gets the offline player data

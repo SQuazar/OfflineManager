@@ -25,7 +25,6 @@ package net.flawe.offlinemanager.api.event.entity.player;
 import lombok.Getter;
 import lombok.Setter;
 import net.flawe.offlinemanager.api.data.entity.IPlayerData;
-import net.flawe.offlinemanager.api.entity.IUser;
 import net.flawe.offlinemanager.api.event.OfflineManagerEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -36,29 +35,14 @@ import org.jetbrains.annotations.NotNull;
  * @author flawe
  */
 public class HealOfflinePlayerEvent extends OfflineManagerEvent implements Cancellable {
-
     private final Player player;
-    private final IUser target;
     private final IPlayerData playerData;
     @Getter @Setter
     private boolean cancelled;
 
-    /**
-     *
-     * @param player the player who healing offline player
-     * @param target the player who was healed
-     */
-    @Deprecated
-    public HealOfflinePlayerEvent(@NotNull Player player, @NotNull IUser target) {
-        this.player = player;
-        this.target = target;
-        this.playerData = target.getPlayerData();
-    }
-
     public HealOfflinePlayerEvent(@NotNull Player player, @NotNull IPlayerData playerData) {
         this.player = player;
         this.playerData = playerData;
-        this.target = playerData.getUser();
     }
 
     /**
@@ -68,17 +52,6 @@ public class HealOfflinePlayerEvent extends OfflineManagerEvent implements Cance
     @NotNull
     public Player getPlayer() {
         return player;
-    }
-
-    /**
-     * Gets the player who was healed
-     * @deprecated use getPlayerData
-     * @return The player who was healed
-     */
-    @Deprecated
-    @NotNull
-    public IUser getTarget() {
-        return target;
     }
 
     /**
