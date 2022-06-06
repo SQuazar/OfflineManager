@@ -28,12 +28,12 @@
     <parent>
         <artifactId>offlinemanager</artifactId>
         <groupId>net.flawe</groupId>
-        <version>3.0.4-SNAPSHOT</version>
+        <version>3.0.5-SNAPSHOT</version>
     </parent>
 
     <groupId>net.flawe.offlinemanager</groupId>
     <artifactId>api</artifactId>
-    <version>3.0.4-SNAPSHOT</version>
+    <version>3.0.5-SNAPSHOT</version>
 
     <name>OfflineManagerAPI</name>
 
