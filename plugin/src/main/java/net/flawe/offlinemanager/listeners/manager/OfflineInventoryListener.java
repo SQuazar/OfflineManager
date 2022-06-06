@@ -51,16 +51,16 @@ public class OfflineInventoryListener implements Listener {
         IPlayerData playerData = e.getPlayerData();
         switch (e.getInventoryType()) {
             case ARMOR:
-                api.getSession().removeByValue(playerData.getUUID(), ActiveType.ARMOR_INVENTORY);
+                api.getSession().removeByValue(playerData.getPlayerProfile().getUuid(), ActiveType.ARMOR_INVENTORY);
                 break;
             case ENDER_CHEST:
-                api.getSession().removeByValue(playerData.getUUID(), ActiveType.ENDER_CHEST);
+                api.getSession().removeByValue(playerData.getPlayerProfile().getUuid(), ActiveType.ENDER_CHEST);
                 break;
             case DEFAULT:
-                api.getSession().removeByValue(playerData.getUUID(), ActiveType.INVENTORY);
+                api.getSession().removeByValue(playerData.getPlayerProfile().getUuid(), ActiveType.INVENTORY);
                 break;
         }
-        Player player = Bukkit.getPlayer(e.getPlayerData().getUUID());
+        Player player = Bukkit.getPlayer(e.getPlayerData().getPlayerProfile().getUuid());
         if (player == null)
             e.getPlayerData().save(SavePlayerType.DEFAULT);
     }
@@ -87,7 +87,7 @@ public class OfflineInventoryListener implements Listener {
                     e.setCancelled(true);
                     break;
                 }
-                player = Bukkit.getPlayer(e.getPlayerData().getUUID());
+                player = Bukkit.getPlayer(e.getPlayerData().getPlayerProfile().getUuid());
                 if (player == null) {
                     Bukkit.getScheduler().runTask((Plugin) api, () -> e.getPlayerData().getInventory().setStorageContents(e.getInventory().getContents()));
                     break;
@@ -99,7 +99,7 @@ public class OfflineInventoryListener implements Listener {
                     e.setCancelled(true);
                     break;
                 }
-                player = Bukkit.getPlayer(e.getPlayerData().getUUID());
+                player = Bukkit.getPlayer(e.getPlayerData().getPlayerProfile().getUuid());
                 if (player == null) {
                     AbstractPlayerInventory inventory = e.getPlayerData().getInventory();
                     Bukkit.getScheduler().runTask((Plugin) api, () -> {
@@ -124,7 +124,7 @@ public class OfflineInventoryListener implements Listener {
                     e.setCancelled(true);
                     break;
                 }
-                player = Bukkit.getPlayer(e.getPlayerData().getUUID());
+                player = Bukkit.getPlayer(e.getPlayerData().getPlayerProfile().getUuid());
                 if (player == null) {
                     Bukkit.getScheduler().runTask((Plugin) api, () -> e.getPlayerData().getEnderChest().getEnderChest().setContents(e.getInventory().getContents()));
                     break;

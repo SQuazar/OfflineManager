@@ -95,7 +95,7 @@ public class ContainerCommand extends OMCommand {
             return;
         }
         IPlayerData playerData = api.getPlayerData(playerName);
-        if (api.getSession().containsValue(playerData.getUUID(), activeType)) {
+        if (api.getSession().containsValue(playerData.getPlayerProfile().getUuid(), activeType)) {
             sendPlayerMessage(player, messages.getAlreadyBeingEdited());
             return;
         }
@@ -123,6 +123,6 @@ public class ContainerCommand extends OMCommand {
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return;
         player.openInventory(inventory);
-        api.getSession().add(player.getUniqueId(), playerData.getUUID(), activeType);
+        api.getSession().add(player.getUniqueId(), playerData.getPlayerProfile().getUuid(), activeType);
     }
 }

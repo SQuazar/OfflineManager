@@ -60,7 +60,7 @@ public class Storage implements IStorage {
             data.save();
             if (plugin.getSettings().removeFromCacheNotify())
                 plugin.getLogger().info(String.format("%s (%s) is successfully removed from cache and saved!",
-                        data.getPlayerProfile().getName(), data.getPlayerProfile().getUuid().toString()));
+                        data.getPlayerProfile().getName(), data.getPlayerProfile().getUuid()));
         }).build();
     }
 
@@ -111,7 +111,7 @@ public class Storage implements IStorage {
 
     @Override
     public void addPlayerDataToCache(@NotNull IPlayerData playerData) {
-        this.playerDataCache.put(playerData.getUUID(), playerData);
+        this.playerDataCache.put(playerData.getPlayerProfile().getUuid(), playerData);
     }
 
     @Override
