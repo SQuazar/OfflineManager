@@ -88,7 +88,7 @@ public class PlayerData extends AbstractPlayerData {
         this.api = api;
         this.uuid = profile.getUuid();
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
-        WorldServer worldServer = server.a(World.f);
+        WorldServer worldServer = server.a(World.e);
         if (worldServer == null)
             throw new NullPointerException("Overworld cannot be null!");
         GameProfile gameProfile = new GameProfile(uuid, profile.getName());
@@ -120,7 +120,7 @@ public class PlayerData extends AbstractPlayerData {
             return;
         }
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
-        WorldServer worldServer = server.a(World.f);
+        WorldServer worldServer = server.a(World.e);
         if (worldServer == null)
             throw new NullPointerException("Overworld cannot be null!");
         GameProfile profile = new GameProfile(uuid, Bukkit.getOfflinePlayer(uuid).getName());
