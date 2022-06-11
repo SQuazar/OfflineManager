@@ -30,7 +30,7 @@
     <artifactId>offlinemanager</artifactId>
     <name>OfflineManager</name>
     <url>https://t.me/flawe_sv</url>
-    <version>3.0.5-SNAPSHOT</version>
+    <version>3.0.6-SNAPSHOT</version>
 
     <developers>
         <developer>
@@ -130,7 +130,7 @@
             <dependency>
                 <groupId>net.flawe.offlinemanager</groupId>
                 <artifactId>menus</artifactId>
-                <version>3.0.5-SNAPSHOT</version>
+                <version>3.0.6-SNAPSHOT</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
