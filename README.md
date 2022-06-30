@@ -1,9 +1,9 @@
 # OfflineManager
 
 <div>
-<a href="https://github.com/quazar/OfflineManager/releases/latest"><img src="https://img.shields.io/github/v/release/quazar/OfflineManager?include_prereleases" alt="Last release"></a>
-<a href="https://github.com/quazar/OfflineManager/releases/latest"><img src="https://img.shields.io/github/downloads-pre/quazar/OfflineManager/latest/total" alt="Downloads"></a>
-<a href="https://github.com/quazar/OfflineManager/releases/latest"><img src="https://img.shields.io/github/release-date-pre/quazar/OfflineManager" alt="Release date"></a>
+<a href="https://github.com/squazar/OfflineManager/releases/latest"><img src="https://img.shields.io/github/v/release/squazar/OfflineManager?include_prereleases" alt="Last release"></a>
+<a href="https://github.com/squazar/OfflineManager/releases/latest"><img src="https://img.shields.io/github/downloads-pre/squazar/OfflineManager/latest/total" alt="Downloads"></a>
+<a href="https://github.com/squazar/OfflineManager/releases/latest"><img src="https://img.shields.io/github/release-date-pre/squazar/OfflineManager" alt="Release date"></a>
 <a href="https://discord.gg/VGE2zCcNQD"><img src="https://img.shields.io/discord/794710411060183130" alt="Discord chat"></a>
     <p>Javadoc - https://ci.codemc.io/job/flaweoff/job/OfflineManager/Javadoc/</p>
 </div>
