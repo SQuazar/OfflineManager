@@ -1,8 +1,8 @@
 name: OfflineManager
 version: ${version}
 api-version: 1.16
-main: net.flawe.offlinemanager.OfflineManager
-author: flaweoff
+main: net.quazar.offlinemanager.OfflineManager
+author: quazar
 website: ${url}
 prefix: OfflineManager
 

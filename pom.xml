@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2021 flaweoff
+  ~ Copyright (c) 2021 squazar
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -26,17 +26,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.flawe</groupId>
+    <groupId>net.quazar</groupId>
     <artifactId>offlinemanager</artifactId>
     <name>OfflineManager</name>
-    <url>https://t.me/flawe_sv</url>
+    <url>https://t.me/squazar</url>
     <version>3.0.6-SNAPSHOT</version>
 
     <developers>
         <developer>
-            <name>flaweoff</name>
-            <url>https://t.me/flawe_sv</url>
-            <email>flawesv@yandex.ru</email>
+            <name>quazar</name>
+            <url>https://t.me/squazar</url>
             <roles>
                 <role>owner</role>
             </roles>
@@ -104,31 +103,31 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>net.flawe.offlinemanager</groupId>
+                <groupId>net.quazar.offlinemanager</groupId>
                 <artifactId>api</artifactId>
                 <version>${project.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>net.flawe.offlinemanager</groupId>
+                <groupId>net.quazar.offlinemanager</groupId>
                 <artifactId>plugin</artifactId>
                 <version>${project.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>net.flawe.offlinemanager</groupId>
+                <groupId>net.quazar.offlinemanager</groupId>
                 <artifactId>placeholders</artifactId>
                 <version>${project.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>net.flawe.offlinemanager</groupId>
+                <groupId>net.quazar.offlinemanager</groupId>
                 <artifactId>annotations</artifactId>
                 <version>${project.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>net.flawe.offlinemanager</groupId>
+                <groupId>net.quazar.offlinemanager</groupId>
                 <artifactId>menus</artifactId>
                 <version>3.0.6-SNAPSHOT</version>
                 <scope>provided</scope>

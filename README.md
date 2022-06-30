@@ -1,9 +1,9 @@
 # OfflineManager
 
 <div>
-<a href="https://github.com/flaweoff/OfflineManager/releases/latest"><img src="https://img.shields.io/github/v/release/flaweoff/OfflineManager?include_prereleases" alt="Last release"></a>
-<a href="https://github.com/flaweoff/OfflineManager/releases/latest"><img src="https://img.shields.io/github/downloads-pre/flaweoff/OfflineManager/latest/total" alt="Downloads"></a>
-<a href="https://github.com/flaweoff/OfflineManager/releases/latest"><img src="https://img.shields.io/github/release-date-pre/flaweoff/OfflineManager" alt="Release date"></a>
+<a href="https://github.com/quazar/OfflineManager/releases/latest"><img src="https://img.shields.io/github/v/release/quazar/OfflineManager?include_prereleases" alt="Last release"></a>
+<a href="https://github.com/quazar/OfflineManager/releases/latest"><img src="https://img.shields.io/github/downloads-pre/quazar/OfflineManager/latest/total" alt="Downloads"></a>
+<a href="https://github.com/quazar/OfflineManager/releases/latest"><img src="https://img.shields.io/github/release-date-pre/quazar/OfflineManager" alt="Release date"></a>
 <a href="https://discord.gg/VGE2zCcNQD"><img src="https://img.shields.io/discord/794710411060183130" alt="Discord chat"></a>
     <p>Javadoc - https://ci.codemc.io/job/flaweoff/job/OfflineManager/Javadoc/</p>
 </div>
@@ -347,7 +347,7 @@ In order to get information from the player you need, you must:
 ```xml
 <dependencies>
     <dependency>
-        <groupId>net.flawe.offlinemanager</groupId>
+        <groupId>net.quazar.offlinemanager</groupId>
         <artifactId>api</artifactId>
         <version>VERSION</version>
         <scope>provided</scope>
@@ -366,7 +366,7 @@ repositories {
 ```
 ```groovy
 dependencies {
-    implementation 'net.flawe.offlinemanager:api:VERSION'
+    implementation 'net.quazar.offlinemanager:api:VERSION'
 }
 ```
 
@@ -377,9 +377,9 @@ dependencies {
 ```java
 package net.example;
 
-import net.flawe.offlinemanager.api.OfflineManagerAPI;
-import net.flawe.offlinemanager.api.data.entity.IPlayerData;
-import net.flawe.offlinemanager.api.enums.SavePlayerType;
+import net.quazar.offlinemanager.api.OfflineManagerAPI;
+import net.quazar.offlinemanager.api.data.entity.IPlayerData;
+import net.quazar.offlinemanager.api.enums.SavePlayerType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -437,7 +437,7 @@ public class Example extends JavaPlugin {
 <div>
 <ul>
 <li><a href="https://discord.gg/VGE2zCcNQD">Discord Support</a></li>
-<li><a href="https://t.me/flawe_sv">Telegram Support</a></li>
+<li><a href="https://t.me/squazar">Telegram Support</a></li>
 </ul>
 </div>
 

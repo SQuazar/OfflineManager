@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2021 flaweoff
+  ~ Copyright (c) 2021 squazar
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <artifactId>OfflineManagerParent</artifactId>
-    <groupId>net.flawe</groupId>
+    <groupId>net.quazar</groupId>
     <version>3.0.3-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -65,7 +65,7 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>net.flawe</groupId>
+      <groupId>net.quazar</groupId>
       <artifactId>OfflineManagerAPI</artifactId>
       <version>3.0.3-SNAPSHOT</version>
       <scope>provided</scope>

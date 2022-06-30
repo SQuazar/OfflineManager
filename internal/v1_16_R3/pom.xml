@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2021 flaweoff
+  ~ Copyright (c) 2021 squazar
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>internal</artifactId>
-        <groupId>net.flawe.offlinemanager</groupId>
+        <groupId>net.quazar.offlinemanager</groupId>
         <version>3.0.6-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -46,7 +46,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.flawe.offlinemanager</groupId>
+            <groupId>net.quazar.offlinemanager</groupId>
             <artifactId>api</artifactId>
         </dependency>
     </dependencies>
