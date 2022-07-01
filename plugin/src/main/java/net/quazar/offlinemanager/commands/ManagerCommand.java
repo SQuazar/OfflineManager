@@ -128,7 +128,7 @@ public class ManagerCommand implements CommandExecutor, TabCompleter {
                     .flatMap(c -> Arrays.stream(c.getAliases()))
                     .collect(Collectors.toList());
         if (args.length == 2)
-            return api.getStorage().getListForComplete(args);
+            return api.getStorage().getListForComplete(args[1]);
         return Collections.emptyList();
     }
 }

@@ -124,8 +124,8 @@ public interface IStorage {
     /**
      * Gets list for tab complete
      * Used to optimize tab completions
-     * @param args command arguments
+     * @param nickname player nickname
      * @return formatted player nickname list
      */
-    List<String> getListForComplete(String[] args);
+    List<String> getListForComplete(String nickname);
 }
