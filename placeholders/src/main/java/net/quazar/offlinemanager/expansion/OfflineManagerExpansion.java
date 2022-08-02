@@ -94,19 +94,19 @@ public class OfflineManagerExpansion extends PlaceholderExpansion {
                 loc = api.getPlayerData(player.getUniqueId()).getLocation();
             }
             if (params.equalsIgnoreCase("player_locX")) {
-                return String.valueOf(loc.getX());
+                return String.format("%.1f", loc.getX());
             }
             if (params.equalsIgnoreCase("player_locY")) {
-                return String.valueOf(loc.getY());
+                return String.format("%.1f", loc.getY());
             }
             if (params.equalsIgnoreCase("player_locZ")) {
-                return String.valueOf(loc.getZ());
+                return String.format("%.1f", loc.getZ());
             }
             if (params.equalsIgnoreCase("player_locYaw")) {
-                return String.valueOf(loc.getYaw());
+                return String.format("%.1f", loc.getYaw());
             }
             if (params.equalsIgnoreCase("player_locPitch")) {
-                return String.valueOf(loc.getPitch());
+                return String.format("%.1f", loc.getPitch());
             }
             if (params.equalsIgnoreCase("player_locWorld")) {
                 if (loc.getWorld() != null)
@@ -132,19 +132,19 @@ public class OfflineManagerExpansion extends PlaceholderExpansion {
         if (params.toLowerCase().startsWith("player_loc")) {
             Location loc = playerData.getLocation();
             if (params.equalsIgnoreCase("player_locX")) {
-                return String.valueOf(loc.getX());
+                return String.format("%.1f", loc.getX());
             }
             if (params.equalsIgnoreCase("player_locY")) {
-                return String.valueOf(loc.getY());
+                return String.format("%.1f", loc.getY());
             }
             if (params.equalsIgnoreCase("player_locZ")) {
-                return String.valueOf(loc.getZ());
+                return String.format("%.1f", loc.getZ());
             }
             if (params.equalsIgnoreCase("player_locYaw")) {
-                return String.valueOf(loc.getYaw());
+                return String.format("%.1f", loc.getYaw());
             }
             if (params.equalsIgnoreCase("player_locPitch")) {
-                return String.valueOf(loc.getPitch());
+                return String.format("%.1f", loc.getPitch());
             }
             if (params.equalsIgnoreCase("player_locWorld")) {
                 if (loc.getWorld() != null)
