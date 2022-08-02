@@ -152,8 +152,8 @@ public class Storage implements IStorage {
     }
 
     @Override
-    public List<String> getListForComplete(String[] args) {
-        if (args[1].isEmpty())
+    public List<String> getListForComplete(String nickname) {
+        if (nickname.isEmpty())
             return players
                     .stream()
                     .limit(Math.min(players.size(), 50))
@@ -162,7 +162,7 @@ public class Storage implements IStorage {
         List<String> list = players
                 .stream()
                 .map(PlayerProfile::getName)
-                .filter(s -> s.toLowerCase().startsWith(args[1].toLowerCase()))
+                .filter(s -> s.toLowerCase().startsWith(nickname.toLowerCase()))
                 .collect(Collectors.toList());
         List<String> nList = new ArrayList<>();
         int size = 0;

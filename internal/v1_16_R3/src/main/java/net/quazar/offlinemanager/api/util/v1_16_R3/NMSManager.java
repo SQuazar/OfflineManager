@@ -32,20 +32,22 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 public class NMSManager implements INMSManager {
+    private final MinecraftServer server;
     private final OfflineManagerAPI api;
 
     public NMSManager(OfflineManagerAPI api) {
         this.api = api;
+        this.server = ((CraftServer) Bukkit.getServer()).getServer();
     }
 
     @Override
     public List<String> getSeenPlayers() {
-        MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         return Arrays.asList(server.worldNBTStorage.getSeenPlayers());
     }
 
@@ -62,6 +64,13 @@ public class NMSManager implements INMSManager {
     @Override
     public IPlayerData getPlayerData(@NotNull PlayerProfile profile) {
         return new PlayerData(profile, api);
+    }
+
+    @Override
+    public boolean removePlayerData(UUID uuid) {
+        File file = new File(server.worldNBTStorage.getPlayerDir(), uuid.toString() + ".dat");
+        if (!file.exists()) return false;
+        return file.delete();
     }
 
 }

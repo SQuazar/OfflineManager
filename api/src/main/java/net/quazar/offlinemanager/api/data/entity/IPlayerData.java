@@ -270,6 +270,12 @@ public interface IPlayerData {
     void setExpTotal(int exp);
 
     /**
+     * Gets player last visit
+     * @return date of player last player on server
+     */
+    long getLastPlayed();
+
+    /**
      * Changes the data online status
      * Set true if you would like load data to player
      * Set false if you would like load player to data

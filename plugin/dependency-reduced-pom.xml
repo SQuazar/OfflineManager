@@ -23,13 +23,15 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <artifactId>OfflineManager</artifactId>
+    <artifactId>offlinemanager</artifactId>
     <groupId>net.quazar</groupId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.0.6-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
+  <groupId>net.quazar.offlinemanager</groupId>
   <artifactId>plugin</artifactId>
   <name>OfflineManagerPlugin</name>
+  <version>3.0.6-SNAPSHOT</version>
   <build>
     <resources>
       <resource>
@@ -40,7 +42,6 @@
     <plugins>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.4</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -77,25 +78,31 @@
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.16.4-R0.1-SNAPSHOT</version>
+      <version>1.17-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>net.quazar</groupId>
+      <groupId>net.quazar.offlinemanager</groupId>
       <artifactId>api</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>3.0.6-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>net.quazar</groupId>
+      <groupId>net.quazar.offlinemanager</groupId>
       <artifactId>placeholders</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>3.0.6-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>net.quazar</groupId>
+      <groupId>net.quazar.offlinemanager</groupId>
       <artifactId>annotations</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>3.0.6-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.quazar.offlinemanager</groupId>
+      <artifactId>menus</artifactId>
+      <version>3.0.6-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

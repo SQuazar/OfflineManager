@@ -51,8 +51,9 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -166,10 +167,10 @@ public class PlayerData extends AbstractPlayerData {
     public void save(SavePlayerType type) {
         SavePlayerEvent event = new SavePlayerEvent(this, type);
         Bukkit.getPluginManager().callEvent(event);
-        try {
-            File file = new File(this.playerDir, uuid + ".dat.tmp");
-            File file1 = new File(this.playerDir, uuid + ".dat");
-            NbtIo.writeCompressed(tag, new FileOutputStream(file));
+        File file = new File(this.playerDir, uuid + ".dat.tmp");
+        File file1 = new File(this.playerDir, uuid + ".dat");
+        try (OutputStream out = Files.newOutputStream(file.toPath())){
+            NbtIo.writeCompressed(tag, out);
             if (file1.exists())
                 if (!file1.delete())
                     throw new IOException(String.format("Failed to delete tmp player file %s", uuid.toString()));

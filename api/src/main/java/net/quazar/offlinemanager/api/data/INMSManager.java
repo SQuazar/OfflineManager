@@ -65,4 +65,11 @@ public interface INMSManager {
      */
     IPlayerData getPlayerData(@NotNull PlayerProfile profile);
 
+    /**
+     * Removed the player data from server
+     * @param uuid player uuid
+     * @return true if player data is removed
+     */
+    boolean removePlayerData(UUID uuid);
+
 }

@@ -125,7 +125,7 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
         if (papi())
             new OfflineManagerExpansion(this).register();
         papiHelper = new PAPIHelper(this);
-/*        Menus menus = new Menus(this);
+        /*Menus menus = new Menus(this);
         if (menus.getConfiguration().enabled()) {
             menus.load();
             addons.add(menus);

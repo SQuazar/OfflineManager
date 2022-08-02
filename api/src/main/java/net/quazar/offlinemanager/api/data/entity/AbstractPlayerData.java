@@ -259,6 +259,11 @@ public abstract class AbstractPlayerData implements IPlayerData {
     }
 
     @Override
+    public long getLastPlayed() {
+        return ((TagLong) adapter.getTagCompound("bukkit").getTagValue("lastPlayed")).getValue();
+    }
+
+    @Override
     public void setTag(String key, TagValue<?> tagValue) {
         adapter.setValue(key, tagValue);
     }

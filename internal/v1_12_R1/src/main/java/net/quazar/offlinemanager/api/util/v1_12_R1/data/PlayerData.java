@@ -44,8 +44,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -161,7 +161,7 @@ public class PlayerData extends AbstractPlayerData {
         try {
             File file = new File(this.playerDir, uuid + ".dat.tmp");
             File file1 = new File(this.playerDir, uuid + ".dat");
-            NBTCompressedStreamTools.a(tag, new FileOutputStream(file));
+            NBTCompressedStreamTools.a(tag, Files.newOutputStream(file.toPath()));
             if (file1.exists())
                 if (!file1.delete())
                     throw new IOException(String.format("Failed to delete tmp player file %s", uuid.toString()));

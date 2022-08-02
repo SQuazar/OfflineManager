@@ -32,7 +32,8 @@ import net.quazar.offlinemanager.api.configuration.Configuration;
 import net.quazar.offlinemanager.api.configuration.ContainerConfiguration;
 import org.bukkit.configuration.file.FileConfiguration;
 
-@Comment({"OfflineManager 3.0.1-SNAPSHOT", "Created by quazar, LOVEC3327", "Contact https://vk.com/flawesv or https://t.me/squazar", "Configuration file"})
+@SuppressWarnings("FieldMayBeFinal")
+@Comment({"OfflineManager 3.0.7", "Created by quazar, LOVEC3327", "Contact https://vk.com/flawesv or https://t.me/squazar", "Configuration file"})
 public class Settings implements Configuration {
 
     @Indents(1)
