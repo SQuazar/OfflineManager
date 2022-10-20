@@ -33,12 +33,13 @@
         <module>v1_18_R1</module>
         <module>v1_18_R2</module>
         <module>v1_19_R1</module>
+        <module>v1_19_R2</module>
     </modules>
 
     <parent>
         <artifactId>offlinemanager</artifactId>
         <groupId>net.quazar</groupId>
-        <version>3.0.7</version>
+        <version>3.0.8</version>
     </parent>
 
     <groupId>net.quazar.offlinemanager</groupId>

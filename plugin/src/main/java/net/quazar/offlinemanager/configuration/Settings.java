@@ -54,6 +54,9 @@ public class Settings implements Configuration {
     @Comment("Tab-complete by plugin commands")
     @ConfigKey("command-complete")
     private boolean commandComplete = true;
+    @Comment("Async player profiles storage loading")
+    @ConfigKey("async-storage-init")
+    private boolean asyncStorageInit = false;
     @Indents(1)
     @Comment({"Cache configuration", "This cache stores the data of recently used players"})
     @ConfigKey("cache")
@@ -397,6 +400,10 @@ public class Settings implements Configuration {
         return feedConfiguration;
     }
 
+    public boolean isAsyncStorageInit() {
+        return asyncStorageInit;
+    }
+
     public void reload(FileConfiguration configuration) {
         ConfigurationLoader.loadConfiguration(this, configuration);
     }
@@ -420,4 +427,5 @@ public class Settings implements Configuration {
                 ", feedConfiguration=" + feedConfiguration +
                 '}';
     }
+
 }

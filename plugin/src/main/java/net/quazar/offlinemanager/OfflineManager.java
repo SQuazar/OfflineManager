@@ -113,7 +113,9 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
         session = new Session();
         ClassAccessor accessor = new ClassAccessor(this);
         nmsManager = accessor.getNMSManager();
-        storage.init();
+        if (settings.isAsyncStorageInit())
+            storage.initAsync();
+        else storage.init();
     }
 
     private void postInit() {

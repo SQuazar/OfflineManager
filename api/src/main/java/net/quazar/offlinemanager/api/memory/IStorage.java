@@ -22,6 +22,7 @@
 
 package net.quazar.offlinemanager.api.memory;
 
+import com.google.common.annotations.Beta;
 import com.google.common.cache.Cache;
 import net.quazar.offlinemanager.api.data.entity.IPlayerData;
 import net.quazar.offlinemanager.api.data.entity.PlayerProfile;
@@ -41,6 +42,9 @@ public interface IStorage {
      * Add all current players profiles from playerdata folder to collection
      */
     void init();
+
+    @Beta
+    void initAsync();
 
     /**
      * Add new player profile to collection

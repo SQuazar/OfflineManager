@@ -27,12 +27,12 @@
     <parent>
         <artifactId>internal</artifactId>
         <groupId>net.quazar.offlinemanager</groupId>
-        <version>3.0.7</version>
+        <version>3.0.8</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>v1_19_R1</artifactId>
-    <version>3.0.7</version>
+    <version>3.0.8</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

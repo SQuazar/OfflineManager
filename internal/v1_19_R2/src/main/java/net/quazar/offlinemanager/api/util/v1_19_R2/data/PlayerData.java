@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package net.quazar.offlinemanager.api.util.v1_19_R1.data;
+package net.quazar.offlinemanager.api.util.v1_19_R2.data;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.nbt.CompoundTag;
@@ -40,9 +40,8 @@ import net.quazar.offlinemanager.api.event.data.SavePlayerEvent;
 import net.quazar.offlinemanager.api.inventory.AbstractPlayerInventory;
 import net.quazar.offlinemanager.api.inventory.IArmorInventory;
 import net.quazar.offlinemanager.api.inventory.IEnderChest;
-import net.quazar.offlinemanager.api.util.v1_19_R1.inventory.ArmorInventory;
-import net.quazar.offlinemanager.api.util.v1_19_R1.inventory.OfflineEnderChest;
-import net.quazar.offlinemanager.api.util.v1_19_R1.inventory.PlayerInventory;
+import net.quazar.offlinemanager.api.util.v1_19_R2.inventory.ArmorInventory;
+import net.quazar.offlinemanager.api.util.v1_19_R2.inventory.OfflineEnderChest;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_19_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
@@ -65,7 +64,7 @@ public class PlayerData extends AbstractPlayerData {
     private PlayerDataStorage worldNBTStorage;
     private CompoundTag tag;
     private final File playerDir;
-    private PlayerInventory playerInventory;
+    private net.quazar.offlinemanager.api.util.v1_19_R2.inventory.PlayerInventory playerInventory;
     private ArmorInventory armorInventory;
     private IEnderChest enderChest;
 
@@ -102,7 +101,7 @@ public class PlayerData extends AbstractPlayerData {
         ListTag inventoryList = (ListTag) tag.get("Inventory");
         Inventory virtual = new Inventory(entityPlayer);
         virtual.load(inventoryList);
-        this.playerInventory = new PlayerInventory(new CraftInventoryPlayer(virtual), tag);
+        this.playerInventory = new net.quazar.offlinemanager.api.util.v1_19_R2.inventory.PlayerInventory(new CraftInventoryPlayer(virtual), tag);
         this.armorInventory = new ArmorInventory(this);
         this.enderChest = new OfflineEnderChest(Bukkit.createInventory(null, InventoryType.ENDER_CHEST), tag);
         LoadPlayerEvent event = new LoadPlayerEvent(this);
@@ -139,7 +138,7 @@ public class PlayerData extends AbstractPlayerData {
         ListTag inventoryList = (ListTag) tag.get("Inventory");
         Inventory virtual = new Inventory(ep);
         virtual.load(inventoryList);
-        this.playerInventory = new PlayerInventory(new CraftInventoryPlayer(virtual), tag);
+        this.playerInventory = new net.quazar.offlinemanager.api.util.v1_19_R2.inventory.PlayerInventory(new CraftInventoryPlayer(virtual), tag);
         this.armorInventory = new ArmorInventory(this);
         this.enderChest = new OfflineEnderChest(Bukkit.createInventory(null, InventoryType.ENDER_CHEST), tag);
     }

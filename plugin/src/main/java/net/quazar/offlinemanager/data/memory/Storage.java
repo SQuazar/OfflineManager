@@ -42,6 +42,7 @@ public class Storage implements IStorage {
     private final Set<PlayerProfile> players = new HashSet<>();
 
     private final OfflineManager plugin;
+    private boolean locked = false;
 
     public Storage(OfflineManager plugin) {
         this.plugin = plugin;
@@ -66,6 +67,11 @@ public class Storage implements IStorage {
 
     @Override
     public void init() {
+        if (locked) {
+            plugin.getLogger().info("Cannot load players, because loading thread is locket at this time.");
+            return;
+        }
+        locked = true;
         OfflineManager.getApi().getNMSManager().getSeenPlayers().forEach(id -> {
             try {
                 if (id.endsWith("_old"))
@@ -80,21 +86,63 @@ public class Storage implements IStorage {
                 plugin.err(id + " file is broken. Replace or remove it to resolve this error.");
             }
         });
+        locked = false;
         plugin.info("Players loaded successfully!");
     }
 
     @Override
+    public void initAsync() {
+        if (locked) {
+            plugin.getLogger().info("Cannot load players, because loading thread is locket at this time.");
+            return;
+        }
+        plugin.getLogger().info("Loading player profiles...");
+        locked = true;
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                    OfflineManager.getApi().getNMSManager().getSeenPlayers().forEach(id -> {
+                        try {
+                            if (id.endsWith("_old"))
+                                return;
+                            UUID uuid = UUID.fromString(id);
+                            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+                            if (offlinePlayer.hasPlayedBefore() && !offlinePlayer.isOnline()) {
+                                if (offlinePlayer.getName() != null)
+                                    players.add(PlayerProfile.of(uuid, offlinePlayer.getName()));
+                            }
+                        } catch (IllegalArgumentException exception) {
+                            plugin.err(id + " file is broken. Replace or remove it to resolve this error.");
+                        }
+                    });
+                    locked = false;
+                    players.addAll(addQueue);
+                    plugin.info("Players loaded successfully!");
+                }
+        );
+    }
+
+    private final Set<PlayerProfile> addQueue = new HashSet<>();
+
+    @Override
     public void add(PlayerProfile profile) {
+        if (locked) {
+            addQueue.add(profile);
+            return;
+        }
         players.add(profile);
     }
 
     @Override
     public void remove(PlayerProfile profile) {
+        if (locked) {
+            addQueue.remove(profile);
+            return;
+        }
         players.remove(profile);
     }
 
     @Override
     public PlayerProfile getPlayerProfile(String name) {
+        if (locked) return null;
         for (PlayerProfile profile : players)
             if (profile.getName().equalsIgnoreCase(name))
                 return profile;
@@ -103,6 +151,7 @@ public class Storage implements IStorage {
 
     @Override
     public PlayerProfile getPlayerProfile(UUID uuid) {
+        if (locked) return null;
         for (PlayerProfile profile : players)
             if (profile.getUuid().equals(uuid))
                 return profile;
@@ -131,28 +180,34 @@ public class Storage implements IStorage {
 
     @Override
     public void reload() {
-        players.clear();
-        init();
+        if (!locked) {
+            players.clear();
+            initAsync();
+        }
         initCache();
     }
 
     @Override
     public boolean hasPlayer(PlayerProfile profile) {
+        if (locked) return false;
         return players.contains(profile);
     }
 
     @Override
     public boolean hasPlayer(String name) {
+        if (locked) return false;
         return players.stream().anyMatch(profile -> profile.getName().equalsIgnoreCase(name));
     }
 
     @Override
     public List<String> getList() {
+        if (!locked) return Collections.emptyList();
         return players.stream().map(PlayerProfile::getName).collect(Collectors.toList());
     }
 
     @Override
     public List<String> getListForComplete(String nickname) {
+        if (locked) return Collections.emptyList();
         if (nickname.isEmpty())
             return players
                     .stream()
