@@ -57,6 +57,9 @@ public class Settings implements Configuration {
     @Comment("Async player profiles storage loading")
     @ConfigKey("async-storage-init")
     private boolean asyncStorageInit = false;
+    @Comment("Prints error to console if plugin can't read file")
+    @ConfigKey("file-err-log")
+    private boolean fileErrorLog = true;
     @Indents(1)
     @Comment({"Cache configuration", "This cache stores the data of recently used players"})
     @ConfigKey("cache")
@@ -428,4 +431,7 @@ public class Settings implements Configuration {
                 '}';
     }
 
+    public boolean isFileErrorLog() {
+        return fileErrorLog;
+    }
 }
