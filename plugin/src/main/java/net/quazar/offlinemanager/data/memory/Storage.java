@@ -83,7 +83,8 @@ public class Storage implements IStorage {
                         players.add(PlayerProfile.of(uuid, offlinePlayer.getName()));
                 }
             } catch (IllegalArgumentException exception) {
-                plugin.err(id + " file is broken. Replace or remove it to resolve this error.");
+                if (plugin.getSettings().isFileErrorLog())
+                    plugin.err(id + " file is broken. Replace or remove it to resolve this error.");
             }
         });
         locked = false;
@@ -110,7 +111,8 @@ public class Storage implements IStorage {
                                     players.add(PlayerProfile.of(uuid, offlinePlayer.getName()));
                             }
                         } catch (IllegalArgumentException exception) {
-                            plugin.err(id + " file is broken. Replace or remove it to resolve this error.");
+                            if (plugin.getSettings().isFileErrorLog())
+                                plugin.err(id + " file is broken. Replace or remove it to resolve this error.");
                         }
                     });
                     locked = false;
