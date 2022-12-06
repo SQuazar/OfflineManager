@@ -39,7 +39,7 @@
     <parent>
         <artifactId>offlinemanager</artifactId>
         <groupId>net.quazar</groupId>
-        <version>3.0.8</version>
+        <version>3.0.9</version>
     </parent>
 
     <groupId>net.quazar.offlinemanager</groupId>

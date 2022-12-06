@@ -30,7 +30,7 @@
     <artifactId>offlinemanager</artifactId>
     <name>OfflineManager</name>
     <url>https://t.me/squazar</url>
-    <version>3.0.8</version>
+    <version>3.0.9</version>
 
     <developers>
         <developer>
@@ -129,7 +129,7 @@
             <dependency>
                 <groupId>net.quazar.offlinemanager</groupId>
                 <artifactId>menus</artifactId>
-                <version>3.0.8</version>
+                <version>3.0.9</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>

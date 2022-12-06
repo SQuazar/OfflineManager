@@ -31,7 +31,7 @@ import net.quazar.offlinemanager.api.configuration.Configuration;
 import java.io.File;
 import java.io.IOException;
 
-@Comment({"#OfflineManager 3.0.7", "Created by quazar, LOVEC3327", "Contact https://vk.com/flawesv or https://t.me/squazar", "Messages configuration file"})
+@Comment({"#OfflineManager 3.0.9", "Created by quazar, LOVEC3327", "Contact https://vk.com/flawesv or https://t.me/squazar", "Messages configuration file"})
 public class Messages implements Configuration {
 
     public Messages(OfflineManager plugin) {
