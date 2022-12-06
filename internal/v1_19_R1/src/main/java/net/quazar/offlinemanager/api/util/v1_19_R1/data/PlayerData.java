@@ -94,8 +94,8 @@ public class PlayerData extends AbstractPlayerData {
         ServerPlayer entityPlayer
                  = new ServerPlayer(server, level, gameProfile, null);
         this.tag = Objects.requireNonNull(compound.getTag(), "Player file cannot be loaded! File name is " + uuid);
-        entityPlayer.load(tag); //load
-        entityPlayer.readAdditionalSaveData(tag); //loadData
+        entityPlayer.load(tag); 
+        entityPlayer.readAdditionalSaveData(tag);
         this.name = entityPlayer.displayName;
         this.worldNBTStorage = server.playerDataStorage;
         this.playerDir = worldNBTStorage.getPlayerDir();
