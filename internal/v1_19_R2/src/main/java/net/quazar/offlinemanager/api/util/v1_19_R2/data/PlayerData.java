@@ -43,9 +43,9 @@ import net.quazar.offlinemanager.api.inventory.IEnderChest;
 import net.quazar.offlinemanager.api.util.v1_19_R2.inventory.ArmorInventory;
 import net.quazar.offlinemanager.api.util.v1_19_R2.inventory.OfflineEnderChest;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftInventoryPlayer;
+import org.bukkit.craftbukkit.v1_19_R2.CraftServer;
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R2.inventory.CraftInventoryPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.Plugin;
@@ -91,7 +91,7 @@ public class PlayerData extends AbstractPlayerData {
             throw new NullPointerException("Overworld cannot be null!");
         GameProfile gameProfile = new GameProfile(uuid, profile.getName());
         ServerPlayer entityPlayer
-                 = new ServerPlayer(server, level, gameProfile, null);
+                 = new ServerPlayer(server, level, gameProfile);
         this.tag = Objects.requireNonNull(compound.getTag(), "Player file cannot be loaded! File name is " + uuid);
         entityPlayer.load(tag); //load
         entityPlayer.readAdditionalSaveData(tag); //loadData
@@ -132,7 +132,7 @@ public class PlayerData extends AbstractPlayerData {
             adapter = new TagAdapter(ep.saveWithoutId(tag)); //save
             ep.addAdditionalSaveData(tag); //saveData
         }
-        ep = new ServerPlayer(server, worldServer, profile, null);
+        ep = new ServerPlayer(server, worldServer, profile);
         ep.load(tag);
         ep.readAdditionalSaveData(tag);
         ListTag inventoryList = (ListTag) tag.get("Inventory");

@@ -29,8 +29,8 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.quazar.offlinemanager.api.inventory.AbstractInventory;
 import net.quazar.offlinemanager.api.inventory.IEnderChest;
-import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftInventory;
-import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_19_R2.inventory.CraftInventory;
+import org.bukkit.craftbukkit.v1_19_R2.inventory.CraftItemStack;
 import org.bukkit.inventory.Inventory;
 
 public class OfflineEnderChest extends AbstractInventory implements IEnderChest {

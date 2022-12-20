@@ -29,7 +29,7 @@ import net.quazar.offlinemanager.api.data.entity.IPlayerData;
 import net.quazar.offlinemanager.api.data.entity.PlayerProfile;
 import net.quazar.offlinemanager.api.util.v1_19_R2.data.PlayerData;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_19_R2.CraftServer;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

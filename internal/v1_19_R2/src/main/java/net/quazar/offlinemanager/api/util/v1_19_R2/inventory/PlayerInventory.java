@@ -26,7 +26,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
 import net.quazar.offlinemanager.api.inventory.AbstractPlayerInventory;
-import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftInventoryPlayer;
+import org.bukkit.craftbukkit.v1_19_R2.inventory.CraftInventoryPlayer;
 
 public class PlayerInventory extends AbstractPlayerInventory {
 
