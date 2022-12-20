@@ -27,12 +27,12 @@
     <parent>
         <artifactId>internal</artifactId>
         <groupId>net.quazar.offlinemanager</groupId>
-        <version>3.0.9</version>
+        <version>3.1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>v1_18_R2</artifactId>
-    <version>3.0.9</version>
+    <version>3.1.0</version>
 
     <repositories>
         <repository>
