@@ -41,13 +41,13 @@
     <parent>
         <artifactId>offlinemanager</artifactId>
         <groupId>net.quazar</groupId>
-        <version>3.1.1</version>
+        <version>3.1.2</version>
     </parent>
 
     <groupId>net.quazar.offlinemanager</groupId>
     <artifactId>internal</artifactId>
     <name>OfflineManagerAdapter</name>
-    <version>3.1.1</version>
+    <version>3.1.2</version>
 
     <packaging>pom</packaging>
 
