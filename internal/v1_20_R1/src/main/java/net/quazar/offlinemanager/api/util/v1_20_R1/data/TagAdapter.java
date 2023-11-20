@@ -74,6 +74,8 @@ public class TagAdapter implements ITagAdapter {
                 return FloatTag.valueOf(((TagFloat) value).getValue());
             case DOUBLE:
                 return DoubleTag.valueOf(((TagDouble) value).getValue());
+            case BYTE_ARRAY:
+                return new ByteArrayTag(((TagByteArray) value).getValue());
             case STRING:
                 return StringTag.valueOf(((TagString) value).getValue());
             case LIST:
@@ -93,6 +95,10 @@ public class TagAdapter implements ITagAdapter {
                 }
                 return compound;
             }
+            case INT_ARRAY:
+                return new IntArrayTag(((TagIntArray) value).getValue());
+            case LONG_ARRAY:
+                return new LongArrayTag(((TagLongArray) value).getValue());
         }
         return null;
     }
@@ -112,6 +118,8 @@ public class TagAdapter implements ITagAdapter {
                 return new TagFloat(((FloatTag) base).getAsFloat());
             case TagTypes.DOUBLE:
                 return new TagDouble(((DoubleTag) base).getAsDouble());
+            case TagTypes.BYTE_ARRAY:
+                return new TagByteArray(((ByteArrayTag) base).getAsByteArray());
             case TagTypes.STRING:
                 return new TagString(base.getAsString());
             case TagTypes.LIST:
@@ -130,6 +138,10 @@ public class TagAdapter implements ITagAdapter {
                 }
                 return compoundTag;
             }
+            case TagTypes.INT_ARRAY:
+                return new TagIntArray(((IntArrayTag) base).getAsIntArray());
+            case TagTypes.LONG_ARRAY:
+                return new TagLongArray(((LongArrayTag) base).getAsLongArray());
         }
         return null;
     }

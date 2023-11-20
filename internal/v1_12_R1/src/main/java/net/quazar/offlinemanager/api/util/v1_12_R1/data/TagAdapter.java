@@ -73,6 +73,8 @@ public class TagAdapter implements ITagAdapter {
                 return new NBTTagFloat(((TagFloat) value).getValue());
             case DOUBLE:
                 return new NBTTagDouble(((TagDouble) value).getValue());
+            case BYTE_ARRAY:
+                return new NBTTagByteArray(((TagByteArray) value).getValue());
             case STRING:
                 return new NBTTagString(((TagString) value).getValue());
             case LIST:
@@ -92,7 +94,10 @@ public class TagAdapter implements ITagAdapter {
                 }
                 return compound;
             }
-
+            case INT_ARRAY:
+                return new NBTTagIntArray(((TagIntArray) value).getValue());
+            case LONG_ARRAY:
+                return new NBTTagLongArray(((TagLongArray) value).getValue());
         }
         return null;
     }
@@ -112,6 +117,8 @@ public class TagAdapter implements ITagAdapter {
                 return new TagFloat(((NBTTagFloat) base).i());
             case TagTypes.DOUBLE:
                 return new TagDouble(((NBTTagDouble) base).asDouble());
+            case TagTypes.BYTE_ARRAY:
+                return new TagByteArray(((NBTTagByteArray) base).c());
             case TagTypes.STRING:
                 return new TagString(((NBTTagString) base).c_());
             case TagTypes.LIST:
@@ -131,6 +138,15 @@ public class TagAdapter implements ITagAdapter {
                 }
                 return compoundTag;
             }
+            case TagTypes.INT_ARRAY:
+                return new TagIntArray(((NBTTagIntArray) base).d());
+            case TagTypes.LONG_ARRAY:
+                try {
+                    long[] value = (long[]) base.getClass().getDeclaredField("b").get(base);
+                    return new TagLongArray(value);
+                } catch (IllegalAccessException | NoSuchFieldException e) {
+                    return null;
+                }
         }
         return null;
     }
