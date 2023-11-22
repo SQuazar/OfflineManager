@@ -20,55 +20,47 @@
  * SOFTWARE.
  */
 
-package net.quazar.offlinemanager.api.inventory.view;
+package net.quazar.offlinemanager.api.util.v1_20_R2.inventory;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import net.quazar.offlinemanager.api.data.entity.IPlayerData;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
+import net.quazar.offlinemanager.api.inventory.IArmorInventory;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
-/**
- * Test class
- * Not used in current version
- */
-@AllArgsConstructor
-public class OfflineInventoryView extends InventoryView {
+public class ArmorInventory implements IArmorInventory {
+    private final IPlayerData playerData;
 
-    @Getter private final IPlayerData playerData;
-    private final Player player;
-
-    @NotNull
-    @Override
-    public Inventory getTopInventory() {
-        return playerData.getInventory();
+    public ArmorInventory(IPlayerData playerData) {
+        this.playerData = playerData;
     }
 
-    @NotNull
     @Override
-    public Inventory getBottomInventory() {
-        return player.getInventory();
+    public Inventory getInventory() {
+        Inventory inventory = Bukkit.createInventory(null, 9);
+        for (int i = 0; i < 9; i++) {
+            if (i > 4) {
+                inventory.setItem(i, blockedItem());
+                continue;
+            }
+            if (i == 4) {
+                inventory.setItem(i, playerData.getInventory().getItemInOffHand());
+                continue;
+            }
+            inventory.setItem(i, playerData.getInventory().getArmorContents()[i]);
+
+        }
+        return inventory;
     }
 
-    @NotNull
-    @Override
-    public HumanEntity getPlayer() {
-        return player;
-    }
-
-    @NotNull
-    @Override
-    public InventoryType getType() {
-        return InventoryType.PLAYER;
-    }
-
-    @NotNull
-    @Override
-    public String getTitle() {
-        return "Title";
+    private ItemStack blockedItem() {
+        ItemStack stack = new ItemStack(Material.BARRIER);
+        ItemMeta meta = stack.getItemMeta();
+        assert meta != null;
+        meta.setDisplayName(" ");
+        stack.setItemMeta(meta);
+        return stack;
     }
 }
