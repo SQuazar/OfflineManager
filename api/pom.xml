@@ -28,12 +28,12 @@
     <parent>
         <artifactId>offlinemanager</artifactId>
         <groupId>net.quazar</groupId>
-        <version>3.1.3</version>
+        <version>3.1.4</version>
     </parent>
 
     <groupId>net.quazar.offlinemanager</groupId>
     <artifactId>api</artifactId>
-    <version>3.1.3</version>
+    <version>3.1.4</version>
 
     <name>OfflineManagerAPI</name>
 
