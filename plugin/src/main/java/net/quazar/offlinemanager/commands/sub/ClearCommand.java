@@ -24,6 +24,7 @@ package net.quazar.offlinemanager.commands.sub;
 
 import net.quazar.offlinemanager.api.data.entity.IPlayerData;
 import net.quazar.offlinemanager.api.enums.SavePlayerType;
+import net.quazar.offlinemanager.api.event.inventory.ClearOfflineEnderchestEvent;
 import net.quazar.offlinemanager.api.event.inventory.ClearOfflineInventoryEvent;
 import net.quazar.offlinemanager.commands.OMCommand;
 import net.quazar.offlinemanager.placeholders.Placeholder;
@@ -64,12 +65,22 @@ public class ClearCommand extends OMCommand {
             return;
         }
         IPlayerData playerData = api.getPlayerData(playerName);
-        ClearOfflineInventoryEvent event = new ClearOfflineInventoryEvent(player, playerData);
-        Bukkit.getPluginManager().callEvent(event);
-        if (event.isCancelled())
-            return;
-        playerData.getInventory().clear();
-        playerData.save(SavePlayerType.INVENTORY);
-        sendPlayerMessage(player, messages.getClearInventory());
+        if (args.length == 2) {
+            ClearOfflineInventoryEvent event = new ClearOfflineInventoryEvent(player, playerData);
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled())
+                return;
+            playerData.getInventory().clear();
+            playerData.save(SavePlayerType.INVENTORY);
+            sendPlayerMessage(player, messages.getClearInventory());
+        } else if (args[2].equalsIgnoreCase("ec")) {
+            ClearOfflineEnderchestEvent event = new ClearOfflineEnderchestEvent(player, playerData);
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled())
+                return;
+            playerData.getEnderChest().getEnderChest().clear();
+            playerData.save(SavePlayerType.ENDER_CHEST);
+            sendPlayerMessage(player, messages.getClearEnderChest());
+        }
     }
 }

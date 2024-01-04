@@ -81,6 +81,8 @@ public class Messages implements Configuration {
     private String feedPlayer = "&a[OfflineManager] &eThe player was fed!";
     @ConfigKey("clear-inventory")
     private String clearInventory = "&a[OfflineManager] &ePlayer's inventory has been cleared!";
+    @ConfigKey("clear-enderchest")
+    private String clearEnderChest = "&a[OfflineManager] &ePlayer ender chest has been cleared!";
 
     public String getPermissionDeny() {
         return permissionDeny;
@@ -150,6 +152,10 @@ public class Messages implements Configuration {
         return clearInventory;
     }
 
+    public String getClearEnderChest() {
+        return clearEnderChest;
+    }
+
     @Override
     public String toString() {
         return "Messages{" +
@@ -169,6 +175,7 @@ public class Messages implements Configuration {
                 ", killPlayer='" + killPlayer + '\'' +
                 ", feedPlayer='" + feedPlayer + '\'' +
                 ", clearInventory='" + clearInventory + '\'' +
+                ", clearEnderChest='" + clearEnderChest + '\'' +
                 '}';
     }
 }
