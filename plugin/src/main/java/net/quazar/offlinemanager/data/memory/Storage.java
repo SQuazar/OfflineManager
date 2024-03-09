@@ -209,26 +209,21 @@ public class Storage implements IStorage {
 
     @Override
     public List<String> getListForComplete(String nickname) {
+        if (!plugin.getSettings().isPlayerComplete()) return Collections.emptyList();
         if (locked) return Collections.emptyList();
+
         if (nickname.isEmpty())
             return players
                     .stream()
                     .limit(Math.min(players.size(), 50))
                     .map(PlayerProfile::getName)
                     .collect(Collectors.toList());
-        List<String> list = players
+
+        return players
                 .stream()
                 .map(PlayerProfile::getName)
                 .filter(s -> s.toLowerCase().startsWith(nickname.toLowerCase()))
+                .limit(100)
                 .collect(Collectors.toList());
-        List<String> nList = new ArrayList<>();
-        int size = 0;
-        for (String s : list) {
-            size += s.getBytes().length;
-            if (size >= 2097152 - 116507)
-                break;
-            nList.add(s);
-        }
-        return nList;
     }
 }
