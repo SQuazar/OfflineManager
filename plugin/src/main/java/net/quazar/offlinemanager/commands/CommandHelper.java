@@ -18,4 +18,9 @@ public final class CommandHelper {
         message = OfflineManager.getApi().getConfigManager().fillMessage(player, message);
         player.sendMessage(PlaceholderUtil.fillPlaceholders(message, placeholders));
     }
+
+    public static void sendPlayerMessage(Player player, String message) {
+        message = OfflineManager.getApi().getConfigManager().fillMessage(player, message);
+        player.sendMessage(message);
+    }
 }
