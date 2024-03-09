@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class CommandBase implements CommandExecutor, TabCompleter {
     @Getter
@@ -89,7 +90,13 @@ public abstract class CommandBase implements CommandExecutor, TabCompleter {
 
     public abstract void execute(CommandSender sender, String[] args);
 
-    public abstract List<String> tabComplete(CommandSender sender, String[] args);
+    public List<String> tabComplete(CommandSender sender, String[] args) {
+        return subCommands.values().stream()
+                .filter(c -> sender.hasPermission(c.permission)
+                        && c.name.startsWith(args[0].toLowerCase()))
+                .map(CommandBase::getName)
+                .collect(Collectors.toList());
+    }
 
     protected void addCommand(CommandBase command) {
         subCommands.put(command.name, command);
