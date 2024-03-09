@@ -34,6 +34,7 @@ import net.quazar.offlinemanager.api.data.entity.PlayerProfile;
 import net.quazar.offlinemanager.api.memory.ISession;
 import net.quazar.offlinemanager.api.memory.IStorage;
 import net.quazar.offlinemanager.commands.CommandManager;
+import net.quazar.offlinemanager.commands.CommandOfflineManager;
 import net.quazar.offlinemanager.commands.ManagerCommand;
 import net.quazar.offlinemanager.configuration.Messages;
 import net.quazar.offlinemanager.configuration.Settings;
@@ -167,8 +168,10 @@ public class OfflineManager extends JavaPlugin implements OfflineManagerAPI {
 
     private void initCommands() {
         PluginCommand command = Bukkit.getPluginCommand("offlinemanager");
-        if (command != null)
-            command.setExecutor(new ManagerCommand());
+        if (command != null) {
+//            command.setExecutor(new ManagerCommand());
+            command.setExecutor(new CommandOfflineManager(this, "om", "OfflineManager command", "offlinemanager"));
+        }
     }
 
     public static OfflineManagerAPI getApi() {
