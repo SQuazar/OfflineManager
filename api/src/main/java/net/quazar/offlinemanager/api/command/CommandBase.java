@@ -117,4 +117,16 @@ public abstract class CommandBase implements CommandExecutor, TabCompleter {
     protected Set<CommandBase> getSubCommands() {
         return new HashSet<>(subCommands.values());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return Objects.equals(name, ((ICommand) o).getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
+    }
 }
