@@ -26,7 +26,7 @@ import net.quazar.offlinemanager.api.IPlaceholder;
 
 import java.util.Objects;
 
-public class Placeholder implements IPlaceholder {
+public final class Placeholder implements IPlaceholder {
 
     private final String key;
     private final String value;
@@ -34,6 +34,10 @@ public class Placeholder implements IPlaceholder {
     public Placeholder(String key, String value) {
         this.key = key;
         this.value = value;
+    }
+
+    public static Placeholder of(String key, String value) {
+        return new Placeholder(key, value);
     }
 
     @Override
