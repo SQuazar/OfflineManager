@@ -61,7 +61,7 @@ public abstract class CommandBase implements CommandExecutor, TabCompleter {
         }
         if (args.length > 0) {
             CommandBase subCommand;
-            if ((subCommand = subCommands.get(args[0])) != null) {
+            if ((subCommand = getCommand(args[0])) != null) {
                 String[] newArgs = new String[args.length - 1];
                 System.arraycopy(args, 1, newArgs, 0, newArgs.length);
                 subCommand.onCommand(sender, command, s, newArgs);
@@ -79,7 +79,7 @@ public abstract class CommandBase implements CommandExecutor, TabCompleter {
         if (!sender.hasPermission(permission)) return null;
         if (args.length > 0) {
             CommandBase subCommand;
-            if ((subCommand = subCommands.get(args[0])) != null) {
+            if ((subCommand = getCommand(args[0])) != null) {
                 String[] newArgs = new String[args.length - 1];
                 System.arraycopy(args, 1, newArgs, 0, newArgs.length);
                 return subCommand.onTabComplete(sender, command, s, newArgs);
