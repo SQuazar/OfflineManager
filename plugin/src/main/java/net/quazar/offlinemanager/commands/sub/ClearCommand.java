@@ -66,7 +66,7 @@ public class ClearCommand extends OMCommand {
         }
         IPlayerData playerData = api.getPlayerData(playerName);
         if (args.length == 2) {
-            ClearOfflineInventoryEvent event = new ClearOfflineInventoryEvent(player, playerData);
+            ClearOfflineInventoryEvent event = new ClearOfflineInventoryEvent(playerData);
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled())
                 return;
@@ -74,7 +74,7 @@ public class ClearCommand extends OMCommand {
             playerData.save(SavePlayerType.INVENTORY);
             sendPlayerMessage(player, messages.getClearInventory());
         } else if (args[2].equalsIgnoreCase("ec")) {
-            ClearOfflineEnderchestEvent event = new ClearOfflineEnderchestEvent(player, playerData);
+            ClearOfflineEnderchestEvent event = new ClearOfflineEnderchestEvent(playerData);
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled())
                 return;
