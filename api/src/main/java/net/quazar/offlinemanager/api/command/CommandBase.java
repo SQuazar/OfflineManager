@@ -22,7 +22,7 @@ public abstract class CommandBase implements CommandExecutor, TabCompleter {
     private final String permission;
     private String[] aliases;
     private final Map<String, CommandBase> subCommands;
-    private boolean onlyPlayerExecute;
+    private final boolean onlyPlayerExecute;
 
     public CommandBase(String name, String description, String permission) {
         this(name, description, permission, true);
