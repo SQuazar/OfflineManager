@@ -56,22 +56,22 @@ public class ManagerCommand implements CommandExecutor, TabCompleter {
     private final Settings settings = ((OfflineManager) api).getSettings();
 
     public ManagerCommand() {
-        api.getCommandManager().addSubCommand(new ReloadCommand("reload", "Reload plugin configuration", OFFLINEMANAGER_RELOAD));
-        api.getCommandManager().addSubCommand(new TeleportCommand("teleport", "Teleport to player", OFFLINEMANAGER_TELEPORT, new String[]{"tp"}));
-        api.getCommandManager().addSubCommand(new GameModeCommand("creative", "Set creative mode for player", OFFLINEMANAGER_CREATIVE));
-        api.getCommandManager().addSubCommand(new GameModeCommand("survival", "Set survival mode for player", OFFLINEMANAGER_SURVIVAL));
-        api.getCommandManager().addSubCommand(new GameModeCommand("spectator", "Set spectator mode for player", OFFLINEMANAGER_SPECTATOR));
-        api.getCommandManager().addSubCommand(new GameModeCommand("adventure", "Set adventure mode for player", OFFLINEMANAGER_ADVENTURE));
-        api.getCommandManager().addSubCommand(new ClearCommand("clear", "Clear offline player inventory", OFFLINEMANAGER_CLEAR));
-        api.getCommandManager().addSubCommand(new TeleportHereCommand("tphere", "Teleport offline player to yourself", OFFLINEMANAGER_TPHERE));
-        api.getCommandManager().addSubCommand(new KillPlayerCommand("kill", "Kill offline player", OFFLINEMANAGER_KILL));
-        api.getCommandManager().addSubCommand(new HealCommand("heal", "Heal offline player", OFFLINEMANAGER_HEAL));
-        api.getCommandManager().addSubCommand(new FeedPlayerCommand("feed", "Feed offline player", OFFLINEMANAGER_FEED));
-        api.getCommandManager().addSubCommand(new HelpCommand("help", "Get command list for plugin", OFFLINEMANAGER_USAGE));
-        api.getCommandManager().addSubCommand(new ContainerCommand("invsee", "Open player inventory", OFFLINEMANAGER_INVSEE, InventoryType.DEFAULT, settings.getInventoryConfiguration()));
-        api.getCommandManager().addSubCommand(new ContainerCommand("enderchest", "Open offline player enderchest", OFFLINEMANAGER_ENDERCHEST, new String[]{"ec"},
-                InventoryType.ENDER_CHEST, settings.getEnderChestConfiguration()));
-        api.getCommandManager().addSubCommand(new ContainerCommand("armor", "Open player offline armor inventory", OFFLINEMANAGER_INVSEE_ARMOR, InventoryType.ARMOR, settings.getArmorInventoryConfiguration()));
+//        api.getCommandManager().addSubCommand(new ReloadCommand("reload", "Reload plugin configuration", OFFLINEMANAGER_RELOAD));
+//        api.getCommandManager().addSubCommand(new TeleportCommand("teleport", "Teleport to player", OFFLINEMANAGER_TELEPORT, new String[]{"tp"}));
+//        api.getCommandManager().addSubCommand(new GameModeCommand("creative", "Set creative mode for player", OFFLINEMANAGER_CREATIVE));
+//        api.getCommandManager().addSubCommand(new GameModeCommand("survival", "Set survival mode for player", OFFLINEMANAGER_SURVIVAL));
+//        api.getCommandManager().addSubCommand(new GameModeCommand("spectator", "Set spectator mode for player", OFFLINEMANAGER_SPECTATOR));
+//        api.getCommandManager().addSubCommand(new GameModeCommand("adventure", "Set adventure mode for player", OFFLINEMANAGER_ADVENTURE));
+//        api.getCommandManager().addSubCommand(new ClearCommand("clear", "Clear offline player inventory", OFFLINEMANAGER_CLEAR));
+//        api.getCommandManager().addSubCommand(new TeleportHereCommand("tphere", "Teleport offline player to yourself", OFFLINEMANAGER_TPHERE));
+//        api.getCommandManager().addSubCommand(new KillPlayerCommand("kill", "Kill offline player", OFFLINEMANAGER_KILL));
+//        api.getCommandManager().addSubCommand(new HealCommand("heal", "Heal offline player", OFFLINEMANAGER_HEAL));
+//        api.getCommandManager().addSubCommand(new FeedPlayerCommand("feed", "Feed offline player", OFFLINEMANAGER_FEED));
+//        api.getCommandManager().addSubCommand(new HelpCommand("help", "Get command list for plugin", OFFLINEMANAGER_USAGE));
+//        api.getCommandManager().addSubCommand(new ContainerCommand("invsee", "Open player inventory", OFFLINEMANAGER_INVSEE, InventoryType.DEFAULT, settings.getInventoryConfiguration()));
+//        api.getCommandManager().addSubCommand(new ContainerCommand("enderchest", "Open offline player enderchest", OFFLINEMANAGER_ENDERCHEST, new String[]{"ec"},
+//                InventoryType.ENDER_CHEST, settings.getEnderChestConfiguration()));
+//        api.getCommandManager().addSubCommand(new ContainerCommand("armor", "Open player offline armor inventory", OFFLINEMANAGER_INVSEE_ARMOR, InventoryType.ARMOR, settings.getArmorInventoryConfiguration()));
     }
 
     @Override
